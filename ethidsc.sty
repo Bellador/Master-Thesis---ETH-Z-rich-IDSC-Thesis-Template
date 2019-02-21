@@ -43,7 +43,7 @@
 \RequirePackage[dvips]{epsfig} 
 \RequirePackage{float}
 \RequirePackage{fancyhdr}
-%\RequirePackage{hyperref}
+\RequirePackage{hyperref}
 \RequirePackage{pstricks,pst-plot,psfrag}
 \RequirePackage{multirow}
 \RequirePackage{rotating}
@@ -158,10 +158,16 @@ Zurich, \the\day. \the\month. \the\year: \hrulefill
  Institut f\"{u}r Dynamische Systeme und Regelungstechnik\\
  Eidgen\"{o}ssische Technische Hochschule (ETH) Z\"{u}rich\\
 \else
- D-USYS Department of Environmental Systems Science\\
+D-USYS Department of Environmental Systems Science\\
  Forest and Landscape Management (ETH) Zurich\\
 \fi
-\vspace{3.5cm}
+\vspace{1.5cm}
+\begin{large}\textbf{Affiliated institutions}\end{large} \\
+\vspace{0.5cm}
+ETH Zurich\\
+Swiss federal institute for forest, snow and landscape research (WSL)\\
+
+\vspace{1.5cm}
 
 \ifingerman
  {\bf Betreuung} \\[1.5ex]
@@ -250,7 +256,7 @@ Forest and Landscape Management}
 Name: \> \@studentA \\
 E-mail: \> \@emailA \\
 Legi-Nr.: \> \@ethidA \\
-Semester: \> \@semesterA
+%Semester: \> \@semesterA
 \end{tabbing}
 
 \if\@studentB \else
@@ -282,7 +288,7 @@ Legi-Nr.: \> \@ethidB \\
 	\setlength{\oddsidemargin}{3cm}
 	\setlength{\evensidemargin}{3cm}
 
-	\setlength{\topmargin}{2.5cm} % -1in subtract latex default margin (1 inch) from topmargin
+	\setlength{\topmargin}{3cm} % -1in subtract latex default margin (1 inch) from topmargin
 
 %	\setlength{\headheight}{14.mm} %platz für kopfzeile
 %	\setlength{\headsep}{+11.mm} %freiraum nach kopfzeile
@@ -301,6 +307,7 @@ Legi-Nr.: \> \@ethidB \\
 %	\addtolength{\evensidemargin}{-1in}  %subtract latex default margin (1 inch) from evensidemargin
 %	\setlength{\marginparwidth}{10cm}
 	\setlength{\parindent}{0pt}
+
 
 % Revision history___________________________________________________________ 
 % 2009/29/05 Adapted from ethimrt.sty,v 1.1 2004/04/02
