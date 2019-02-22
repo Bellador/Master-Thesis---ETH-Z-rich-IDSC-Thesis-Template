@@ -35,7 +35,7 @@ The data-collection accounted for 28\rq246 raw Instagram media objects. After th
 The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
 \begin{itemize}
     \item id : Unique media object identifier. [varchar(30)] if the media object contains location information, [numeric(20)] if not.
-    \item latitude and longitude: coordinate information in the WGS84 reference system [double precision]
+    \item latitude and longitude : Coordinate information in the WGS84 reference system of a specific Instagram location [double precision]
     \item link : URL to the actual media object on \texttt{https://www.Instagram.com/} [text]
     \item media-link : URL directing solely to the image content [text]
     \item publication date : Date and time when the media object was uploaded with the data-format YYYY-MM-DD HH:MM:SS [timestamp]
@@ -45,6 +45,9 @@ The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) 
     \item like-count : Amount of likes the media object received on the SMP Instagram
 \end{itemize}
 
+\paragraph{Location tag}
+The provided location information or tag consists of the above mentioned coordinates of a Instagram location. Instagram locations are points of interest which can be user-generated and do not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity by mitigating the divulging of sensitive location data. This implies that media objects that do not originate from the same location can still be \lq snapped\rq to the same Instagram location and therefore show the same coordinate pair in the meta-data \cite{InstagramTags}.
+It has been shown that roughly 85\% of Instagram media objects lack a location tag \cite{2018InstagramTags} and most users only use them on vacation or when being abroad.
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in chapter \ref{sec: XXXXX}
 
 
@@ -57,11 +60,11 @@ The entire Flickr database was queried via the publicly accessible official Flic
 \subsubsection{Time-span} \label{flickr_timespan}
 The all the individual bounding-box API requests described above were queried for the time-spawn 2005 (launch of the SMP Flickr) until the 23rd of November 2018. 
 \subsubsection{Data} \label{flickr_data}
-The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object:\\
+The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
 
 \begin{itemize}
     \item id : Unique media object identifier [bigint]
-    \item latitude and longitude: coordinate information in the WGS84 reference system [double precision]
+    \item latitude and longitude : Coordinate information in the WGS84 reference system [double precision]
     \item link : URL to the actual media object in the format \texttt{https://www.flickr.com/photos/[author]/[ID]/} [text]
     \item date taken : Time-stamp from the image meta-data stating when it was taken. 
     \item publication date : Time-stamp when the media object was uploaded to Flickr with the data-format MM/DD/YYYY HH:MM:SS [time-stamp]
@@ -75,6 +78,8 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
     \item favorites : Amount of approves - similar to \lq likes\rq on Instagram - a media object received by other Flickr users [bigint]
 \end{itemize}
 
+\paragraph{Location tag}
+Unlike Instagram provides Flickr location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
 Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{sec: XXXXX}
 
 \subsection{Foursquare} \label{foursquare}
@@ -87,9 +92,81 @@ The following two API endpoints which return different information were used for
 The first step of the information acquirement involved a spatial search for venue ids of the category \lq Outdoors & Recreation\rq that lie within the research area boundaries. This request was done with the regular venue search API endpoint. There was a limitation to the maximum number of results per request, similar to the bounding box request of Flickr. Therefore, a similar spatial subdivision of the research areas was used to query all the available venues, so that each individual request returned less than 50 results.
 \paragraph{Acquiring venue details (premium endpoint)} \label{foursquare_endpoint2}
 To obtain more specific information about each venue, a second (premium) Foursquare API endpoint was used. This venue details endpoint only allowed 50 requests per day for regular users which spread the data acquisition over 9 days. Insight among others on a more concrete subcategory description, the formatted address, the user rating as well as if the venue was verified or not was the result.
-\subsubsection{Data verification} \label{foursquare_data_verification}
-Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics & sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors & recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge. XY venues belonged to said categories of which XY were verified by the author of this thesis.
+
 \subsubsection{Data} \label{fq_data}
+The data returned by the Foursqure API and the above mentioned endpoints was in the JSON format - the same as the Flickr data.
+Only the following excerpt of the returned venue meta-data was used with the appropriate PostgreSQL data types in square brackets: \\
+\begin{itemize}
+    \item venue id : Unique venue identifier [text]
+    \item venue name : Locally used name to address the venue [text]
+    \item latitude and longitude : Coordinate information in the WGS84 reference system [double precision]
+    \item country name : Name of the country the venue is located in - used as additional data-verification [text]
+    \item rating : Venue rating generated through Foursquare users [real]
+    \item category id : Unique Foursquare venue category identifier [text]
+    \item category name : Foursquare venue category name
+    \item verified : Takes the values TRUE or FALSE. States if the venue data is verified by Foursquare
+\end{itemize}
+
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{sec: XXXXX}
+
+\subsubsection{Data verification} \label{foursquare_data_verification}
+The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 USD for venues outside of the United States of America \cite{Foursquare2019FoursquareClaim}. \\
+Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics & sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors & recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge. XY venues belonged to said categories of which XY were verified by the author of this thesis.
+
+\section{Database Setup} \label{database_setup}
+During the course of this thesis a PostgreSQL database (\texttt{https://www.postgresql.org/}) was used which functioned as a centralised place to store the Flickr, Instagram and Foursquare data related to this project. The advantage of this approach compared to reading and storing in common txt- or csv-files is the possibility of computational efficient data-retrieval as by indexing conditional columns and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among other, smart table joins through primary and foreign key relation and conditional statements for advanced filtering \cite{PostgreSQL2019PostgreSQLDocumentation}.\\
+Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is compatible with PostgreSQL - was used for the manually performed training-data verification process that is described in chapter \ref{XY}.\\
+The following tables were created for the housing of the used data in this format: [object-type]\_[data-origin]\_[data-source] \\
+\newline
+
+Media object tables:\\
+\begin{itemize}
+    \item media\_objects\_cantonzug\_flickr
+    \item media\_objects\_unionzug\_instagram
+    \item media\_objects\_trainingdata\_instagram
+    \item media\_objects\_cantonzug\_foursquare
+\end{itemize}
+\newline
+Location tables:\\
+\begin{itemize}
+    \item locations\_cantonzug\_flickr
+    \item locations\_unionzug\_instagram
+\end{itemize}
+
+In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subchapters above. Furthermore are the outputs from the data- and text-processing steps (see chapter \ref{XY}) stored in the database.\\ 
+The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{XXXX}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
+\newline
+The exact structure and table specific content of the database is visible in figure \ref{fig:database}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[width=0.75\textwidth]{img/fusion_db_overview.eps}
+   \caption{Visualisation of the database, its associated tables and columns}
+   \label{fig:database}
+\end{figure}
+
+\section{Data-processing} \label{data_processing}
+The following processes cover the entire workflow of data manipulation on the database in the order they were executed.
+\subsection{Merging of Instagram files} \label{netlytic_files_merge}
+In total, three different, partly spatially overlapping Instagram queries were run via Netlytic. All of them returned one CSV file. they were merged to reduce the complexity of handling multiple files for the consecutive processes. Media object duplicates were also addressed in this step. This entire data-processing step was not needed for the Flickr-data since merging and duplicates were already handled during the data-mining.
+
+\subsection{Acquisition of additional location information} \label{add_location_data}
+Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subchapters will elaborate on this process for the different data sources Instagram and Flickr.
+
+\subsubsection{Via the Instagram API}
+The Instagram data that was provided by Netlytic was enhanced by using the \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
+
+\subsubsection{Via the Google Geocoding API}
+Each coordinate of every Flickr media object was run through the Google Geocoding API. Detailed information regarding the media objects address and location type was returned. The location type attribute is evidence of the API\rq s accuracy. Everything besides 'ROOFTOP' returns an address that is close but not exactly at the given coordinate and therefore an approximation.\\
+The API has been called by modifiying the following HTTPS-request:\\
+\texttt{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]&key=[API_KEY]}
+
+\subsection{Populating the database} \label{populate_db}
+The merged Instagram CSV-files and the Flickr CSV-files which were extended by the addititional location information descirbed in the subchapters above were used to populate the inital PostgeSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
+
+\subsection{Check the \lq in boundary\rq condition} \label{in_boundary}
+Due to the data querying span which does not entirely match the actual research area perimeters, each acquired media object had to be checked to be inside the given perimeter boundary. This process was done manually with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects is clipped to the given research area. All remaining points / media objects are than exported to a new file and read by the script which automatically updates the \lq in\_boundary\rq column in the corresponding database table to TRUE.
+
 
 
 
