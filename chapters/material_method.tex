@@ -165,7 +165,7 @@ The API has been called by modifiying the following HTTPS-request:\\
 The merged Instagram CSV-files and the Flickr CSV-files which were extended by the addititional location information descirbed in the subchapters above were used to populate the inital PostgeSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
 
 \subsection{Check the \lq in boundary\rq condition} \label{in_boundary}
-Due to the data querying span which does not entirely match the actual research area perimeters, each acquired media object had to be checked to be inside the given perimeter boundary. This process was done manually with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects is clipped to the given research area. All remaining points / media objects are than exported to a new file and read by the script which automatically updates the \lq in\_boundary\rq column in the corresponding database table to TRUE.
+Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the given perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new file. This file was read by the Python script which updated the \lq in\_boundary\rq column in the corresponding database table to TRUE for the provided media objects.
 
 
 
