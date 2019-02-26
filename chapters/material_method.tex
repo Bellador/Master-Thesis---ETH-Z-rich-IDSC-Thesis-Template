@@ -168,12 +168,14 @@ The merged Instagram CSV-files and the Flickr CSV-files which were extended by t
 Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the \lq in\_boundary\rq column in the corresponding database entries to TRUE for the provided media objects.
 
 \subsection{Potential sources of bias in the data} \label{sources_data_bias}
-This part of the data-processing is a filtering step as seen in ####Step 1 of figure XY#### to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: When and where are people performing NBRAs?
+This part of the data-processing is a filtering step as seen in step 1 of figure \ref{XY} to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: When and where are people performing NBRAs?
 
 \subsubsection{Dominant authors} \label{bias_dominant_authors}
 Authors (person who contributes to a given social media platform by uploading media objects) which are above a certain threshold regarding their total number of uploaded media objects in the research area, are marked in the database table column \lq included\_after\_dataprocessing\rq as \texttt{False} and are thereby excluded from further analysis. There is a need to address dominant authors, because otherwise the data evaluation will be unequally based on a small number of users that contributed a lot to the entire data-set.\\
+\newline
 \textbf{How was this threshold defined?}\\
-Two possibilities were considered:\\
+\newline
+Two possibilities were considered:
 \begin{enumerate}
   \item A static, top percentage of authors will be excluded
   \item A fixed amount of the most contributing authors will be excluded
@@ -190,11 +192,30 @@ Text processing is needed to turn the noisy user-generated character input (text
 Firstly, iterating over all media objects which lie inside the research area boundary and are included after the data processing while acquiring their text data from the database.
 
 \subsubsection{Language detection} \label{langauge_detection}
-The language detection serves the purpose of optimally adjusting the parameters for the later occurring core text processing step. By identifying the language, the suitable word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see following steps).
-\paragraph{To accomplish this, the provided text string which consists only of the title of the media object is parsed to the function. First a small bit of text processing, that happens in its core later on again (but then more adjusted due to the then available language of the original text string), is necessary to ensure a reliable prediction. This consists of splitting the title text string at white spaces, which forms basic separate character elements. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly all characters are turned lowercase. These resulting character elements are only further considered, if they have a \textbf{minimum length of three characters}. This minimum length was chosen according to conducted tests to avoid small character length artefacts that can occur during the entire process.}
+The language detection serves the purpose of optimally adjusting the parameters for the later occurring core text processing step. By identifying the language, the suitable word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see \ref{XY}).\\
+\newline
+To accomplish this, the provided text string which consists only of the title of the media object is parsed to the function. First a small bit of text processing, that happens in its core later on again (but then more adjusted due to the then available language of the original text string), is necessary to ensure a reliable prediction. This consists of splitting the title text string at white spaces, which forms basic separate character elements. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly all characters are turned lowercase. These resulting character elements are only further considered, if they have a minimum length of three characters. This minimum length was chosen according to conducted tests to avoid small character length artefacts that can occur during the entire process.\\
 Next, each created word-token is run against three different word lists of the English, German, and Swiss German language.
-The English word list was acquired via the \lq natural language toolkit\rq (NLTK) Python library - available through the function \lq nltk.corpus.words.words() \rq. The mentioned list encompasses over 236’000 of the most common words of the English language.
-The German and Swiss-German word lists were acquired from the following source \cite{GeooffwicksWordLanguages} which contain 166\rq100 and 165\rq900  of the most common words respectively.
+The English word list was acquired via the \lq natural language toolkit\rq (NLTK) Python library. The mentioned list encompasses over 236\rq000 of the most common words of the English language.
+The German and Swiss-German word lists were acquired from the following source \cite{GeooffwicksWordLanguages} which contain 166\rq100 and 165\rq900  of the most common words respectively.\\
+\newline
+\texttt{Remark 1:} All word lists were slightly modified to fit the text-processing algorithm that is applied to the text-data of the media objects (lowercase, replacement of vowel mutations).\\
+\newline
+After the entity check of each word versus all three of the above mentioned word lists, the language of the word list with the most contained words defines the language of the text string and ultimately of the entire media object. The determined language for each media object was saved in the \lq detected\_language\rq column in the corresponding database entry.\\
+\newline
+\texttt{Remark 2:} A lot of hashtags, used across different languages, are dominantly in English, therefore even a media object which in its core was not written exclusively in English can be classified as written in English due to the hashtags.
+
+\subsubsection{Core text processing} \label{core_text_processing}
+The core text processing encompasses the following alteration steps and serves the purpose of creating universally similar structured and comparable word tokens out of the noisy user generated text data from each media object in the database. This entire process generates the needed feed in data which enables the training and testing of a sophisticated machine learning model to accurately predict the NBRA contained in one of these media objects.\\
+\newline
+The function \lq text\_processing\_core()\rq is called with the language detection corresponding word lists regarding spell checking, stop words, the corresponding stemmer object to attribute each word to its stem or root and the actual text string. If the Swiss German language was detected or none of the remaining two, then the mentioned function was called with no specific word lists and the steps regarding spell checking, stemming and the removal of stop words was skipped due to a lack of sophisticated methods. The provided text string consisted out of a concatenation of the title and the description of the given media object, unlike just the title for the shortened text processing step applied in the language detection function.\\
+Flickr tags were not neglected from this step, even though they were also created by an image detection algorithm similar to the \textit{Google Cloud Vision} algorithm which was used in this thesis to acquire image content tags.
+
+\subsubsection{Match and remove special text patterns} \label{text_patterns}
+The first step of the text alteration included the regular expression matching (see \ref{definitions}) of any URI (which includes \texttt{https://, http://, www.} beginnings as well as the domain ending), HTML related tags (e.g. \texttt{<a>…<\backslash a>}), Instagram mentions (e.g. \texttt{@madmax}) and character/number combination-patterns (e.g. \texttt{zugersee2018}). If found, they were replaced by a whitespace (\texttt{\backslash s}) character. This step was done before prior to any other text processing step, due to the high risk of creating character artefacts which occur if those patterns remain in the text string.
+
+\subsubsection{Removal of characters other than letters} \label{remove_eveything_but_letters}
+As a next step, all special characters, such as Unicode characters of the category \lq other symbols\rq including numbers were removed from the text string and also replaced by a whitespace (\texttt{\backslash s}) character. This is done as a measure to assure that character objects like emojis, time-stamps, dates among others that often occur in social media data are removed to achieve a less noisy and purer word token list at the end. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence. E.g. \lq ä\rq was replaced with \lq ae\rq.
 
 
 
