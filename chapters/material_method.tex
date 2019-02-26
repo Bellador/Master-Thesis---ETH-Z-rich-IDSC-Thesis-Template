@@ -73,7 +73,7 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
     \item author origin : User given geographical information regarding the authors origin [text]
     \item title : User generated media object title [text]
     \item description : User generated media object description [text]
-    \item tags : Keywords similar to Instagram hashtags that describe the media object [text]
+    \item tags : Keywords similar to Instagram hashtags that describe the media object but which are extracted by an image recognition algorithm similar to Google Cloud Vision \cite{Flickr2019FlickrRecognition}. (therefore already includes smart image labels!) [text]
     \item views : Amount of media object calls [bigint]
     \item favorites : Amount of approves - similar to \lq likes\rq on Instagram - a media object received by other Flickr users [bigint]
 \end{itemize}
@@ -158,17 +158,43 @@ The Instagram data that was provided by Netlytic was enhanced by using the \text
 
 \subsubsection{Via the Google Geocoding API}
 Each coordinate of every Flickr media object was run through the Google Geocoding API. Detailed information regarding the media objects address and location type was returned. The location type attribute is evidence of the API\rq s accuracy. Everything besides 'ROOFTOP' returns an address that is close but not exactly at the given coordinate and therefore an approximation.\\
-The API has been called by modifiying the following HTTPS-request:\\
-\texttt{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]&key=[API_KEY]}
+The API has been called by modifying the following HTTPS-request:\\
+\texttt{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]&key=[API\_KEY]}
 
 \subsection{Populating the database} \label{populate_db}
-The merged Instagram CSV-files and the Flickr CSV-files which were extended by the addititional location information descirbed in the subchapters above were used to populate the inital PostgeSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
+The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subchapters above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
 
 \subsection{Check the \lq in boundary\rq condition} \label{in_boundary}
-Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the given perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new file. This file was read by the Python script which updated the \lq in\_boundary\rq column in the corresponding database table to TRUE for the provided media objects.
+Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the \lq in\_boundary\rq column in the corresponding database entries to TRUE for the provided media objects.
 
+\subsection{Potential sources of bias in the data} \label{sources_data_bias}
+This part of the data-processing is a filtering step as seen in ####Step 1 of figure XY#### to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: When and where are people performing NBRAs?
 
+\subsubsection{Dominant authors} \label{bias_dominant_authors}
+Authors (person who contributes to a given social media platform by uploading media objects) which are above a certain threshold regarding their total number of uploaded media objects in the research area, are marked in the database table column \lq included\_after\_dataprocessing\rq as \texttt{False} and are thereby excluded from further analysis. There is a need to address dominant authors, because otherwise the data evaluation will be unequally based on a small number of users that contributed a lot to the entire data-set.\\
+\textbf{How was this threshold defined?}\\
+Two possibilities were considered:\\
+\begin{enumerate}
+  \item A static, top percentage of authors will be excluded
+  \item A fixed amount of the most contributing authors will be excluded
+\end{enumerate}
 
+At first, a top 0.1\% threshold was implemented. Later in the development of the thesis a \lq posts per author\rq distribution graph was simultaneously created as soon as the data was read into the database. The user is able to adapt the graph by inputting a desired number of top authors which should be included in the graph. This enables a data specific dynamic adaption of the threshold according to the user\rq s own evaluation of the graph and the underlying data-set.
+
+\subsubsection{Bulk uploads} \label{bias_bulk_uploads}
+In the context of this thesis, bulk uploads describe a certain amount of simultaneously or during a short period of time uploaded media objects to the same social media platform by a single author. In an early stage of the project, a static bulk upload threshold - similarly to the dominant author threshold - was chosen. Later, a dynamic solution - which makes adaptive data handling possible - was implemented. A graph which visualises the amount of effected media objects by different bulk upload thresholds (2-10) is displayed to the user. Again, according to the graph a suitable threshold can be inputted and applied to the given data-set. The time period in which the exceeding of the threshold was considered a bulk upload was set to one hour. 
+All as bulk upload marked media objects will be excluded from further analysis by setting the \lq included\_after\_dataprocessing\rq column to \texttt{False} (if they were not already excluded in the \lq dominant user\rq step)
+
+\subsection{Text-processing} \label{text_processing}
+Text processing is needed to turn the noisy user-generated character input (text) into normalised word-tokens which are comparable between media objects and are needed for the following machine learning (ML) text-classification approach. The text-processing encompasses the following steps in corresponding order which have been visualised under step 3 in Figure \ref{XY}:\\
+Firstly, iterating over all media objects which lie inside the research area boundary and are included after the data processing while acquiring their text data from the database.
+
+\subsubsection{Language detection} \label{langauge_detection}
+The language detection serves the purpose of optimally adjusting the parameters for the later occurring core text processing step. By identifying the language, the suitable word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see following steps).
+\paragraph{To accomplish this, the provided text string which consists only of the title of the media object is parsed to the function. First a small bit of text processing, that happens in its core later on again (but then more adjusted due to the then available language of the original text string), is necessary to ensure a reliable prediction. This consists of splitting the title text string at white spaces, which forms basic separate character elements. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly all characters are turned lowercase. These resulting character elements are only further considered, if they have a \textbf{minimum length of three characters}. This minimum length was chosen according to conducted tests to avoid small character length artefacts that can occur during the entire process.}
+Next, each created word-token is run against three different word lists of the English, German, and Swiss German language.
+The English word list was acquired via the \lq natural language toolkit\rq (NLTK) Python library - available through the function \lq nltk.corpus.words.words() \rq. The mentioned list encompasses over 236’000 of the most common words of the English language.
+The German and Swiss-German word lists were acquired from the following source \cite{GeooffwicksWordLanguages} which contain 166\rq100 and 165\rq900  of the most common words respectively.
 
 
 
