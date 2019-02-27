@@ -439,8 +439,84 @@ In addition to the previously mentioned data and text-processing some extra func
     \newline
     \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
     \newline
-    
+    \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.5\textwidth, left]{img/linearSVC_hyperparameters.eps}
+       \caption{Tuned hyperparameters of the linearSVC fitting algorithm}
+       \label{fig:linearSVC_hyperparameters}
+    \end{figure}
+    \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.5\textwidth, left]{img/randomForest_hyperparameters.eps}
+       \caption{Tuned hyperparameters of the randomForest fitting algorithm}
+       \label{fig:randomForest_hyperparameters}
+    \end{figure}
 \end{enumerate}
+
+\subsection{ML evaluation scores} \label{ml_evaluation_scores}
+There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
+\begin{figure}[h]
+       \centering
+       \includegraphics[width=0.5\textwidth, left]{img/Confusion_matrix_edited.eps}
+       \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 ≤ k ≤ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018ActivityModels}}
+       \label{fig:confusion_matrix_illustration}
+\end{figure}
+    
+Measurements that were calculated (Abbreviations visible in legend of figure \ref{fig:confusion_matrix_illustration}):
+\begin{itemize}
+    \item \[Overall Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
+    \item \[Overall Precision = \frac{TP}{(TP+FP)}\]
+    \item \[Overall Recall = \frac{(TP)}{(\frac{TP}{FN})}\]
+    \item \textbf{F1-Score} Summarising Precision and Recall in one measurement.\\ 
+    \[F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
+\end{itemize}
+
+\subsection{Ground truthing} \label{groud_truthing}
+Interviews and passive observations of NBRAs were held to gain insight on how well the social media data approximates to actual visitation rates and NBRA behaviour. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
+\subsubsection{Locations for ground truth data acquisition} \label{locations_ground_truthing_data}
+Three locations (see figure \ref{XY}) with different degrees of urbanisation were chosen which resemble hotspots for NBRAs covered in this thesis. The location to the far left is called 'Br\"uggli' – right next to the camping ground - which is a hotspot for jogging, biking, (dog-) walking and in summer also for picnicking. It lies inside the perimeter of the concept 'Lorzenebene' (plain of the river Lorze) and is close to the ‘Delta’ wildlife sanctuary which allows for various activities along the lake for relaxation.\\
+The second location includes the 'R\"ossliwiese' which is a meadow located close to the city centre at the lake side. There people like to relax, go for short walks (with their dog) - often for lunch, after they are done shopping or in the evening due to its closeness to the residential area.\\
+The last and most nature-near location was the adventure playground 'Schattenw\"aldli' on the Zugerberg. It appeals to various groups of people due to its wide spectrum of activities the environment allows. Young families with kids are the most dominant visitor group due to the playground and the possibility to have a picnic. But also, people hiking, walking (their dog) and mountain-bikers can be frequently encountered there.
+
+\begin{figure}[h]
+       \centering
+       \includegraphics[width=0.5\textwidth, left]{img/interviews_locations.eps}
+       \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were held. Image \copyright Google, map-data 2019}
+       \label{fig:locations_ground_truthing}
+\end{figure}
+
+\subsubsection{Passive observation setup} \label{passive_observation_setup}
+The passive observation encompassed the recording of the NBRAs of interest performed by people that passed through the location during the same time the interviews were held. More specific the group size, the approximate average group age, the NBRA and the time were captured. The term 'passive' implies that no direct interaction with the recorded people occurred - therefore the data is entirely based on perception.
+Since the thesis’s author held all the interviews, the passive observation was performed by an unaffiliated assistant (see Acknowledgements).\\
+The durations of these passive observations were the following:
+\begin{itemize}
+    \item \textbf{Br\"uggli} 1h30min
+    \item \textbf{R\"ossliwiese} 1h15min
+    \item \textbf{Zugerberg} 1h45min
+\end{itemize}
+The time spend in one location was dependant on the time needed to hold the required interviews therefore the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
+The passive observation template used in this thesis can be found under the Appendix \ref{XY}
+
+\subsubsection{Interview setup} \label{interview_setup}
+The interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24th in 'Br\"uggli' and 'R\"ossliwiese' as well as on the 25th of November 2018 on the Zugerberg. It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
+Every interview started out with a small introduction to the author’s persona, the motivation behind the interviews and that all the gathered information will be kept anonymous and will solely be used for the course of this thesis. The purpose of these interviews was to gain information on three topics.\\
+\newline
+The first one being \textbf{location} related:
+\begin{itemize}
+    \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
+    \item \textbf{Activity} Which NBRA is most frequently practiced by the person in this location?
+    \item \textbf{Frequency} How often does the person visit the location? (In the case of the Zugerberg, it was also asked what the destination of the trip was.)
+\end{itemize}
+\newline
+The second one was related to \textbf{social media}:
+\begin{itemize}
+    \item \textbf{Member} Do they own an account on any social media platform and if yes on which?
+    \item \textbf{How do they interact with social media? Do they share own content (if yes – in what frequency?), or do they rather look at foreign contributions?}
+    \item \textbf{Intent} Do they consider sharing their visit to the given location on social media and if yes on which platform?
+\end{itemize}
+The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\
+The interview template used in this thesis can be found under the Appendix \ref{XY}.
+
 
 
 
