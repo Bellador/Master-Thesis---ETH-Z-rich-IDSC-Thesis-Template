@@ -253,22 +253,22 @@ The reason for removing as stop words identified tokens is to prevent the inflat
 
 \paragraph{Topographic related words}
 Swiss topographic names and descriptions consisting of a dictionary of towns and cities \parencite{Swisstopo2018Ortschaftenverzeichnis} and geographical names from the topographical survey of Switzerland \parencite{Swisstopo2018SwissNAMES3D} were ignored, ensuring that the resulting model is not trained on  specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis, where the training's data originated from a different area than the actual research area, this factor should not be neglected. 
-The possibility to use this additional locational information in the form of topographic terms to narrow down the location of the NBRA’s was not considered but could be a potential further improvement to this method. 
-Additionally, 20 language variations of the country name ‘Switzerland’ where also removed \parencite{101languages2018SwitzerlandLanguages}. 
-During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as ‘laufen’ (to run) were being wrongfully removed based on the existing town \textit{Laufen} in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1’032 matched words of a total of 66’133 topographic list entities were not further considered.
+The possibility to use this additional locational information in the form of topographic terms to narrow down the location of the NBRA's was not considered but could be a potential further improvement to this method. 
+Additionally, 20 language variations of the country name 'Switzerland' where also removed \parencite{101languages2018SwitzerlandLanguages}. 
+During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to run) were being wrongfully removed based on the existing town \textit{Laufen} in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1'032 matched words of a total of 66'133 topographic list entities were not further considered.
 
 \paragraph{Feed-back to the database}
 The generated word tokens and the identified language are saved in the corresponding media object row in the database where they can be accessed again for the ML training and testing phase.
 
 \section{Image recognition} \label{image_recognition}
-The extraction of structural elements from a media object’s image enables an additional information gain to further describe its overall context and content besides the user generated text.\\
+The extraction of structural elements from a media object's image enables an additional information gain to further describe its overall context and content besides the user generated text.\\
 \newline
 Since image recognition is a scientific field of its own, an independent service was used for this task. At the time of writing, there were multiple suitable solutions on the market - two of which were the \textit{Amazon Rekognition Service} and the \textit{Google Cloud Vision API}. The latter was applied in this thesis based on the given pricing (see subsection XY) and initialisation conditions at that time.\\
-The \textit{Google Cloud Vision API} allows users to draw upon a deep-learning algorithm that is constantly trained on Google’s rich image pool to identify and classify structural elements in images.
+The \textit{Google Cloud Vision API} allows users to draw upon a deep-learning algorithm that is constantly trained on Google's rich image pool to identify and classify structural elements in images.
 
 \subsection{Process}
-Every Flickr and Instagram media object stored in the database comes with a media link that allows accessing the post’s image. 
-These links with the corresponding media\_object\_id’s were iteratively queried and parsed to the Google Cloud Vision API for analysis. The processes that are performed under the hood on the server side of Google lead to the output illustrated in figure \ref{fig:vision_illustration} which consists of text labels with their corresponding confidence score. These values are then stored back into the database under the media\_object\_id the media link belonged to.
+Every Flickr and Instagram media object stored in the database comes with a media link that allows accessing the post's image. 
+These links with the corresponding media\_object\_id's were iteratively queried and parsed to the Google Cloud Vision API for analysis. The processes that are performed under the hood on the server side of Google lead to the output illustrated in figure \ref{fig:vision_illustration} which consists of text labels with their corresponding confidence score. These values are then stored back into the database under the media\_object\_id the media link belonged to.
 
 \begin{figure}[h]
    \centering
@@ -280,19 +280,19 @@ These links with the corresponding media\_object\_id’s were iteratively querie
 The placement of this entire step in relation to the other data- and text-processes is visualised in step 2 of figure \ref{XY}.
 
 \subsection{Query costs} \label{vision_query_cost}
-Google allows the creation of one Google Cloud trial account (needs a valid Credit Card for verification) per user which comes with 300 US Dollars’ worth of credit to one’s disposal. This credit can be used among others to rent virtual machines (VM’s), API’s and other Google Cloud services.\\
+Google allows the creation of one Google Cloud trial account (needs a valid Credit Card for verification) per user which comes with 300 US Dollars' worth of credit to one's disposal. This credit can be used among others to rent virtual machines (VM's), API's and other Google Cloud services.\\
 \newline
-he Google Cloud Vision API can also be paid with that available credit and comes with the following rates: The first 1’000 requests per month are free of charge. The following requests up to 5 million requests per month are charged at \$1.50 per 1’000 requests – this applies specifically to the API specific label detection feature. Therefore, the 300\$ worth of credit would allow the processing of around 201’000 images \parencite{2019GooglePricing}. These rates were in place during the time of writing (January 2019) and will mostly likely vary with time.
+he Google Cloud Vision API can also be paid with that available credit and comes with the following rates: The first 1'000 requests per month are free of charge. The following requests up to 5 million requests per month are charged at \$1.50 per 1'000 requests – this applies specifically to the API specific label detection feature. Therefore, the 300\$ worth of credit would allow the processing of around 201'000 images \parencite{2019GooglePricing}. These rates were in place during the time of writing (January 2019) and will mostly likely vary with time.
 
 \section{Machine Learning for text classification} 
 \subsection{Background}
 To understand how machine learning (ML) functions on text data, one first has to understand how it works on machine readable numerical data.\\
-ML in its core refers to the process of a computer to understand or ‘learn’ the relationships inside a dataset with the help of algorithms to be able to make predictions on data the model has never seen before. The training's data normally consists of different features which identify and characterise a given entry. The constellation of feature-values which can be metaphorical seen as a ‘fingerprint’ of a given data point are the reason why a model can potentially make out patterns and relate them to a certain output. This output can either be a class (in the case of a classification problem) or a continuous number (in the case of a regression problem) of new data point.\\
+ML in its core refers to the process of a computer to understand or 'learn' the relationships inside a dataset with the help of algorithms to be able to make predictions on data the model has never seen before. The training's data normally consists of different features which identify and characterise a given entry. The constellation of feature-values which can be metaphorical seen as a 'fingerprint' of a given data point are the reason why a model can potentially make out patterns and relate them to a certain output. This output can either be a class (in the case of a classification problem) or a continuous number (in the case of a regression problem) of new data point.\\
 \newline
 One simple example of potential features could be different body-measurements of a specific animal with the aim to differentiate between different types of the same species. The training's data would then consist of multiple entries, where most likely a human measured all the needed body parts of several individuals and entered the numerical value in the corresponding feature field.\\
 
-One can differentiate between two general types of ML – supervised and unsupervised learning. To illustrate the difference - imagine a set of training's data where each entry is represented by a point in an n-dimensional space where n corresponds to the number of features present and the coordinates of each point correspond to the feature’s values. If we make the link back to the example above, then unsupervised learning would mean that the training's data consists of only the training's data without any labels. The labels in this case would have been the names of the animal species that the measurements were taken from. In this way the model is forced to find natural breaks / boundaries on its own in the training data by clustering similar data points together and regarding them as an independent class. The hypothesis here is, that points closer to each other in space are more related / similar to one another than distant ones. This model given class name does not correspond in any way to the actual name of the animal, because the model has no information on it what so ever. It is up to the user to appropriately label the clusters / classes the model isolated.
-Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term ‘supervised’ therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training-data set takes time, but it allows for a better performing model and its direct validation. Validation is done by splitting the original training-data set into two parts. Generally, a bigger portion is used for training the model and the other one - which the model has never seen during the fitting phase - is used to assess the model’s performance.\\
+One can differentiate between two general types of ML – supervised and unsupervised learning. To illustrate the difference - imagine a set of training's data where each entry is represented by a point in an n-dimensional space where n corresponds to the number of features present and the coordinates of each point correspond to the feature's values. If we make the link back to the example above, then unsupervised learning would mean that the training's data consists of only the training's data without any labels. The labels in this case would have been the names of the animal species that the measurements were taken from. In this way the model is forced to find natural breaks / boundaries on its own in the training data by clustering similar data points together and regarding them as an independent class. The hypothesis here is, that points closer to each other in space are more related / similar to one another than distant ones. This model given class name does not correspond in any way to the actual name of the animal, because the model has no information on it what so ever. It is up to the user to appropriately label the clusters / classes the model isolated.
+Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term 'supervised' therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training-data set takes time, but it allows for a better performing model and its direct validation. Validation is done by splitting the original training-data set into two parts. Generally, a bigger portion is used for training the model and the other one - which the model has never seen during the fitting phase - is used to assess the model's performance.\\
 \newline
 These terms correspond to two extremes of how the model and its incorporated (boundary-) function is fitted to the provided test-data (see point in figure \ref{XY}). Underfitting describes the state, where the model does not seem to extract and comprehend any logic from the dataset and therefore over-generalises the classification problem at hand (see outer left graph of figure \ref{fig:over_underfitting}). The other extreme is known by the term overfitting where the model tries to correctly classify every single training-data point to its proper class. This results in the model being extremely tuned to the provided training-data but not being able to generalise well on new, unseen data (see outer right graph in figure \ref{fig:over_underfitting}).\\
 Underfitting is more easily detected and corrected than overfitting but more on that topic in chapter \ref{ml_text_data} Machine learning on non-numerical text data.
@@ -308,22 +308,144 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 
 One approach to transform text-based data into machine readable information will be covered in this chapter. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
-In this project the \textit{bag-of-words} representation has been applied \parencite{Joulin2016BagClassification}. This method learns the ‘vocabulary’ of a corpus of documents – in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a ‘fingerprint’. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
+In this project the \textit{bag-of-words} representation has been applied \parencite{Joulin2016BagClassification}. This method learns the 'vocabulary' of a corpus of documents – in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
 
-\paragraph{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} ‘Text-processing’ and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
+\paragraph{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
 
-\paragraph{Vocabulary building} By assessing the individual word tokens of each media object, the ‘bag-of-words’ constructor assembles a vocabulary of unique tokens found in the corpus. This ‘vocabulary’ so to speak appears in the shape of an alphabetic ordered array where each column represents a word token. These columns are from now on referred to as a (model) features.
+\paragraph{Vocabulary building} By assessing the individual word tokens of each media object, the 'bag-of-words' constructor assembles a vocabulary of unique tokens found in the corpus. This 'vocabulary' so to speak appears in the shape of an alphabetic ordered array where each column represents a word token. These columns are from now on referred to as a (model) features.
 
-\paragraph{Encoding} The previously build vocabulary array is iterated through and compared to the word tokens found in the final text string of each media object for which a ‘fingerprint’-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. This results in a number sequence linked to a given media object on which the model is later trained.
+\paragraph{Encoding} The previously build vocabulary array is iterated through and compared to the word tokens found in the final text string of each media object for which a 'fingerprint'-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. This results in a number sequence linked to a given media object on which the model is later trained.
 
 \begin{figure}[h]
    \centering
    \includegraphics[width=0.5\textwidth, left]{img/ML_text_data_visualization.eps}
-   \caption{}
+   \caption{Visualisation of the core machine learning workflow applied in this thesis}
    \label{fig:ml_visualisation}
 \end{figure}
 
-\subsection{Recreation-types}
+\subsection{Recreation-types} \label{recreation_types}
+The decision, which NBRA's the model should capture was built upon and influenced by the 'Recreation types Guidebook' of the Institute of Technology Rapperswil \parencite{IFL2018LeitfadenNaherholungsgebieten}. The following seven distinct classes were chosen for the model to be trained on.\\
+\newline
+By examining these classes, it seems that some classes are rather similar to one another and others are more specific. This observation is indeed true, and one can argue about its effectiveness and the degree of overlapping. Consider how people would differentiate between e.g. walking, running and hiking? Also, for some people, walking through a forest is already considered hiking, while for others it is still considered going for a walk. Normally, NBRA's can be easily identified by their needed equipment. Not so much by the three mentioned NBRA's compared to others, like horse riding where you notably need a horse.\\
+Nevertheless, the classes 1-3 make up the clear majority of them all. 77\% of the entire manually verified training's data, used to fit the model, was classified as one of them. This clearly shows the importance of these NBRA's as well as their spatial and temporal distinction which corresponds to the perception of the authors of the 'Recreation types guidebook' \parencite{IFL2018LeitfadenNaherholungsgebieten}.
+Additionally, a class 'None' is also implemented, which describes a media object which is not related to nature recreation and therefore is not an entity of any of the above listed NBRA's.\\
+\newline
+If one is familiar with all the classes in the mentioned recreation types guidebook cited above, then the absence of the NBRA 'Swimming/Bathing' would become apparent and questionable. The reasoning behind the exclusion of said class is based on the Instagram-data acquisition period from the 30.09.2018 till the 11.12.2018. During this time little training's data was available on outdoor swimming due to the low lake temperatures. Additionally, the spatial occurrence of people swimming is less diverse and corresponds to certain, well known locations. Considering these circumstances and the additional needed effort, the decision against including 'swimming' as an independent class was made.
+
+\subsection{Acquisition and preparation of the training- and test dataset} \label{preparation_training_data}
+Due to a limited amount of available Instagram and Flickr data of the research area and the entire canton of Zug respectively, it was certain that not enough training-data for each of the recreations-types was available without training and testing the model on the identical data. Therefore, a larger additional Instagram dataset was drawn upon, which originated from a forest recreation assessment of the University of Zurich (\cite{forest recreation assessment}). The dataset consisted of ten locations in Switzerland which differed in topography, local language spoken and demographical factors. The locations were the following: Aarau, Arosa, Ebmatingen, LocarnoNord, Neuchatel, Ovronnaz, Schanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018.
+Ten merge files for every location were created to firstly eliminate any duplicate media objects and secondly to add the location name as an additional column to the data rows for easier database filtering later on.\\
+\newline
+After considering the different topographic attributes, the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training-data due to their similarity to the research area and to the overall canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 / 68'522 post data-processing respectively. (include graph of dominant user, bulk threshold) Attentive readers will have noticed, that the resulting ML model will be purely based on Instagram data, even though Flickr data will be predicted with it later on also. This observation is correct and can be legitimated with the assumption, that user generated text does not differ to heavily between different social media platforms.\\
+\newline
+The next step encompassed the coarse identification of potential training's data for the seven given NBRA's. This was done with tailored SQL queries to the database (see appendix) containing case insensitive regular expressions in the form of 
+\[processed\_text \sim * (\backslash s | \wedge)KEYWORD(\backslash s | \$)\] with potential keywords that are likely to resemble a media object of interest of a certain class. The keywords needed to be run through the same text-processing algorithm, the way every media object in the database did, to allow successful matching. Media objects that were selected through this process were labelled according to the matching NBRA by changing the classification column in the corresponding row in the database. The order in which these NBRAs were queried impacted the amount of entities a given class would have after the entire set was classified. This is given by the fact, that certain media objects fit the criteria of multiple queries. Therefore, an already classified media object could be reclassified by a later query. The order in which the queries were eventually executed corresponds to the order in the table below (see table \ref{tab:trainingsdata}) which correlated to the number of total matches through the query. The idea behind this approach was to reduce reclassification of media objects, that belonged to an already weakly represented NBRA such as 'horse riding' or 'dog walking'. Simultaneously, this would help even out the number of training-data per classification which is sought-after for the later following ML training's process. It has to be noted at this point, that any media object, that was not targeted by any of the class specific SQL queries was automatically assumed to be of the class 'None' which resembles media objects that are unrelated to any of the mentioned NBRAs.\\
+These 1'890 coarse pre-determined classifications were in a following step manually verified and adapted if needed. This led to a deduction to a total of 1'499 remaining training's data objects (see \ref{tab:trainingsdata}). No media object with the pre-determined classification of 'None' was manually verified.\\
+\newline
+One issue that became apparent during the manual verification procedure was the problem of consistent class-definitions, especially for classes that were closely related, such as 'walking' and 'hiking'. As already touched upon further up in my work, people tend to have different interpretations of what hiking and what walking is. Also hiking might sound more adventurous then walking, which could explain an even more interchangeable usage in the field of social media. The following rules were established to differentiate between the three most similar classes, being: hiking, jogging and walking. A violation of these rules would lead to a reclassification during the manual verification process.\\
+\newline
+\begin{enumerate}
+    \item Mentioned equipment: If equipment related keywords are present that give a strong incentive towards one class over the rest. E.g. 'backpack' for hiking.
+    \item Mentioned adjectives, adverbs: It is assumed, that these NBRAs can be allocated on an axis that goes from relaxing to adventurous. Walking being on the far left, followed by jogging and hiking on the far-right side corresponding to adventurous. If adjectives or adverbs are used, that allow the allocation of a media object on this axis, then the closest most fitting class is chosen.
+    \item Basic human context interpretation: If a media object is clearly incorrectly classified according to the (author of this thesis) human interpretation of the text then a reclassification can be performed.
+\end{enumerate}
+
+The baseline is, that the model is trained to capture the personal interpretation of the media object author of what he/she thinks the present NBRA is. Therefore, if no certain manual distinction between classes can be made, then the used verb decides the class. E.g.:\\
+'We went for a walk on Uetliberg' $\to$ walking \\
+'I went hiking on Uetliberg' $\to$ hiking\\
+
+\begin{table}[ht]
+\begin{center}
+\caption{Training's data purification process}\vspace{1ex}
+\label{tab:trainingsdata}
+\begin{tabular}{llccc}\hline
+NBRA & SQL query matches* & Classifications** & After manual verification \\ \hline
+Walking & 549 & 485 & 333 \\
+Hiking & 465 & 428 & 306 \\
+Jogging & 377 & 358 & 208 \\
+Picnic & 339 & 335 & 51 \\
+Biking & 169 & 164 & 72 \\
+Dog walking & 74 & 74 & 63 \\
+Horse riding & 46 & 46 & 13 \\
+None & - & 279'285 & 279'490 \\ \hline
+\end{tabular}
+\newline
+*see Appendix **can get overwritten by other SQL queries
+\end{center}
+\end{table}
+
+\subsection{Issue of expired Instagram media links} \label{expired_media_links}
+Every media object acquired by Instagram or any similar third-party API contains a media links which points towards the actual Instagram post with the corresponding image, video or Instagram story. According to a \textit{Stackoverflow} post \parencite{Wayne2018ExperiedLinks}, contain all these generated Instagram media links a time-stamp component which functions as an expiration date upon which the links become invalid. At the time of writing, the training-data set dates back more then one year and all the links already turned invalid.\\
+\newline
+The links to the full Instagram media object (see chapter \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
+
+\subsection{Machine learning model} \label{ml_model}
+The following subchapters encompass the entire pipeline of functions that were used for building the final model. Scores for evaluation ML model performance are also introduced which are referenced again in the results when discussing model performance. The entire implementation with the corresponding code can be viewed in the Appendix \ref{XY}.
+
+\subsubsection{Considered algorithms} \label{ml_algorithms}
+The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{XY}.
+
+\paragraph{Linear support vector machines (SVMs)}
+A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data. \\
+For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the plane. The fact that only a small portion of the entire vector set is used for the training of the model - namely the support vectors which were name giving for the algorithm - the processing costs are reduced tremendously.
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[width=0.5\textwidth, left]{img/Svm_separating_hyperplanes.eps}
+   \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
+   \label{fig:SVM_visualisation}
+\end{figure}
+
+\paragraph{Decision Tree algorithm}
+Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data the further down in the tree they wander. The determination of the node’s operation and their position inside the tree is seen as the fitting / training of the model.\\
+One specific variation of the generic decision tree – which has been tested for this project - is the so-called random forest. It creates a defined amount of individual decision trees which are trained on different random test and train splits of the training's dataset - which comes close to performing a cross-validation. At the end these trees are logically merged where among others deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training's data while reducing the trend to overfitting.\\
+Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's data. This can be countered by limiting the maximal depth of the tree. This process is called pre-pruning (see also chapter \ref{XY} model tuning).
+
+\subsection{Model setup} \label{model_setup}
+In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the scikit-learn library v.0.20.2. This library allowed pipelining (see figure \ref{XY}- pycharm screenshot) which consisted of the following steps:
+
+\begin{enumerate}
+    \item \textbf{TfidfVectorizer} Converts a collection of raw documents (media objects) to a matrix of TF-IDF features which stands for the frequency over the inverse document frequency of a given (word-) token. This function is equivalent to applying 'CountVectorizer' followed by 'TfidfTransformer' \parencite{2018Scikit-learnExtraction}.\\
+    This step is visualised in figure \ref{fig:ml_visualisation} under step 5 and 6.\\
+    Tuned hyper-parameters:
+    \begin{itemize}
+        \item \textbf{Min_df} This parameter stands for the minimal required document frequency of a word token in the entire corpus to be included for further processing.
+        \item \textbf{Ngram_range} This parameter defines how word tokens are interpreted by the model. Given a minimal and a maximal token number the function is able to create new features by concatenating tokens that appear in succession. This enables the extraction of semantic meaning that would stay unseen if only individual token were considered.
+    \end{itemize}
+    
+    \item \textbf{SelectKBest} This function allows for a further selection of the features generated by the vectorizer. Score functions such as ANOVA F-value and Chi-squared allow the selection of the most deterministic features in the set. Limiting the number of features can help to prevent model overfitting and can increase model generalisation.\\
+    Tuned hyper-parameters:
+    \begin{itemize}
+        \item \textbf{k} Defines the number of features with the highest score that are accepted.
+    \end{itemize}
+    
+    \item \textbf{ML algorithm} \textit{LinearSVC} ('Support vector classifier') and random forest classifiers (see chapter \ref{ml_algorithms}) were used to find the most well-rounded model.\\
+    Tuned hyper-parameters:
+    \begin{itemize}
+        \item \textbf{LinearSVC__C} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training's point. Reducing this parameter allows more generalisation and counteracts to overfitting, increasing the parameter increases model trainings-accuracy (see figure \ref{fig:over_underfitting}).
+        
+        \item \textbf{LinearSVC__Penalty} This function introduces a regularisation penalty to prevent overfitting by minimising the data term as well as the regularisation. There are two commonly used L\textsubscript{p}-norms:
+        \begin{itemize}
+            \item \textbf{L1} Favours sparse parameter vectors which helps to identify important features.
+            \item \textbf{L2} Forces parameter vectors to be close to zero.
+        \end{itemize}
+        
+        \item \textbf{randomForest__n_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the trainings-data captured. The downside is the computational cost increase.
+        
+        \item \textbf{randomForest__max_depth} Defines the how many levels the created decision trees are allowed to have.
+    \end{itemize}
+    
+    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyper-parameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{XY} and the one for the linearSVC algorithm in figure \ref{XY}.
+    \newline
+    \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
+    \newline
+    
+\end{enumerate}
+
+
+
+
+
 
 
 
