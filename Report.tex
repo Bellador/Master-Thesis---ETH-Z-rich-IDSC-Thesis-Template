@@ -20,9 +20,9 @@
 								 % {german}/english: language of headings, etc.
 								 % {st}/bt/mt: {semester}/bachelor/master thesis
 
-\usepackage[backend=biber,style=alphabetic,citestyle=authoryear-comp]{biblatex}
+\usepackage[backend=biber, citestyle=authoryear-comp,sortcites=true,block=none ,indexing=false, citereset=none,isbn=true,url=true,doi=false ,natbib=true]{biblatex}
 
-\addbibresource{references.bib}
+\addbibresource{myCollection.bib}
 							
 % Page header (don't change)____________________________________________________
 \setlength{\parindent}{0em}                 % Disable parindent
@@ -45,7 +45,7 @@
 %\semesterB{9}
 %\emailB{second@student.ethz.ch}
 
-\supervision{Dr. Marcel Hunziker (ETH and WSL)\\ Dr. Flurina Wartmann (WSL)\\ Prof. Dr. Ross Purves (UZH)\\ Dr. Rahul Deb Das (UZH)}https://www.overleaf.com/project/5c17b723cc8ebc7442acf754
+%\supervision{Dr. Marcel Hunziker (ETH and WSL)\\ Dr. Flurina Wartmann (WSL)\\ Prof. Dr. Ross Purves (UZH)\\ Dr. Rahul Deb Das (UZH)}
 \date{April 2019}
 
 %\identification{IDSC-XX-YY-ZZ} 		% Project identifier
@@ -89,8 +89,6 @@
 
 % Bibliography__________________________________________________________________
 % Literature (Additional references can be added to the .bib-file manually, or by using, for example, the free application JabRef). Compile in the following order: latex -bibtex -latex -latex
-
-%\bibliographystyle{plain}
-%\bibliography{references}
+\bibliographystyle{plain}
 \printbibliography
 \end{document}
