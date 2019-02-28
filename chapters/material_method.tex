@@ -6,7 +6,7 @@ There is no perimeter concordance due to varying constraints in the data acquisi
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.75\textwidth]{img/overview_research_area_w_Lorzenebene.eps}
+   \includegraphics[width=0.75\textwidth]{img/overview_research_area_w_Lorzenebene}
    \caption{Overview over the data acquisition perimeters}
    \label{fig:research_area}
 \end{figure}
@@ -140,7 +140,7 @@ The exact structure and table specific content of the database is visible in fig
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.75\textwidth]{img/fusion_db_overview.eps}
+   \includegraphics[width=0.75\textwidth]{img/fusion_db_overview}
    \caption{Visualisation of the database, its associated tables and columns}
    \label{fig:database}
 \end{figure}
@@ -272,7 +272,7 @@ These links with the corresponding media\_object\_id's were iteratively queried 
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.75\textwidth]{img/vision_illustration.eps}
+   \includegraphics[width=0.75\textwidth]{img/vision_illustration}
    \caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API \parencite{2015ImageBiker}}
    \label{fig:vision_illustration}
 \end{figure}
@@ -299,7 +299,7 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.75\textwidth]{img/over_underfitting.eps}
+   \includegraphics[width=0.75\textwidth]{img/over_underfitting}
    \caption{Visualisation of under- and overfitting on a dataset. Altered image by author from\parencite{Bhande2018WhatIt.}}
    \label{fig:over_underfitting}
 \end{figure}
@@ -318,7 +318,7 @@ In this project the \textit{bag-of-words} representation has been applied \paren
 
 \begin{figure}[h]
    \centering
-   %\includegraphics[width=0.5\textwidth]{img/ML_text_data_visualization.eps}
+   \includegraphics[width=0.5\textwidth]{img/ML_text_data_visualization}
    \caption{Visualisation of the core machine learning workflow applied in this thesis}
    \label{fig:ml_visualisation}
 \end{figure}
@@ -380,7 +380,7 @@ Every media object acquired by Instagram or any similar third-party API contains
 The links to the full Instagram media object (see chapter \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
 
 \subsection{Machine learning model} \label{ml_model}
-The following subchapters encompass the entire pipeline of functions that were used for building the final model. Scores for evaluation ML model performance are also introduced which are referenced again in the results when discussing model performance. The entire implementation with the corresponding code can be viewed in the Appendix \ref{XY}.
+The following subchapters encompass the entire pipeline of functions that were used for building two kinds of models. Scores for evaluation ML model performance are also introduced which are referenced again in the results when discussing model performance. The entire implementation with the corresponding code can be viewed in the Appendix \ref{XY}.
 
 \subsubsection{Considered algorithms} \label{ml_algorithms}
 The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{XY}.
@@ -391,7 +391,7 @@ For the calculation of the mentioned hyperplane are only the marginal vectors of
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.5\textwidth, left]{img/Svm_separating_hyperplanes.eps}
+   \includegraphics[width=0.5\textwidth]{img/Svm_separating_hyperplanes}
    \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
    \label{fig:SVM_visualisation}
 \end{figure}
@@ -430,34 +430,35 @@ In addition to the previously mentioned data and text-processing some extra func
             \item \textbf{L2} Forces parameter vectors to be close to zero.
         \end{itemize}
         
-        \item \textbf{randomForest__n_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the trainings-data captured. The downside is the computational cost increase.
+        \item \textbf{randomForest\_\_n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the training's data captured. The downside is the computational cost increase.
         
-        \item \textbf{randomForest__max_depth} Defines the how many levels the created decision trees are allowed to have.
-    \end{itemize}
+        \item \textbf{randomForest\_\_max\_depth} Defines the how many levels the created decision trees are allowed to have.
+        \end{itemize}
     
     \item \textbf{GridSearchCV} This function allows the systematic testing of different hyper-parameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{XY} and the one for the linearSVC algorithm in figure \ref{XY}.
-    \newline
-    \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
-    \newline
-    \begin{figure}[h]
-       \centering
-       \includegraphics[width=0.5\textwidth, left]{img/linearSVC_hyperparameters.eps}
-       \caption{Tuned hyperparameters of the linearSVC fitting algorithm}
-       \label{fig:linearSVC_hyperparameters}
-    \end{figure}
-    \begin{figure}[h]
-       \centering
-       \includegraphics[width=0.5\textwidth, left]{img/randomForest_hyperparameters.eps}
+\end{enumerate}
+
+\texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
+
+\begin{figure}[h]
+      \centering
+      \includegraphics[width=0.5\textwidth]{img/linearSVC_hyperparameters}
+      \caption{Tuned hyperparameters of the linearSVC fitting algorithm}
+      \label{fig:linearSVC_hyperparameters}
+\end{figure}
+\begin{figure}[h]
+     \centering
+       \includegraphics[width=0.5\textwidth]{img/randomForest_hyperparameters}
        \caption{Tuned hyperparameters of the randomForest fitting algorithm}
        \label{fig:randomForest_hyperparameters}
     \end{figure}
-\end{enumerate}
+
 
 \subsection{ML evaluation scores} \label{ml_evaluation_scores}
 There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
 \begin{figure}[h]
        \centering
-       \includegraphics[width=0.5\textwidth, left]{img/Confusion_matrix_edited.eps}
+       \includegraphics[width=0.5\textwidth, left]{img/Confusion_matrix_edited}
        \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 ≤ k ≤ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018ActivityModels}}
        \label{fig:confusion_matrix_illustration}
 \end{figure}
@@ -480,7 +481,7 @@ The last and most nature-near location was the adventure playground 'Schattenw\"
 
 \begin{figure}[h]
        \centering
-       \includegraphics[width=0.5\textwidth, left]{img/interviews_locations.eps}
+       \includegraphics[width=0.5\textwidth, left]{img/interviews_locations}
        \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were held. Image \copyright Google, map-data 2019}
        \label{fig:locations_ground_truthing}
 \end{figure}
