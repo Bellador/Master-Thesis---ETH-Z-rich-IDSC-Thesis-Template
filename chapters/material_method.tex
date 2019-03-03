@@ -300,7 +300,7 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 \begin{figure}[h]
    \centering
    \includegraphics[width=0.75\textwidth]{img/over_underfitting}
-   \caption{Visualisation of under- and overfitting on a dataset. Altered image by author from\parencite{Bhande2018}}
+   \caption{Visualisation of under- and overfitting on a dataset. \textit{Image source:} \parencite{Bhande2018} altered by author}
    \label{fig:over_underfitting}
 \end{figure}
 
@@ -394,15 +394,17 @@ Scores for evaluating ML model performance are also introduced which are referen
 The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{results_models}.
 
 \paragraph{Linear support vector machines (SVMs)}
-A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data. 
+A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data.
+
 \begin{wrapfigure}{l}{0.5\textwidth} %0.3 and 0.28
-  \vspace{-0.5cm}
+  %\vspace{-0.5cm}
   %\begin{center}
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/Svm_separating_hyperplanes}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
-  \label{fig:ml_visualisation}
+  \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}. \textit{Image source:} \parencite{Wikipedia}}
+  \label{fig:SVM_visualisation}
+\vspace{-0.5cm}
 \end{wrapfigure}
 
 For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the plane. The fact that only a small portion of the entire vector set is used for the training of the model - namely the support vectors which were name giving for the algorithm - the processing costs are reduced tremendously.
@@ -473,13 +475,17 @@ randomforest_parameters = {
 
 \subsection{ML evaluation scores} \label{ml_evaluation_scores}
 There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
-\begin{figure}[h]
-       \centering
-       \includegraphics[width=0.5\textwidth]{img/Confusion_matrix_edited}
-       \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018}}
-       \label{fig:confusion_matrix_illustration}
-\end{figure}
-    
+
+\begin{wrapfigure}{l}{0.5\textwidth} %0.3 and 0.28
+  %\vspace{-0.5cm}
+  %\begin{center}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.5\textwidth]{img/Confusion_matrix_edited}}
+%if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
+  %\end{center}
+  \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018}}
+  \label{fig:confusion_matrix_illustration}
+\end{wrapfigure}
+
 Measurements that were calculated (Abbreviations explained in the legend of figure \ref{fig:confusion_matrix_illustration}):
 \[Overall Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
 \[Overall Precision = \frac{TP}{(TP+FP)}\]
@@ -490,16 +496,21 @@ Measurements that were calculated (Abbreviations explained in the legend of figu
 \subsection{Ground truthing} \label{groud_truthing}
 Interviews and passive observations of NBRAs were held to gain insight on how well the social media data approximates to actual visitation rates and NBRA behaviour. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
 \subsubsection{Locations for ground truth data acquisition} \label{locations_ground_truthing_data}
-Three locations (see figure \ref{XY}) with different degrees of urbanisation were chosen which resemble hotspots for NBRAs covered in this thesis. The location to the far left is called 'Br\"uggli' - right next to the camping ground - which is a hotspot for jogging, biking, (dog-) walking and in summer also for picnicking. It lies inside the perimeter of the concept 'Lorzenebene' (plain of the river Lorze) and is close to the 'Delta' wildlife sanctuary which allows for various activities along the lake for relaxation.\\
+
+\begin{wrapfigure}{l}{0.4\textwidth} %0.3 and 0.28
+  %\vspace{-0.5cm}
+  %\begin{center}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.39\textwidth]{img/interviews_locations}}
+%if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
+  %\end{center}
+  \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were held. Image \copyright Google, map-data 2019}
+  \label{fig:locations_ground_truthing}
+%\vspace{-0.5cm}
+\end{wrapfigure}
+
+Three locations (see figure \ref{locations_ground_truthing_data}) with different degrees of urbanisation were chosen which resemble hotspots for NBRAs covered in this thesis. The location to the far left is called 'Br\"uggli' - right next to the camping ground - which is a hotspot for jogging, biking, (dog-) walking and in summer also for picnicking. It lies inside the perimeter of the concept 'Lorzenebene' (plain of the river Lorze) and is close to the 'Delta' wildlife sanctuary which allows for various activities along the lake for relaxation.\\
 The second location includes the 'R\"ossliwiese' which is a meadow located close to the city centre at the lake side. There people like to relax, go for short walks (with their dog) - often for lunch, after they are done shopping or in the evening due to its closeness to the residential area.\\
 The last and most nature-near location was the adventure playground 'Schattenw\"aldli' on the Zugerberg. It appeals to various groups of people due to its wide spectrum of activities the environment allows. Young families with kids are the most dominant visitor group due to the playground and the possibility to have a picnic. But also, people hiking, walking (their dog) and mountain-bikers can be frequently encountered there.
-
-\begin{figure}[h]
-       \centering
-       \includegraphics[width=0.5\textwidth, left]{img/interviews_locations}
-       \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were held. Image \copyright Google, map-data 2019}
-       \label{fig:locations_ground_truthing}
-\end{figure}
 
 \subsubsection{Passive observation setup} \label{passive_observation_setup}
 The passive observation encompassed the recording of the NBRAs of interest performed by people that passed through the location during the same time the interviews were held. More specific the group size, the approximate average group age, the NBRA and the time were captured. The term 'passive' implies that no direct interaction with the recorded people occurred - therefore the data is entirely based on perception.
