@@ -19,9 +19,17 @@
 \usepackage[english,mt]{ethidsc} % Special IDSC styles and commands      	
 								 % {german}/english: language of headings, etc.
 								 % {st}/bt/mt: {semester}/bachelor/master thesis
-
+% for image positioning
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+% defining the bibliography settings
 \usepackage[backend=biber, citestyle=authoryear]{biblatex}
 \addbibresource{library.bib}
+% placing figures next to each other with subfigures
+\usepackage{subcaption}
+% for displaying code snipplets
+\usepackage{listings}
 							
 % Page header (don't change)____________________________________________________
 \setlength{\parindent}{0em}                 % Disable parindent

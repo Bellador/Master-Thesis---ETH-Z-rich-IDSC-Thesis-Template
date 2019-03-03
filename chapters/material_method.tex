@@ -304,7 +304,19 @@ Underfitting is more easily detected and corrected than overfitting but more on 
    \label{fig:over_underfitting}
 \end{figure}
 
+\vspace{1cm}
+
 \subsection{Machine learning on non-numerical text data} \label{ml_text_data}
+
+\begin{wrapfigure}{l}{0.3\textwidth} %0.3 and 0.28
+  \vspace{-0.5cm}
+  %\begin{center}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/ML_visualisation.pdf}}
+%if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
+  %\end{center}
+  \caption{Core ML workflow}
+  \label{fig:ml_visualisation}
+\end{wrapfigure}
 
 One approach to transform text-based data into machine readable information will be covered in this chapter. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
@@ -316,12 +328,7 @@ In this project the \textit{bag-of-words} representation has been applied \paren
 
 \paragraph{Encoding} The previously build vocabulary array is iterated through and compared to the word tokens found in the final text string of each media object for which a 'fingerprint'-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. This results in a number sequence linked to a given media object on which the model is later trained.
 
-\begin{figure}[h]
-   \centering
-   \includegraphics[width=0.5\textwidth]{img/ML_text_data_visualization}
-   \caption{Visualisation of the core machine learning workflow applied in this thesis}
-   \label{fig:ml_visualisation}
-\end{figure}
+\vspace{2cm}
 
 \subsection{Recreation-types} \label{recreation_types}
 The decision, which NBRA's the model should capture was built upon and influenced by the 'Recreation types Guidebook' of the Institute of Technology Rapperswil \parencite{IFL2018}. The following seven distinct classes were chosen for the model to be trained on.\\
@@ -380,26 +387,32 @@ Every media object acquired by Instagram or any similar third-party API contains
 The links to the full Instagram media object (see chapter \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
 
 \subsection{Machine learning model} \label{ml_model}
-The following subchapters encompass the entire pipeline of functions that were used for building two kinds of models. Scores for evaluation ML model performance are also introduced which are referenced again in the results when discussing model performance. The entire implementation with the corresponding code can be viewed in the Appendix \ref{XY}.
+The following subchapters encompass the entire pipeline of functions that were used to build \textbf{two kinds of models}. These models should provide inside on the effect of combining text and image content data regarding model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned form the \textit{Google Cloud Vision API}. Besides that, the models were setup, trained, tuned and implemented in exactly the same fashion.\\
+Scores for evaluating ML model performance are also introduced which are referenced again in the results \ref{XY}. The entire implementation of the subsequent steps with the corresponding code and comments can be viewed in the Appendix \ref{python_code}.
 
 \subsubsection{Considered algorithms} \label{ml_algorithms}
-The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{XY}.
+The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{results_models}.
 
 \paragraph{Linear support vector machines (SVMs)}
-A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data. \\
-For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the plane. The fact that only a small portion of the entire vector set is used for the training of the model - namely the support vectors which were name giving for the algorithm - the processing costs are reduced tremendously.
+A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data. 
+\begin{wrapfigure}{l}{0.5\textwidth} %0.3 and 0.28
+  \vspace{-0.5cm}
+  %\begin{center}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/Svm_separating_hyperplanes}}
+%if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
+  %\end{center}
+  \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
+  \label{fig:ml_visualisation}
+\end{wrapfigure}
 
-\begin{figure}[h]
-   \centering
-   \includegraphics[width=0.5\textwidth]{img/Svm_separating_hyperplanes}
-   \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
-   \label{fig:SVM_visualisation}
-\end{figure}
+For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the plane. The fact that only a small portion of the entire vector set is used for the training of the model - namely the support vectors which were name giving for the algorithm - the processing costs are reduced tremendously.
 
 \paragraph{Decision Tree algorithm}
 Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data the further down in the tree they wander. The determination of the node's operation and their position inside the tree is seen as the fitting / training of the model.\\
 One specific variation of the generic decision tree - which has been tested for this project - is the so-called random forest. It creates a defined amount of individual decision trees which are trained on different random test and train splits of the training's dataset - which comes close to performing a cross-validation. At the end these trees are logically merged where among others deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training's data while reducing the trend to overfitting.\\
-Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's data. This can be countered by limiting the maximal depth of the tree. This process is called pre-pruning (see also chapter \ref{XY} model tuning).
+Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's data. This can be countered by limiting the maximal depth of the tree. This process is called pre-pruning (see also chapter \ref{XY} model tuning).\\
+\newline
+ The book from \parencite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see chapter \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be significantly faster than the one of the linear support vector classifier model (in this thesis roughly 20\% faster). 
 
 \subsection{Model setup} \label{model_setup}
 In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the scikit-learn library v.0.20.2. This library allowed pipelining (see figure \ref{XY}- pycharm screenshot) which consisted of the following steps:
@@ -438,39 +451,41 @@ In addition to the previously mentioned data and text-processing some extra func
     \item \textbf{GridSearchCV} This function allows the systematic testing of different hyper-parameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{XY} and the one for the linearSVC algorithm in figure \ref{XY}.
 \end{enumerate}
 
+\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the linearSVC fitting algorithm]
+linear_svc_parameters = {
+                    'vect__min_df': [7, 8, 9, 10, 11, 12, 13],
+                    'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],
+                    'chi__k': ['all'],
+                    'clf__C': [0.001, 0.1, 1, 10, 100]
+                }
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the randomForest fitting algorithm]
+randomforest_parameters = {
+                    'vect__min_df': [9, 10, 11, 12, 13, 14],
+                    'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],
+                    'chi__k': ['all'],
+                    'clf__max_depth': [5, 6, 7, 8, 9, 10, 11, 12, 13, None]
+                }
+\end{lstlisting}
+
 \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
-
-\begin{figure}[h]
-      \centering
-      \includegraphics[width=0.5\textwidth]{img/linearSVC_hyperparameters}
-      \caption{Tuned hyperparameters of the linearSVC fitting algorithm}
-      \label{fig:linearSVC_hyperparameters}
-\end{figure}
-\begin{figure}[h]
-     \centering
-       \includegraphics[width=0.5\textwidth]{img/randomForest_hyperparameters}
-       \caption{Tuned hyperparameters of the randomForest fitting algorithm}
-       \label{fig:randomForest_hyperparameters}
-    \end{figure}
-
 
 \subsection{ML evaluation scores} \label{ml_evaluation_scores}
 There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
 \begin{figure}[h]
        \centering
-       \includegraphics[width=0.5\textwidth, left]{img/Confusion_matrix_edited}
-       \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 ≤ k ≤ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018ActivityModels}}
+       \includegraphics[width=0.5\textwidth]{img/Confusion_matrix_edited}
+       \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018}}
        \label{fig:confusion_matrix_illustration}
 \end{figure}
     
-Measurements that were calculated (Abbreviations visible in legend of figure \ref{fig:confusion_matrix_illustration}):
-\begin{itemize}
-    \item \[Overall Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
-    \item \[Overall Precision = \frac{TP}{(TP+FP)}\]
-    \item \[Overall Recall = \frac{(TP)}{(\frac{TP}{FN})}\]
-    \item \textbf{F1-Score} Summarising Precision and Recall in one measurement.\\ 
-    \[F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
-\end{itemize}
+Measurements that were calculated (Abbreviations explained in the legend of figure \ref{fig:confusion_matrix_illustration}):
+\[Overall Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
+\[Overall Precision = \frac{TP}{(TP+FP)}\]
+\[Overall Recall = \frac{(TP)}{(\frac{TP}{FN})}\]
+\textbf{F1-Score} Summarising Precision and Recall in one measurement.\\ 
+\[F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
 
 \subsection{Ground truthing} \label{groud_truthing}
 Interviews and passive observations of NBRAs were held to gain insight on how well the social media data approximates to actual visitation rates and NBRA behaviour. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
