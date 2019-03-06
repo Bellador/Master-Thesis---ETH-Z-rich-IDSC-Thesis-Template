@@ -487,11 +487,15 @@ There are different measurements to evaluate a ML model. All of them can be extr
 \end{wrapfigure}
 
 Measurements that were calculated (Abbreviations explained in the legend of figure \ref{fig:confusion_matrix_illustration}):
-\[Overall Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
-\[Overall Precision = \frac{TP}{(TP+FP)}\]
-\[Overall Recall = \frac{(TP)}{(\frac{TP}{FN})}\]
-\textbf{F1-Score} Summarising Precision and Recall in one measurement.\\ 
-\[F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}\]
+
+\begin{gather*}
+Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\\
+Precision = \frac{TP}{(TP+FP)}\\
+Recall = \frac{(TP)}{(\frac{TP}{FN})}\\
+F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}
+\end{gather*}
+
+\textit{F1-Score: Summarising Precision and Recall in one measurement.}
 
 \subsection{Ground truthing} \label{groud_truthing}
 Interviews and passive observations of NBRAs were held to gain insight on how well the social media data approximates to actual visitation rates and NBRA behaviour. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
@@ -534,7 +538,7 @@ The first one being \textbf{location} related:
     \item \textbf{Activity} Which NBRA is most frequently practiced by the person in this location?
     \item \textbf{Frequency} How often does the person visit the location? (In the case of the Zugerberg, it was also asked what the destination of the trip was.)
 \end{itemize}
-\newline
+
 The second one was related to \textbf{social media}:
 \begin{itemize}
     \item \textbf{Member} Do they own an account on any social media platform and if yes on which?

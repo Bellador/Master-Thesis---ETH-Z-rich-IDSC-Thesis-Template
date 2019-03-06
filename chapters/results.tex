@@ -34,8 +34,8 @@ Similar graphs to figure \ref{img:dominant_users_flickr} were created for all th
 \end{figure}
 
 \section{Models} \label{results_models}
-The following subsections will cover the  performance results of each of the two created models (see chapter \ref{ml_model} that were solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table:\\ \texttt{media\_objects\_trainingdata\_instagram} (see figure \ref{database_setup}). For each model the random forest classifier and the linearSVC fitting algorithm was independently tested. The hyperparameters were tuned to yield the best possible average F1-score over all classes excluding the None-class. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also tested. These values ranged from 500 to 6’500 with steps of 500.\\
-These models were then used to predict the NBRAs contained in the media objects contained in the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr} from the Canton Zug.\\
+The following subsections will cover the  performance results of each of the two created models (see chapter \ref{ml_model} that were solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table:\\ \texttt{media\_objects\_trainingdata\_instagram} (see figure \ref{database_setup}). For each model the random forest classifier and the linearSVC fitting algorithm was independently tested. The hyperparameters were tuned to yield the best possible average F1-score over all classes excluding the None-class. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
+These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr} from the Canton Zug.\\
 Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.
 
 \subsection{Model 1: untrained on image labels}
@@ -155,7 +155,7 @@ Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without none clas
 \subsection{Model comparison}
 In the following subsections, the above presented models will be thoroughly compared in terms of classification specific performance and hyperparameter behaviour. 
 
-\subsubsection{Hyperparameter constellation}
+\subsubsection{Hyperparameter interaction}
 The effect of different ngram\_range settings in combination with varying C values is illustrated in figure \ref{fig:heatmaps} for M1 and M2 respectively. The red circles indicates the highest F1-score present which corresponds to the best hyperparameter setting of the respective model (see table \ref{tab:m2_linearSVC_bestParams}). It becomes apparent, that the (2, 2) ngram\_range as well as the C value 0.01 underperform across the board. The F1-scores in the heatmaps are not completely identical to the values found in the corresponding model performance tables \ref{tab:m1_linearSVC_bestscores} and \ref{tab:m2_linearSVC_bestscores}. This variation is due to randomisation effects of the none-object selection from the database as well as from the model train and test splits (this is partly taken care of by cross-validation).\\
 
 \begin{figure}[ht]
@@ -202,9 +202,110 @@ M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 \\ \hline
 \end{table}
 
 \subsubsection{Precision on unseen data}
+This section will present the results of the model performance on new data. All Instagram and Flickr media objects of the Canton of Zug on which these results are based were excluded from the M1 and M2 model training.\\
+Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview: \ref{database_setup}):
+\texttt{media\_objects\_unionzug\_instagram} \\ \texttt{media\_objects\_cantonzug\_flickr}
 
-\section{spatial distribution of NBRAs}
-XXXinsert maps XXX
+One time the final text-string provided for the prediction was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
+
+The model performance evaluation was done manually by the author. 100 media objects (if available) per class per prediction mode and per model were evaluated for True Positive (TP) or False Positive (FP) predictions. Only the model precision can be calculated with this information. An estimate for the recall over all classes was made based on the share of media objects that were correctly classified (except the none-class) in relation to the total amount of media objects present. In other words, how many media objects that actually contained NBRAs were also identified as such? This information is important because e.g. a model with 95\% precision that only identifies 20\% of media objects with a NBRA is still not practical. This approximation was calculated in the following way:
+
+\begin{equation}
+\label{equation_share_TP}
+\frac{\sum_{class=1}^{7}(precision_{class}  * n^{total}_{class})}{n^{total}_{dataset}} * 100
+\end{equation}
+   
+where the class-specific model precision (\textit{precision}\textsubscript{class}) is based on the evaluation of 100 media objects per class which can be a subset of the total amount of predicted media objects of that class.
+
+\paragraph{Model 1}
+The best M1 accuracy of \textbf{0.764} was recorded for the media objects of the SMP Flickr while the parsed final text-string excluded image labels (see table \ref{tab:m1_actual_accuracy}).\\
+While the M1 accuracy differences between the two SMP's Instagram and Flickr was not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels was significant.  
+\begin{table}[ht]
+\begin{center}
+\caption{M1 NBRA prediction accuracy on unseen data}\vspace{1ex}
+\label{tab:m1_actual_accuracy}
+\begin{tabular}{ccc|c}\hline
+SMP & +image labels & -image labels & \Delta\\ \hline
+Instagram & 0.664 & 0.732 & -0.067\\
+Flickr & 0.634 & 0.764 & -0.13\\
+\hline
+\Delta & 0.03 & -0.032 & \\ 
+\end{tabular}
+\end{center}
+\end{table}
+
+The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both SMPs (see table \ref{tab:m1_actual_recall}).
+In the case of Instagram the incorporation and exclusion of image labels results in a total of \textbf{668} and \textbf{384} NBRA-identifications which corresponds to 5.67\% and 3.26\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
+In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.
+
+\begin{table}[ht]
+\begin{center}
+\caption{\%-share of correctly classified NBRA media objects through M1 (except the none-class) in relation to the entire dataset (according \ref{equation_share_TP})}\vspace{1ex}
+\label{tab:m1_actual_recall}
+\begin{tabular}{ccc|c}\hline
+SMP & +image labels & -image labels & \Delta\\ \hline
+Instagram & 5.67 & 3.26 & 1.74\\
+Flickr & 4.25 & 1.77 & 2.4\\
+\hline
+\Delta & 1.424 & 1.493 & \\ 
+\end{tabular}
+\end{center}
+\end{table}
+
+\paragraph{Model 2}
+The best M2 accuracy of \textbf{0.776} was recorded for the media objects of the SMP Instagram while the parsed final text-string included image labels (see table \ref{tab:m2_actual_accuracy}).\\
+While the M2 accuracy differences between the two SMP's Instagram and Flickr was not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels was significant. 
+
+\begin{table}[ht]
+\begin{center}
+\caption{M2 NBRA prediction accuracy on unseen data}\vspace{1ex}
+\label{tab:m2_actual_accuracy}
+\begin{tabular}{ccc|c}\hline
+SMP & +image labels & -image labels & \Delta\\ \hline
+Instagram & 0.776 &  0.691 & 0.085\\
+Flickr & 0.721 & 0.753 & -0.032\\
+\hline
+\Delta & +0.055 & -0.062 & \\ 
+\end{tabular}
+\end{center}
+\end{table}
+
+The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both SMPs (see table \ref{tab:m2_actual_recall}).
+In the case of Instagram the incorporation and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.029\% and 3.626\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
+In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.989\% and 2.164\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.
+
+\begin{table}[ht]
+\begin{center}
+\caption{\%-share of correctly classified NBRA media objects through M2 (except the none-class) in relation to the entire dataset (according \ref{equation_share_TP})}\vspace{1ex}
+\label{tab:m2_actual_recall}
+\begin{tabular}{ccc|c}\hline
+SMP & +image labels & -image labels & \Delta\\ \hline
+Instagram & 6.029 & 3.626 & 1.663\\
+Flickr & 5.989 & 2.164 & 2.768\\
+\hline
+\Delta & 0.039 & 1.462 & \\ 
+\end{tabular}
+\end{center}
+\end{table}
+
+\paragraph{Summary}
+M1 and M2 showed in both cases the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained.
+The model prediction accuracy was less dependant on the SMP the media objects originated from but more if image labels were parsed or not.
+
+\section{Spatial distribution of NBRAs}
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_NEW_1_w_feature_count.pdf}
+   \label{fig:map_cluster_1}
+\end{figure}
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_NEW_2_w_feature_count.pdf}
+   \caption{Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \label{fig:map_cluster_2}
+\end{figure}
 
 \section{Language distribution in media objects}
 
@@ -214,9 +315,9 @@ XXXinsert maps XXX
 \subsection{Passive observation analysis}
 
 \subsection{Interview analysis}
-\subsubsection{occasion specific visitation motivations}
+\subsubsection{Occasion specific visitation motivations}
 
-\subsubsection{most frequent NBRA’s performed by location}
+\subsubsection{Most frequent NBRAs performed by location}
 
 \subsubsection{Ranking of social media platform usage}
 
