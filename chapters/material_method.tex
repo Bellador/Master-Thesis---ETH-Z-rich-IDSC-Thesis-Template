@@ -307,7 +307,6 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 \vspace{1cm}
 
 \subsection{Machine learning on non-numerical text data} \label{ml_text_data}
-
 \begin{wrapfigure}{l}{0.3\textwidth} %0.3 and 0.28
   \vspace{-0.5cm}
   %\begin{center}
@@ -317,7 +316,6 @@ Underfitting is more easily detected and corrected than overfitting but more on 
   \caption{Core ML workflow}
   \label{fig:ml_visualisation}
 \end{wrapfigure}
-
 One approach to transform text-based data into machine readable information will be covered in this chapter. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
 In this project the \textit{bag-of-words} representation has been applied \parencite{Joulin2016}. This method learns the 'vocabulary' of a corpus of documents - in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
@@ -450,7 +448,7 @@ In addition to the previously mentioned data and text-processing some extra func
         \item \textbf{randomForest max\_depth} Defines the how many levels the created decision trees are allowed to have.
     \end{itemize}
     
-    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{\ref{code:randomForest_parameters}} and the one for the linearSVC algorithm in figure \ref{code:linear_svc_parameters}.
+    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{code:randomForest_parameters} and the one for the linearSVC algorithm in figure \ref{code:linear_svc_parameters}.
 \end{enumerate}
 
 \begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the randomForest fitting algorithm, label=code:randomForest_parameters]
@@ -476,7 +474,7 @@ linear_svc_parameters = {
 \subsection{ML evaluation scores} \label{ml_evaluation_scores}
 There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
 
-\begin{wrapfigure}{l}{0.5\textwidth} %0.3 and 0.28
+\begin{wrapfigure}{LR}{0.5\textwidth} %0.3 and 0.28
   %\vspace{-0.5cm}
   %\begin{center}
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.5\textwidth]{img/Confusion_matrix_edited}}
@@ -486,13 +484,14 @@ There are different measurements to evaluate a ML model. All of them can be extr
   \label{fig:confusion_matrix_illustration}
 \end{wrapfigure}
 
+
 Measurements that were calculated (Abbreviations explained in the legend of figure \ref{fig:confusion_matrix_illustration}):
 
 \begin{gather*}
-Accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\\
-Precision = \frac{TP}{(TP+FP)}\\
-Recall = \frac{(TP)}{(\frac{TP}{FN})}\\
-F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}
+accuracy = \frac{(TP+TN)}{(TP+TN+FP+FN)}\\
+precision = \frac{TP}{(TP+FP)}\\
+recall = \frac{TP}{(TP+FN)}\\
+F1 = 2*\frac{(precision*recall)}{(precision+recall)}
 \end{gather*}
 
 \textit{F1-Score: Summarising Precision and Recall in one measurement.}
@@ -501,7 +500,7 @@ F1 = \frac{(TP+TN)}{(TP+TN+FP+FN)}
 Interviews and passive observations of NBRAs were held to gain insight on how well the social media data approximates to actual visitation rates and NBRA behaviour. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
 \subsubsection{Locations for ground truth data acquisition} \label{locations_ground_truthing_data}
 
-\begin{wrapfigure}{l}{0.4\textwidth} %0.3 and 0.28
+\begin{wrapfigure}{LR}{0.4\textwidth} %0.3 and 0.28
   %\vspace{-0.5cm}
   %\begin{center}
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.39\textwidth]{img/interviews_locations}}

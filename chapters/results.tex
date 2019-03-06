@@ -245,7 +245,8 @@ Flickr & 0.634 & 0.764 & -0.13\\
 
 The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both SMPs (see table \ref{tab:m1_actual_recall}).
 In the case of Instagram the incorporation and exclusion of image labels results in a total of \textbf{668} and \textbf{384} NBRA-identifications which corresponds to 5.67\% and 3.26\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
-In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.
+In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.\\
+Therefore, the best performing final text-string format which excludes image labels results in a total of \textbf{451} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both SMPs. 
 
 \begin{table}[h!]
 \begin{center}
@@ -281,8 +282,8 @@ Flickr & 0.721 & 0.753 & -0.032\\
 \end{table}
 
 The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both SMPs (see table \ref{tab:m2_actual_recall}).
-In the case of Instagram the incorporation and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.029\% and 3.626\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
-In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.989\% and 2.164\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.
+In the case of Instagram the incorporation and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.029\% and 3.626\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}. In the case of Flickr the incorporation and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.989\% and 2.164\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.\\
+Therefore, the best performing final text-string format which includes image labels results in a total of \textbf{937} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both SMPs. 
 
 \begin{table}[h!]
 \begin{center}
@@ -302,7 +303,7 @@ Flickr & 5.989 & 2.164 & 2.768\\
 M1 and M2 showed in both cases the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained.\\
 The model prediction accuracy was less dependant on the SMP the media objects originated from but more if image labels were parsed or not.\\
 The best observed accuracy of M2 with \textbf{0.776} (average: 0.749) was only slightly better than the \textbf{0.764} of M1 (average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at roughly \textbf{6\%} for M2 but only at \textbf{1.8\%} for M1.
-M2 with a slightly higher accuracy yielded more true positive NBRA-predictions than M1 and therefore less False Negatives (FN). This concludes that M2 also possess a \textbf{higher recall score} than M1.
+M2 with a slightly higher accuracy yielded (937-451=)486 more true positive NBRA-predictions than M1 which is an increase by factor two. Therefore M2 predicted less False Negatives (FN) which concludes that M2 also possess a \textbf{higher recall score} than M1 and generalises better on new data.
 
 \section{Spatial distribution of NBRAs}
 
