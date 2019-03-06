@@ -448,26 +448,26 @@ In addition to the previously mentioned data and text-processing some extra func
         \item \textbf{randomForest n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the training's data captured. The downside is the computational cost increase.
         
         \item \textbf{randomForest max\_depth} Defines the how many levels the created decision trees are allowed to have.
-        \end{itemize}
+    \end{itemize}
     
-    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyper-parameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{XY} and the one for the linearSVC algorithm in figure \ref{XY}.
+    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the resulting model weighted F1-scores to be reliable (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the random forest algorithm is visible in figure \ref{\ref{code:randomForest_parameters}} and the one for the linearSVC algorithm in figure \ref{code:linear_svc_parameters}.
 \end{enumerate}
 
-\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the linearSVC fitting algorithm]
-linear_svc_parameters = {
-                    'vect__min_df': [7, 8, 9, 10, 11, 12, 13],
-                    'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],
-                    'chi__k': ['all'],
-                    'clf__C': [0.001, 0.1, 1, 10, 100]
-                }
-\end{lstlisting}
-
-\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the randomForest fitting algorithm]
+\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the randomForest fitting algorithm, label=code:randomForest_parameters]
 randomforest_parameters = {
                     'vect__min_df': [9, 10, 11, 12, 13, 14],
                     'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],
                     'chi__k': ['all'],
                     'clf__max_depth': [5, 6, 7, 8, 9, 10, 11, 12, 13, None]
+                }
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the linearSVC fitting algorithm, label=code:linear_svc_parameters]
+linear_svc_parameters = {
+                    'vect__min_df': [7, 8, 9, 10, 11, 12, 13],
+                    'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],
+                    'chi__k': ['all'],
+                    'clf__C': [0.001, 0.1, 1, 10, 100]
                 }
 \end{lstlisting}
 
@@ -482,7 +482,7 @@ There are different measurements to evaluate a ML model. All of them can be extr
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.5\textwidth]{img/Confusion_matrix_edited}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Altered graphic by the author of this thesis \parencite{Kruger2018}}
+  \caption{Confusion matrix for multi-class classification. The confusion matrix of a classification with n classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). \textit{Source: \parencite{Kruger2018}, altered by the author}}
   \label{fig:confusion_matrix_illustration}
 \end{wrapfigure}
 
