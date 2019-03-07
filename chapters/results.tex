@@ -38,6 +38,8 @@ The following subsections will cover the  performance results of each of the two
 These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr} from the Canton Zug.\\
 Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.
 
+\texttt{Remark:} The entire data presented in the following subchapters is available on the enclosed CD to this thesis. This includes the actual M1 and M2 dump files, tuning and cross-validation logs as well as the most important performance graphs (see chapter \ref{CD_content}).
+
 \subsection{Model 1: untrained on image labels}
 The first model (M1) that was trained exclusively on the processed user generated text-data (see chapter \ref{text_processing}). Therefore, it did not include any information about the image and its content. This leads to the model vocabulary potentially missing the associated image labels that the image recognition would yield.
 
@@ -152,7 +154,7 @@ Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without none clas
 \end{center}
 \end{table}
 
-\subsubsection{best features}
+\subsubsection{Best features}
 The following figure \ref{fig:M2_top40_features_biking} visualises the 40 most predictive features of the class 'Biking'. Similar figures for the remaining classifications 'Walking', 'Hiking', 'Jogging', 'Dog walking', 'Horse riding', 'Picnic' and 'None' can be found in appendix \ref{M2_top_features}. 
 \begin{figure}[h!]
    \centering
@@ -196,16 +198,17 @@ The effect of different ngram\_range settings in combination with varying C valu
 \end{figure}
 
 \subsubsection{Final model scores}
-In the end the model M1 and M2 were trained on the entire training's dataset which resulted in the following final performance scores visible in table \ref{XY}. This step is important to generate a final model that is eventually trained on as much training's data as possible. Keeping a portion of the training's dataset aside for model validation is no longer necessary because the most well performing hyperparameter configuration was already determined before.
-
+In the end the model M1 and M2 were trained on the entire training's dataset which resulted in the following final performance scores visible in table \ref{tab:m1_m2_linearSVC_final_scores}. This step is important to generate a final model that is eventually trained on as much training's data as possible. Keeping a portion of the training's dataset aside for model validation is no longer necessary because the most well performing hyperparameter configuration was already determined before.\\
+\newline
+It can be noted at this point that the best M1 and M2 performance yielded similar feature counts during testing (626 and 775 respectively) and after training it on the entire dataset (845 and 958 respectively).  
 \begin{table}[h]
 \begin{center}
 \caption{M2 linearSVC performance scores during testing (except accuracy train)}\vspace{1ex}
-\label{tab:m2_linearSVC_bestscores}
+\label{tab:m1_m2_linearSVC_final_scores}
 \begin{tabular}{cccccc}\hline
-Model & Accuracy & Precision & Recall & F1 & F1 (without none class)\\ \hline
-M1 & 0.984 & 0.984 & 0.984 & 0.984 & 0.967 \\
-M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 \\ \hline
+Model & Accuracy & Precision & Recall & F1 & F1 (without none class) & Features\\ \hline
+M1 & 0.984 & 0.984 & 0.984 & 0.984 & 0.967 & 845\\
+M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 & 958\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -337,6 +340,8 @@ To investigate on that assumption the five actively detected Instagram media obj
 
 \section{Ground truth evaluation}
 The following subsections will cover the results from the \textit{in-situ} ground truthing through passive observations and the 52 interviews over the three different locations 'Br\"uggli', 'R\"ossliwiese' and 'Zugerberg'(see chapter \ref{fig:locations_ground_truthing}) in the research area (Canton of Zug, Switzerland).
+
+\texttt{Remark:} The entire data presented in the following subchapters is available on the enclosed CD to this thesis. This includes the actual transcript-data from the passive observation and the interviews (see chapter \ref{CD_content}).
 
 \subsection{Passive observation analysis}
 The passive NBRA-observation was performed by an assistant of the author. The thereby collected data is visible in figure \ref{fig:passive_observation} and shows the recorded NBRAs based on location sorted from left to right by decreasing observation frequency. Walking and hiking were by far the most recorded classes which corresponds to the interviews results visible in figure \ref{fig:interview_activities}. These two classes were merged due to differentiation difficulties just by observation and the demanded recording speed. 'Biking' follows second with a dominant occurrance in the location 'Br\"uggli' and no occurrence at 'R\"ossliwiese'. Third is 'jogging' shortly followed by 'dog walking' which have roughly the same occurrence frequency distribution across all three locations. 
