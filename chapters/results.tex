@@ -322,20 +322,69 @@ The following maps visualise the spatial NBRA-occurrences of M2 predicted media 
    \label{fig:map_cluster_2}
 \end{figure}
 
-\section{Language distribution in media objects}
+\section{Media object languages}
+One assumption that was made earlier stated that the training's data from Zurich and the media objects from Zug share a similar written language by their author base. This would legitimise the usage of training's data that did not originate from the same region as the region the model would later be applied to.\\
+To investigate on that assumption the five actively detected Instagram media object languages (see chapter \ref{langauge_detection}) of both regions (see figure \ref{fig:det_languages}) were compared with a paired two sample t-test for means. The result showed that the probability that T is smaller or equal t is 0.56 and therefore smaller than t\textsubscript{crit} of 2.78. Therefore, h0 (no difference present) cannot be rejected and the written languages of both areas are with high certainty of similar composition.
 
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/det_languages_bigger_font.pdf}
+   \caption{Comparison between detected languages of Instagram media objects originating from Zug and Zurich}
+   \label{fig:det_languages}
+\end{figure}
+
+\texttt{Remark:} Often times hashtags remain written in English due to their comprehensive meaning and purpose to connect media objects of similar content. Due to the big share hashtags normally have on the entire text, the language detection tends to identify a media object language as English above others.
 
 \section{Ground truth evaluation}
+The following subsections will cover the results from the \textit{in-situ} ground truthing through passive observations and the 52 interviews over the three different locations 'Br\"uggli', 'R\"ossliwiese' and 'Zugerberg'(see chapter \ref{fig:locations_ground_truthing}) in the research area (Canton of Zug, Switzerland).
 
 \subsection{Passive observation analysis}
+The passive NBRA-observation was performed by an assistant of the author. The thereby collected data is visible in figure \ref{fig:passive_observation} and shows the recorded NBRAs based on location sorted from left to right by decreasing observation frequency. Walking and hiking were by far the most recorded classes which corresponds to the interviews results visible in figure \ref{fig:interview_activities}. These two classes were merged due to differentiation difficulties just by observation and the demanded recording speed. 'Biking' follows second with a dominant occurrance in the location 'Br\"uggli' and no occurrence at 'R\"ossliwiese'. Third is 'jogging' shortly followed by 'dog walking' which have roughly the same occurrence frequency distribution across all three locations. 
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/passive_observation_bigger_font_walking_hiking.pdf}
+   \caption{NBRA-occurrence according to the passive observation performed in the three locations listed in the legend}
+   \label{fig:passive_observation}
+\end{figure}
 
 \subsection{Interview analysis}
+
 \subsubsection{Occasion specific visitation motivations}
+The top 8 motivations or reasons the interviewees mentioned why they visited a given location are displayed in figure \ref{fig:interview_visitation_motivation} sorted from left to right in descending order. According to the results plays 'Geographic closeness' a dominant role on how people decide upon their preferred recreation location. If a lake was present it was also frequently mentioned as a strong driver that draws in people for NBRAs. The argument 'sport' was solely mentioned for the location 'Zugerberg' and 'shopping', 'low traffic' and 'sunset' exclusively for the location 'R\"ossliwiese' and the term 'topography' for the location 'Br\"uggli'.
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/interview_keywords_bigger_font_without_sunset.pdf}
+   \caption{Frequency of drivers mentioned by 52 interviewees for visiting one of the three locations listed in the legend.}
+   \label{fig:interview_visitation_motivation}
+\end{figure}
 
 \subsubsection{Most frequent NBRAs performed by location}
+Figure \ref{fig:interview_activities} is similar to figure \ref{fig:passive_observation} and shows similarly performed NBRAs. This time the descriptive term came from the interviewees themselves which explains why the differentiation between the classes 'walking' and 'hiking' was again established. 'Walking' still holds the biggest share across all three locations. 'Biking' follows again second and was recorded everywhere but in the location 'R\"ossliwiese' to which 'relaxing' was exclusive. Third comes 'hiking' which was only found on the mountain location 'Zugerberg'. The NBRA 'swimming' was not actively performed at the time of the interviews but it was instead mentioned by the interviewees as a regular summer activity at the location 'Br\"uggli'.
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/interview_activities_bigger_font.pdf}
+   \caption{NBRA-occurrence according to the 52 performed interviews in the three locations listed in the legend}
+   \label{fig:interview_activities}
+\end{figure}
 
 \subsubsection{Ranking of social media platform usage}
+One main part of the interviews next to the information gain related to the performed NBRAs was dedicated to the interviewee's social media usage and engagement. Figure \ref{fig:interview_SMP} visualises the recorded occurrences where interviewees confirmed having an account on one of the given SMPs. Instagram and Facebook are by far the most widespread SMPs that were registered. LinkedIn follows third with less than half of the mentions of first or second place. Many interviewees mentioned the (sometimes forced) requirement of an LinkedIn account for their professional life.
+A surprisingly low occurrence is registered for Twitter. STRAVA through being a specialised SMP was only mentioned once. Interestingly Flickr was not mentioned a single time during all 52 interviews.
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/interview_socialmedia_bigger_font.pdf}
+   \caption{Deviated SMP popularity according to confirmed profiles of 52 interviewees}
+   \label{fig:interview_SMP}
+\end{figure}
 
 \subsubsection{Relation between age and social media presence}
+Insight on dominantly represented ages groups in social media derived data can be drawn from figure \ref{fig:interview_age_SMP}. According to the 52 conducted interviews are people between the age of 21 and 30 most active on SMPs (red bars indicating a true participation). The age group of 61 to 100 on the other hand has not one recorded connection to any SMP. The red and blue line in figure \ref{fig:interview_age_SMP} represent the linear regression lines of the corresponding datasets. Their intersection can be found at roughly age 50 where the switch between the observed usage and absence of SMP's happens. Instagram and Facebook make out the biggest share of these records as already seen in figure \ref{fig:interview_SMP}. 
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth]{img/interview_socialmedia_age_bigger_font.pdf}
+   \caption{Share per age class of social media users (true) and the once that do not use it (false). The red and blue line represent the linear regression of their corresponding datasets.}
+   \label{fig:interview_age_SMP}
+\end{figure}
 
 

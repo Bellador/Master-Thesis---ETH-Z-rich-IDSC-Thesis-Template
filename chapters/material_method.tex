@@ -145,6 +145,8 @@ The exact structure and table specific content of the database is visible in fig
    \label{fig:database}
 \end{figure}
 
+\texttt{Remark:} The entire populated database in its final form can be found on the enclosed CD provided with this thesis.
+
 \section{Data-processing} \label{data_processing}
 The following processes cover the entire workflow of data manipulation on the database in the order they were executed.
 \subsection{Merging of Instagram files} \label{netlytic_files_merge}
@@ -164,14 +166,14 @@ The API has been called by modifying the following HTTPS-request:\\
 \subsection{Populating the database} \label{populate_db}
 The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subchapters above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
 
-\subsection{Check the ' in boundary' condition} \label{in_boundary}
-Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the 'in\_boundary' column in the corresponding database entries to TRUE for the provided media objects.
+\subsection{In boundary condition check} \label{in_boundary}
+Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the \texttt{in\_boundary} column in the corresponding database entries to TRUE for the provided media objects.
 
-\subsection{Potential sources of bias in the data} \label{sources_data_bias}
-This part of the data-processing is a filtering step as seen in step 1 of figure \ref{XY} to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: When and where are people performing NBRAs?
+\subsection{Potential sources of data-bias} \label{sources_data_bias}
+This part of the data-processing is a filtering step as seen in step 1 of figure \ref{fig:ml_visualisation} to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: When and where are people performing NBRAs?
 
 \subsubsection{Dominant authors} \label{bias_dominant_authors}
-Authors (person who contributes to a given social media platform by uploading media objects) which are above a certain threshold regarding their total number of uploaded media objects in the research area, are marked in the database table column 'included\_after\_dataprocessing' as \texttt{False} and are thereby excluded from further analysis. There is a need to address dominant authors, because otherwise the data evaluation will be unequally based on a small number of users that contributed a lot to the entire data-set.\\
+Authors (person who contributes to a given social media platform by uploading media objects) which are above a certain threshold regarding their total number of uploaded media objects in the research area, are marked in the database table column \texttt{included\_after\_dataprocessing} as \texttt{False} and are thereby excluded from further analysis. There is a need to address dominant authors, because otherwise the data evaluation will be unequally based on a small number of users that contributed a lot to the entire data-set.\\
 \newline
 \textbf{How was this threshold defined?}\\
 \newline
@@ -185,14 +187,14 @@ At first, a top 0.1\% threshold was implemented. Later in the development of the
 
 \subsubsection{Bulk uploads} \label{bias_bulk_uploads}
 In the context of this thesis, bulk uploads describe a certain amount of simultaneously or during a short period of time uploaded media objects to the same social media platform by a single author. In an early stage of the project, a static bulk upload threshold - similarly to the dominant author threshold - was chosen. Later, a dynamic solution - which makes adaptive data handling possible - was implemented. A graph which visualises the amount of effected media objects by different bulk upload thresholds (2-10) is displayed to the user. Again, according to the graph a suitable threshold can be inputted and applied to the given data-set. The time period in which the exceeding of the threshold was considered a bulk upload was set to one hour. 
-All as bulk upload marked media objects will be excluded from further analysis by setting the 'included\_after\_dataprocessing' column to \texttt{False} (if they were not already excluded in the 'dominant user' step)
+All as bulk upload marked media objects will be excluded from further analysis by setting the \texttt{included\_after\_dataprocessing} column to \texttt{False} (if they were not already excluded in the 'dominant user' step)
 
 \subsection{Text-processing} \label{text_processing}
-Text processing is needed to turn the noisy user-generated character input (text) into normalised word-tokens which are comparable between media objects and are needed for the following machine learning (ML) text-classification approach. The text-processing encompasses the following steps in corresponding order which have been visualised under step 3 in Figure \ref{XY}:\\
+Text processing is needed to turn the noisy user-generated character input (text) into normalised word-tokens which are comparable between media objects and are needed for the following machine learning (ML) text-classification approach. The text-processing encompasses the following steps in corresponding order which have been visualised under step 3 in Figure \ref{fig:ml_visualisation}:\\
 Firstly, iterating over all media objects which lie inside the research area boundary and are included after the data processing while acquiring their text data from the database.
 
 \subsubsection{Language detection} \label{langauge_detection}
-The language detection serves the purpose of optimally adjusting the parameters for the later occurring core text processing step. By identifying the language, the suitable word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see \ref{XY}).\\
+The language detection serves the purpose of optimally adjusting the parameters for the later occurring core text processing step. By identifying the language, the suitable word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see \ref{core_text_processing}).\\
 \newline
 To accomplish this, the provided text string which consists only of the title of the media object is parsed to the function. First a small bit of text processing, that happens in its core later on again (but then more adjusted due to the then available language of the original text string), is necessary to ensure a reliable prediction. This consists of splitting the title text string at white spaces, which forms basic separate character elements. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly all characters are turned lowercase. These resulting character elements are only further considered, if they have a minimum length of three characters. This minimum length was chosen according to conducted tests to avoid small character length artefacts that can occur during the entire process.\\
 Next, each created word-token is run against three different word lists of the English, German, and Swiss German language.
@@ -208,7 +210,7 @@ After the entity check of each word versus all three of the above mentioned word
 \subsubsection{Core text processing} \label{core_text_processing}
 The core text processing encompasses the following alteration steps and serves the purpose of creating universally similar structured and comparable word tokens out of the noisy user generated text data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated machine learning model to accurately predict the NBRA contained in the media objects.\\
 \newline
-The function 'text\_processing\_core()' is called with the language detection corresponding word lists regarding spell checking, stop words, the corresponding stemmer object to attribute each word to its stem or root and the actual text string. If the Swiss German language was detected or none of the remaining two, then the mentioned function was called with no specific word lists and the steps regarding spell checking, stemming and the removal of stop words was skipped due to a lack of sophisticated methods. The provided text string consisted out of a concatenation of the title and the description of the given media object, unlike just the title for the shortened text processing step applied in the language detection function.\\
+The function \texttt{text\_processing\_core()} is called with the language detection corresponding word lists regarding spell checking, stop words, the corresponding stemmer object to attribute each word to its stem or root and the actual text string. If the Swiss German language was detected or none of the remaining two, then the mentioned function was called with no specific word lists and the steps regarding spell checking, stemming and the removal of stop words was skipped due to a lack of sophisticated methods. The provided text string consisted out of a concatenation of the title and the description of the given media object, unlike just the title for the shortened text processing step applied in the language detection function.\\
 Flickr tags were not neglected from this step, even though they were also created by an image detection algorithm similar to the \textit{Google Cloud Vision} algorithm which was used in this thesis to acquire image content tags.
 
 \paragraph{Match and remove special text patterns} \label{text_patterns}
@@ -525,16 +527,16 @@ The durations of these passive observations were the following:
     \item \textbf{Zugerberg} 1h45min
 \end{itemize}
 The time spend in one location was dependant on the time needed to hold the required interviews therefore the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
-The passive observation template used in this thesis can be found under the Appendix \ref{XY}
+The passive observation template used in this thesis can be found under the Appendix \ref{passive_obs_templates}
 
 \subsubsection{Interview setup} \label{interview_setup}
-The interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24th in 'Br\"uggli' and 'R\"ossliwiese' as well as on the 25th of November 2018 on the Zugerberg. It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
+A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25th of November 2018 on the 'Zugerberg' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
 Every interview started out with a small introduction to the author's persona, the motivation behind the interviews and that all the gathered information will be kept anonymous and will solely be used for the course of this thesis. The purpose of these interviews was to gain information on three topics.\\
 \newline
 The first one being \textbf{location} related:
 \begin{itemize}
     \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
-    \item \textbf{Activity} Which NBRA is most frequently practiced by the person in this location?
+    \item \textbf{Activity} Which NBRA is most frequently practised by the person in this location?
     \item \textbf{Frequency} How often does the person visit the location? (In the case of the Zugerberg, it was also asked what the destination of the trip was.)
 \end{itemize}
 
@@ -545,7 +547,7 @@ The second one was related to \textbf{social media}:
     \item \textbf{Intent} Do they consider sharing their visit to the given location on social media and if yes on which platform?
 \end{itemize}
 The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\
-The interview template used in this thesis can be found under the Appendix \ref{XY}.
+The interview template used in this thesis can be found under the Appendix \ref{interview_templates}.
 
 
 
