@@ -45,7 +45,7 @@ The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) 
     \item like-count : Amount of likes the media object received on the SMP Instagram
 \end{itemize}
 
-\paragraph{Location tag}
+\paragraph{Location tag} \label{instagram_location_tag}
 The provided location information or tag consists of the above mentioned coordinates of a Instagram location. Instagram locations are points of interest which can be user-generated and do not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity by mitigating the divulging of sensitive location data. This implies that media objects that do not originate from the same location can still be 'snapped' to the same Instagram location and therefore show the same coordinate pair in the meta-data \parencite{Instagram}.
 It has been shown that roughly 85\% of Instagram media objects lack a location tag \parencite{XY} and most users only use them on vacation or when being abroad.
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in chapter \ref{sec: XXXXX}
@@ -78,9 +78,9 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
     \item favorites : Amount of approves - similar to 'likes' on Instagram - a media object received by other Flickr users [bigint]
 \end{itemize}
 
-\paragraph{Location tag}
+\paragraph{Location tag} \label{flickr_location_tag}
 Unlike Instagram provides Flickr location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
-Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{sec: XXXXX}
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{geocoding_api}
 
 \subsection{Foursquare} \label{foursquare}
 Foursquare is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). All the stored ' infrastructure' which is categorised into different sectors such as ' Travel \& Transport', ' Arts and Entertainment' but also ' Outdoors \& Recreation' can be accessed via the official Foursquare API.
@@ -107,7 +107,7 @@ Only the following excerpt of the returned venue meta-data was used with the app
     \item verified : Takes the values TRUE or FALSE. States if the venue data is verified by Foursquare
 \end{itemize}
 
-Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{sec: XXXXX}
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{geocoding_api}
 
 \subsubsection{Data verification} \label{foursquare_data_verification}
 The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 USD for venues outside of the United States of America \parencite{Foursquare2019}. \\
@@ -134,7 +134,7 @@ Location tables:\\
 \end{itemize}
 
 In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subchapters above. Furthermore are the outputs from the data- and text-processing steps (see chapter \ref{XY}) stored in the database.\\ 
-The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{XXXX}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
+The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
 \newline
 The exact structure and table specific content of the database is visible in figure \ref{fig:database}
 
@@ -158,7 +158,7 @@ Auxiliary, more detailed location information regarding the spatial origin of th
 \subsubsection{Via the Instagram API}
 The Instagram data that was provided by Netlytic was enhanced by using the \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
 
-\subsubsection{Via the Google Geocoding API}
+\subsubsection{Via the Google Geocoding API} \label{geocoding_api}
 Each coordinate of every Flickr media object was run through the Google Geocoding API. Detailed information regarding the media objects address and location type was returned. The location type attribute is evidence of the API' s accuracy. Everything besides 'ROOFTOP' returns an address that is close but not exactly at the given coordinate and therefore an approximation.\\
 The API has been called by modifying the following HTTPS-request:\\
 \texttt{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]\&key=[API\_KEY]}
@@ -257,7 +257,7 @@ The reason for removing as stop words identified tokens is to prevent the inflat
 Swiss topographic names and descriptions consisting of a dictionary of towns and cities \parencite{Swisstopo2018O} and geographical names from the topographical survey of Switzerland \parencite{Swisstopo2018a} were ignored, ensuring that the resulting model is not trained on  specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis, where the training's data originated from a different area than the actual research area, this factor should not be neglected. 
 The possibility to use this additional locational information in the form of topographic terms to narrow down the location of the NBRA's was not considered but could be a potential further improvement to this method. 
 Additionally, 20 language variations of the country name 'Switzerland' where also removed \parencite{101languages2018}. 
-During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to run) were being wrongfully removed based on the existing town \textit{Laufen} in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1'032 matched words of a total of 66'133 topographic list entities were not further considered.
+During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to run) were being wrongfully removed based on the existing town 'Laufen' in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1'032 matched words of a total of 66'133 topographic list entities were not further considered.
 
 \paragraph{Feed-back to the database}
 The generated word tokens and the identified language are saved in the corresponding media object row in the database where they can be accessed again for the ML training and testing phase.
@@ -320,7 +320,7 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 \end{wrapfigure}
 One approach to transform text-based data into machine readable information will be covered in this chapter. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
-In this project the \textit{bag-of-words} representation has been applied \parencite{Joulin2016}. This method learns the 'vocabulary' of a corpus of documents - in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
+In this project the 'bag-of-words' representation has been applied \parencite{Joulin2016}. This method learns the 'vocabulary' of a corpus of documents - in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
 
 \paragraph{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
 
@@ -543,7 +543,7 @@ The first one being \textbf{location} related:
 The second one was related to \textbf{social media}:
 \begin{itemize}
     \item \textbf{Member} Do they own an account on any social media platform and if yes on which?
-    \item \textbf{Habits} How do they interact with social media? Do they share own content (if yes - in what frequency?), or do they rather look at foreign contributions?
+    \item \textbf{Habits} How do they interact with social media? Do they share own content (if yes in what frequency?), or do they rather look at foreign contributions?
     \item \textbf{Intent} Do they consider sharing their visit to the given location on social media and if yes on which platform?
 \end{itemize}
 The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\

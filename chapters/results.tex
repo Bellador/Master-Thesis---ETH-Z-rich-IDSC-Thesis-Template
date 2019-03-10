@@ -308,22 +308,7 @@ The model prediction accuracy was less dependant on the SMP the media objects or
 The best observed accuracy of M2 with \textbf{0.776} (average: 0.749) was only slightly better than the \textbf{0.764} of M1 (average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at roughly \textbf{6\%} for M2 but only at \textbf{1.8\%} for M1.
 M2 with a slightly higher accuracy yielded (937-451=)486 more true positive NBRA-predictions than M1 which is an increase by factor two. Therefore M2 predicted less False Negatives (FN) which concludes that M2 also possess a \textbf{higher recall score} than M1 and generalises better on new data.
 
-\section{Spatial distribution of NBRAs}
 
-The following maps visualise the spatial NBRA-occurrences of M2 predicted media object in the Canton of Zug. XXX
-
-\begin{figure}[h!]
-   \centering
-   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_NEW_1_w_feature_count.pdf}
-   \label{fig:map_cluster_1}
-\end{figure}
-
-\begin{figure}[h!]
-   \centering
-   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_NEW_2_w_feature_count.pdf}
-   \caption{Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
-   \label{fig:map_cluster_2}
-\end{figure}
 
 \section{Media object languages}
 One assumption that was made earlier stated that the training's data from Zurich and the media objects from Zug share a similar written language by their author base. This would legitimise the usage of training's data that did not originate from the same region as the region the model would later be applied to.\\
@@ -391,5 +376,50 @@ Insight on dominantly represented ages groups in social media derived data can b
    \caption{Share per age class of social media users (true) and the once that do not use it (false). The red and blue line represent the linear regression of their corresponding datasets.}
    \label{fig:interview_age_SMP}
 \end{figure}
+
+\section{Spatial distribution of NBRAs}
+This section will present the maps which resulted from the M2 NBRAs- prediction on both Instagram and Flickr media objects from the Canton of Zug. The cluster of maps in figure \ref{fig:map_cluster_2} show the NBRA's spatial distribution in parallel comparison between the two SMPs Instagram and Flickr. The amount of M2 predictions per classification and SMP are listed in figure \ref{tab:amount_class_NBRAs} as well as in the maps themselves as 'feature count'.
+
+\begin{table}[h!]
+\begin{center}
+\caption{Amounts of M2 classified media objects that contain NBRAs}\vspace{1ex}
+\label{tab:amount_class_NBRAs}
+\begin{tabular}{cccc}\hline
+Class & Instagram & Flickr & Total\\ \hline
+Hiking & 231 & 126 & 357\\
+Walking & 265 & 55 & 320\\
+Dog walking & 143 & 16 & 159\\
+Biking & 95 & 51 & 146\\
+Jogging & 85 & 19 & 104\\
+Horse riding & 37 & 6 & 43\\
+Picnic & 23 & 6 & 29\\
+ & & & \\
+None & 10'898 & 3'511 & 14'409\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+As already described in chapter \ref{instagram_location_tag} Instagram locations can be user generated and are often general descriptions of the area at hand. This results in a lot of media objects being snapped to the same point on the map and therefore a lower spatial resolution. To illustrate this a bit further let's compare the two SMPs:
+There are \textbf{152} unique Instagram locations of which the top three are named 'Zug' with 1'970, 'Canton of Zug' with 1'590 and 'lake Zug' with 400 associated Instagram media objects.
+Flickr on the other hand consists of \textbf{1'144} unique locations of which the top three are named 'Baarerstrasse 12' with 112, 'Bahnhofsplatz' with 84 and 'Landsgemeindeplatz' with 69 associated Flickr media objects. This additional geo-information in form of an address is not provided by the Flickr API but rather through the \textit{Google Geocoding API} as stated in chapter \ref{geocoding_api}.
+One has to keep in mind that Flickr holds only roughly a third of the media objects compared to Instagram in the area of interest. 
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_1.pdf}
+   %\label{fig:map_cluster_1}
+\end{figure}
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_2.pdf}
+   \caption{Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \label{fig:map_cluster_2}
+\end{figure}
+
+\subsection{Comparison to ground truth}
+
+\subsection{Comparison to Foursquare}
 
 
