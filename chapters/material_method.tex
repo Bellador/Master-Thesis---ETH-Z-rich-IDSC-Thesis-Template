@@ -322,11 +322,11 @@ One approach to transform text-based data into machine readable information will
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
 In this project the 'bag-of-words' representation has been applied \parencite{Joulin2016}. This method learns the 'vocabulary' of a corpus of documents - in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
 
-\paragraph{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
+\paragraph*{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
 
-\paragraph{Vocabulary building} By assessing the individual word tokens of each media object, the 'bag-of-words' constructor assembles a vocabulary of unique tokens found in the corpus. This 'vocabulary' so to speak appears in the shape of an alphabetic ordered array where each column represents a word token. These columns are from now on referred to as a (model) features.
+\paragraph*{Vocabulary building} By assessing the individual word tokens of each media object, the 'bag-of-words' constructor assembles a vocabulary of unique tokens found in the corpus. This 'vocabulary' so to speak appears in the shape of an alphabetic ordered array where each column represents a word token. These columns are from now on referred to as a (model) features.
 
-\paragraph{Encoding} The previously build vocabulary array is iterated through and compared to the word tokens found in the final text string of each media object for which a 'fingerprint'-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. This results in a number sequence linked to a given media object on which the model is later trained.
+\paragraph*{Encoding} The previously build vocabulary array is iterated over and compared to the word tokens found in the final text string of each media object for which a 'fingerprint'-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. This results in a number sequence linked to a given media object on which the model is later trained.
 
 \vspace{2cm}
 
@@ -524,20 +524,20 @@ The durations of these passive observations were the following:
 \begin{itemize}
     \item \textbf{Br\"uggli} 1h30min
     \item \textbf{R\"ossliwiese} 1h15min
-    \item \textbf{Zugerberg} 1h45min
+    \item \textbf{Schattenw\"aldli} 1h45min
 \end{itemize}
 The time spend in one location was dependant on the time needed to hold the required interviews therefore the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
 The passive observation template used in this thesis can be found under the Appendix \ref{passive_obs_templates}
 
 \subsubsection{Interview setup} \label{interview_setup}
-A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25th of November 2018 on the 'Zugerberg' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
+A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25th of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
 Every interview started out with a small introduction to the author's persona, the motivation behind the interviews and that all the gathered information will be kept anonymous and will solely be used for the course of this thesis. The purpose of these interviews was to gain information on three topics.\\
 \newline
 The first one being \textbf{location} related:
 \begin{itemize}
     \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
     \item \textbf{Activity} Which NBRA is most frequently practised by the person in this location?
-    \item \textbf{Frequency} How often does the person visit the location? (In the case of the Zugerberg, it was also asked what the destination of the trip was.)
+    \item \textbf{Frequency} How often does the person visit the location? (In the case of 'Schattenw\"aldli', it was also asked what the destination of the trip was.)
 \end{itemize}
 
 The second one was related to \textbf{social media}:
