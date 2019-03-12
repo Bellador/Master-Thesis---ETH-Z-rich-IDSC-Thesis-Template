@@ -417,7 +417,7 @@ Decision trees are prone to overfitting due to their infinite possible depth by 
  The book from \parencite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see chapter \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be significantly faster than the one of the linear support vector classifier model (in this thesis roughly 20\% faster). 
 
 \subsection{Model setup} \label{model_setup}
-In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the scikit-learn library v.0.20.2. This library allowed pipelining (see figure \ref{XY}- pycharm screenshot) which consisted of the following steps:
+In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library allowed pipelining (see figure \ref{XY}- pycharm screenshot) which consisted of the following steps:
 
 \begin{enumerate}
     \item \textbf{TfidfVectorizer} Converts a collection of raw documents (media objects) to a matrix of TF-IDF features which stands for the frequency over the inverse document frequency of a given (word-) token. This function is equivalent to applying 'CountVectorizer' followed by 'TfidfTransformer' \parencite{Scikit-learn2018}.\\
