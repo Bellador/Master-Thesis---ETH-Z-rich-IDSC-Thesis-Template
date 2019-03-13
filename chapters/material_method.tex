@@ -2,7 +2,7 @@
 
 \section{Research area} \label{research_area}
 The Canton of Zug was chosen by the author - who was raised in Cham - as the area of interest since important local knowledge was already present. The specific areas for which social media data (SMD) was acquired are visible in the map below (see figure \ref{fig:research_area}). The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter of the Canton of Zug and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept - named 'Leitbild Lorzenebene' has been created for it which was used as reference in this thesis \parencite{BaudirektiondesKantonsZug2012}. The second area resembles the jurisdiction of the City of Zug which partly encompasses the 'Lorzenebene'. This area is distinctive by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their sport and recreation value. \\
-There is no perimeter concordance due to varying constraints in the data acquisition between the different social media platforms which will be illustrated further down in section \ref{data_acquisition}.
+There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subchapter.
 
 \begin{figure}[h]
    \centering
@@ -213,19 +213,19 @@ The core text processing encompasses the following alteration steps and serves t
 The function \texttt{text\_processing\_core()} is called with the language detection corresponding word lists regarding spell checking, stop words, the corresponding stemmer object to attribute each word to its stem or root and the actual text string. If the Swiss German language was detected or none of the remaining two, then the mentioned function was called with no specific word lists and the steps regarding spell checking, stemming and the removal of stop words was skipped due to a lack of sophisticated methods. The provided text string consisted out of a concatenation of the title and the description of the given media object, unlike just the title for the shortened text processing step applied in the language detection function.\\
 Flickr tags were not neglected from this step, even though they were also created by an image detection algorithm similar to the \textit{Google Cloud Vision} algorithm which was used in this thesis to acquire image content tags.
 
-\paragraph{Match and remove special text patterns} \label{text_patterns}
+\paragraph*{Match and remove special text patterns} \label{text_patterns}
 The first step of the text alteration included the regular expression matching (see definitions for reverence) of any URI (which includes \texttt{https://, http://, www.} beginnings as well as the domain ending), HTML related tags (e.g. \texttt{<a>\dots<$\backslash$a>}), Instagram mentions (e.g. \texttt{@madmax}) and character/number combination-patterns (e.g. \texttt{zugersee2018}). If found, they were replaced by a whitespace (\texttt{$\backslash$s}) character. This step was done before prior to any other text processing step, due to the high risk of creating character artefacts which occur if those patterns remain in the text string.
 
-\paragraph{Removal of characters other than letters} \label{remove_eveything_but_letters}
+\paragraph*{Removal of characters other than letters} \label{remove_eveything_but_letters}
 As a next step, all special characters, such as Unicode characters of the category 'other symbols' including numbers were removed from the text string and also replaced by a whitespace (\texttt{$\backslash$s}) character. This is done as a measure to assure that character objects like emojis, time-stamps, dates among others that often occur in social media data are removed to achieve a less noisy and purer word token list at the end. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence. E.g. '\"a' was replaced with 'ae'.
 
-\paragraph{Whitespace splitting} \label{whitespace_splitting}
+\paragraph*{Whitespace splitting} \label{whitespace_splitting}
 Eventually the text string is split at the occurrence of one or more whitespaces. This creates for the first time individual word tokens which will be further modified and filtered in the following steps.
 
-\paragraph{Spell-check} \label{spell_check}
+\paragraph*{Spell-check} \label{spell_check}
 Basic spell checking is done for the English, German and French language. The purpose again lies in the reduction of the vocabulary for the machine learning model. This is achieved by ensuring the same spelling and therefore the same word token for a given word by reducing word variety created through spelling mistakes. Each given word token is checked for being part of the same corresponding language word list (dictionary) already used for the determination of the media object language. If the token has been determined to be an entity of the given list, it is returned without any alteration. If no match was found, a suitable word correction is suggested. The entire process makes use of the Python library \textit{pyenchant} which handles the smart entity search as well as the word suggestion and word correction process. Spell checking was skipped for the Italian language due to a missing \textit{pyenchant} dictionary.
 
-\paragraph{Stemming} \label{word_stemming}
+\paragraph*{Stemming} \label{word_stemming}
 Stemming refers to the process of reducing a word to its linguistic root which yields many advantages for information retrieval (IR) in general and more particular for text-based machine learning models as demonstrated further down in CHAPTER \ref{XY}. The following paper \parencite{Lovins1968} distinguishes between root and stem where the root is the stem minus any prefixes. This differentiation was not applied here. 
 \parencite{Weissweiler2018} described the purpose of a stemmer as not being exclusive to finding the morphological correct root for a word, but to reduce it to a form it shares with all words that are sufficiently semantically related. The exact nature of that form is irrelevant, but it boils down to removing all prefixes and suffixes - leaving only the pure stem of the former word. Lemmatisation is another term that gets used in computational linguistics together with stemming. The difference being that lemmatisation considers the context of the entire sentence or document while algorithmically determining the lemma (stem) of a word. Stemming was used over lemmatisation due to the reduced processing cost and the increased recall accuracy.\\
 \newline
@@ -237,29 +237,29 @@ Due to the big data-set and its associated processing expense as well as the una
 For the English and French language, the Snowball Stemmer \parencite{Porter2001} with their respective language variation was used. Especially the English version has found wide acceptance in scientific applications such as \parencite{Krauthammer2011} or \parencite{Joulin2016} in the field of machine learning. This is among the reason why this stemmer is part of the natural-language processing toolkit \parencite{Manning2014} of the used \textit{nltk} Python library.\\
 For the German language however, stemmer variety and quality are comparably lower due to less attention and importance. First tests were run with the German version of the above-mentioned snowball stemmer, which was later outperformed by a stemmer called CISTEM, developed by the Ludwig-Maximilians University (LMU) Munich. The paper that was published with the underlying algorithm source code proves the best accuracy compared to similar stemmers (including snowball stemmer) and a noticeable reduction of computation time \parencite{Weissweiler2018}.
 
-\paragraph{Conversion to lowercase and stripping of excess whitespace}
+\paragraph*{Conversion to lowercase and stripping of excess whitespace}
 To unify the word tokens even more, every remaining character is turned lowercase and excess whitespace that could have occurred in the previous text processing steps is removed once again.
 
-\paragraph{Minimum token length}
+\paragraph*{Minimum token length}
 By setting the requirement of a minimum word token length one can avoid the further consideration of small and most in the sense of context, meaningless words as well as character artefacts that were created throughout the text processing steps. The threshold was set to a minimum token-length of 3 for this thesis.\\
 \newline
 \textbf{How was this threshold defined?}\\
 \newline
 This threshold was defined based upon personal empirical tests on the original data and on the book of \parencite{Guido2016}. This value should enable to maximise the amount of meaningful word-tokens while minimising the amount of meaningless character artefacts.
 
-\paragraph{Stop words}
+\paragraph*{Stop words}
 Stop words describe a category of frequently occurring and used words that do not hold any strong contextual meaning. Stop words occur in every language - examples for the English language are for instance the words: while, before, because, theirs.\\
 An English and a German stop word list - also provided by the \textit{nltk} Python library - which contained 179 and 231 (state: 23.11.2018) unique elements respectively were used for matching.\\
 \newline
 The reason for removing as stop words identified tokens is to prevent the inflation of the general word space while not proportionally enriching the overall contextual meaning of the entire text string. The more common words across different media objects are retained, the more similar they seem to the machine learning model later which hinders the achieving of high prediction accuracy's.
 
-\paragraph{Topographic related words}
+\paragraph*{Topographic related words}
 Swiss topographic names and descriptions consisting of a dictionary of towns and cities \parencite{Swisstopo2018O} and geographical names from the topographical survey of Switzerland \parencite{Swisstopo2018a} were ignored, ensuring that the resulting model is not trained on  specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis, where the training's data originated from a different area than the actual research area, this factor should not be neglected. 
 The possibility to use this additional locational information in the form of topographic terms to narrow down the location of the NBRA's was not considered but could be a potential further improvement to this method. 
 Additionally, 20 language variations of the country name 'Switzerland' where also removed \parencite{101languages2018}. 
 During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to run) were being wrongfully removed based on the existing town 'Laufen' in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1'032 matched words of a total of 66'133 topographic list entities were not further considered.
 
-\paragraph{Feed-back to the database}
+\paragraph*{Feed-back to the database}
 The generated word tokens and the identified language are saved in the corresponding media object row in the database where they can be accessed again for the ML training and testing phase.
 
 \section{Image recognition} \label{image_recognition}
