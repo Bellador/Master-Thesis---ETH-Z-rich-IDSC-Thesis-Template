@@ -213,10 +213,10 @@ M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 & 958\\ \hline
 \end{center}
 \end{table}
 
-\subsubsection{Precision on unseen data}
+\subsubsection{Precision on unseen data} \label{precision_unseen_data}
 This section will present the results of the model performance on new data. All Instagram and Flickr media objects of the Canton of Zug on which these results are based were excluded from the M1 and M2 model training.\\
-Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview: \ref{database_setup}):
-\texttt{media\_objects\_unionzug\_instagram} \\ \texttt{media\_objects\_cantonzug\_flickr}
+Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview see chapter \ref{database_setup}):\\
+\texttt{media\_objects\_unionzug\_instagram} \\ \texttt{media\_objects\_cantonzug\_flickr}\\
 
 One time the final text-string provided for the prediction was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
 

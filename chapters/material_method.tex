@@ -20,7 +20,7 @@ Instagram is a SMP which supports the sharing of geo-referenced image and video 
 Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780' 000). The gender distribution was at 49.4\% women and 50.6\% men \parencite{2013}. This popularity was the determining factor that lead to including Instagram data into this thesis.\\
 
 \subsubsection{Query} \label{netlytic}
-Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser \textit{Netlytic}. \textit{Netlytic} can be accessed via \texttt{https://netlytic.org/} and allows for hashtag (\# + keyword) or location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows location based query for Instagram media objects of public accounts in a 5km radius around a given point. The used \textit{Netlytic} query points with their given perimeter are visible in figure \ref{fig:research_area}. The exact latitude / longitude coordinate pairs are the following:\\
+Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser \textit{Netlytic} \parencite{Gruzd2016}. \textit{Netlytic} can be accessed via \texttt{https://netlytic.org/} and allows for hashtag (\# + keyword) or location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows location based query for Instagram media objects of public accounts in a 5km radius around a given point. The used \textit{Netlytic} query points with their given perimeter are visible in figure \ref{fig:research_area}. The exact latitude / longitude coordinate pairs are the following:\\
 \begin{enumerate}
   \item 47.177068, 8.494803
   \item 47.129913, 8.533604
@@ -33,54 +33,54 @@ Data collection has been continuously performed over all three queries from the 
 \subsubsection{Data} \label{Instagram_data}
 The data-collection accounted for 28'246 raw Instagram media objects. After the dominant authors and bulk-upload data-processing steps referenced further down (see chapter (\ref{data_processing}) 11'777 remained.
 The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
-\begin{itemize}
-    \item id : Unique media object identifier. [varchar(30)] if the media object contains location information, [numeric(20)] if not.
-    \item latitude and longitude : Coordinate information in the WGS84 reference system of a specific Instagram location [double precision]
-    \item link : URL to the actual media object on \texttt{https://www.Instagram.com/} [text]
-    \item media-link : URL directing solely to the image content [text]
-    \item publication date : Date and time when the media object was uploaded with the data-format YYYY-MM-DD HH:MM:SS [timestamp]
-    \item author : The Instagram username of the media object author [text]
-    \item title : User generated media object title [text]
-    \item description : User generated media object description [text] 
-    \item like-count : Amount of likes the media object received on the SMP Instagram
+\begin{itemize}[label={}]
+    \item \textbf{Id:} Unique media object identifier. [varchar(30)] if the media object contains location information, [numeric(20)] if not.
+    \item \textbf{Latitude and longitude
+    :} Coordinate information in the WGS84 reference system of a specific \textit{Instagram} location [double precision]
+    \item \textbf{Link:} URL to the actual media object on \texttt{https://www.Instagram.com/} [text]
+    \item \textbf{media-link:} URL directing solely to the image content [text]
+    \item \textbf{publication date:} Date and time when the media object was uploaded with the data-format YYYY-MM-DD HH:MM:SS [timestamp]
+    \item \textbf{author:} The \textit{Instagram} username of the media object author [text]
+    \item \textbf{title:} User generated media object title [text]
+    \item \textbf{description:} User generated media object description [text] 
+    \item \textbf{like-count:} Amount of likes the media object received on the SMP \textit{Instagram} [bigint]
 \end{itemize}
 
 \paragraph{Location tag} \label{instagram_location_tag}
 The provided location information or tag consists of the above mentioned coordinates of a Instagram location. Instagram locations are points of interest which can be user-generated and do not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity by mitigating the divulging of sensitive location data. This implies that media objects that do not originate from the same location can still be 'snapped' to the same Instagram location and therefore show the same coordinate pair in the meta-data \parencite{Instagram}.
-It has been shown that roughly 85\% of Instagram media objects lack a location tag \parencite{XY} and most users only use them on vacation or when being abroad.
-Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in chapter \ref{sec: XXXXX}
-
+It has been shown that roughly 85\% of Instagram media objects lack a location tag \parencite{Flatow2015} and most users only use them on vacation or when being abroad.
+Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in chapter \ref{geolocation_via_instagramapi}.
 
 \subsection{Flickr} \label{flickr}
-Flickr is photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload geo-reverenced images similar to Instagram. The corresponding free of charge Flickr API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2005. The popularity of Flickr according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role also as data foundation for scientific studies due to the simple and unbounded data-access. <ADD REFERENCES>
+\textit{Flickr} is photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload georeferenced images similar to Instagram. The corresponding free of charge \textit{Flickr} API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2005. The popularity of \textit{Flickr} according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role also as data foundation for scientific studies due to the simple and unbounded data-access. <ADD REFERENCES>
 DEMOGRPAHIC INFORMATION
 WHY WAS IT CHOSEN
 \subsubsection{Query} \label{flickr_query}
-The entire Flickr database was queried via the publicly accessible official Flickr API. Media objects with a geo-reference-accuracy level of 12 or higher (maximum of 16) were of interest which resolves to city level up to street level. Queries were conducted by inputting several different bounding boxes which together cover the entire perimeter of the legal boundaries of the canton of Zug. Each bounding box was defined by two coordinate pairs, describing the bottom left and top right corner of a rectangle. This process of subdividing the area was necessary due to a maximum return threshold of 4'000 media objects per request. Therefore, to ensure the acquisition of the entire available data-set each bounding box had to hold less than 4'000 media objects.
+The entire Flickr database was queried via the publicly accessible official Flickr API. Media objects with a georeference-accuracy level of 12 or higher (maximum of 16) were of interest which resolves to city level up to street level. Queries were conducted by inputting several different bounding boxes which together cover the entire perimeter of the legal boundaries of the canton of Zug. Each bounding box was defined by two coordinate pairs, describing the bottom left and top right corner of a rectangle. This process of subdividing the area was necessary due to a maximum return threshold of 4'000 media objects per request. Therefore, to ensure the acquisition of the entire available data-set each bounding box had to hold less than 4'000 media objects.
 \subsubsection{Time-span} \label{flickr_timespan}
 The all the individual bounding-box API requests described above were queried for the time-spawn 2005 (launch of the SMP Flickr) until the 23rd of November 2018. 
 \subsubsection{Data} \label{flickr_data}
 The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
 
-\begin{itemize}
-    \item id : Unique media object identifier [bigint]
-    \item latitude and longitude : Coordinate information in the WGS84 reference system [double precision]
-    \item link : URL to the actual media object in the format \texttt{https://www.flickr.com/photos/[author]/[ID]/} [text]
-    \item date taken : Time-stamp from the image meta-data stating when it was taken. 
-    \item publication date : Time-stamp when the media object was uploaded to Flickr with the data-format MM/DD/YYYY HH:MM:SS [time-stamp]
-    \item author : The Flickr username of the media object author [text]
-    \item author id : Unique author identifier [text] 
-    \item author origin : User given geographical information regarding the authors origin [text]
-    \item title : User generated media object title [text]
-    \item description : User generated media object description [text]
-    \item tags : Keywords similar to Instagram hashtags that describe the media object but which are extracted by an image recognition algorithm similar to Google Cloud Vision \parencite{Flickr2019}. (therefore already includes smart image labels!) [text]
-    \item views : Amount of media object calls [bigint]
-    \item favorites : Amount of approves - similar to 'likes' on Instagram - a media object received by other Flickr users [bigint]
+\begin{itemize}[label={}]
+    \item \textbf{Id:} Unique media object identifier [bigint]
+    \item \textbf{Latitude and longitude:} Coordinate information in the WGS84 reference system [double precision]
+    \item \textbf{Link:} URL in the form \texttt{https://www.flickr.com/photos/[author]/[ID]/} to the actual media object [text]
+    \item \textbf{Date taken:} Time-stamp from the image meta-data stating when it was taken. 
+    \item \textbf{Publication date:} Time-stamp when the media object was uploaded to \textit{Flickr} with the data-format MM/DD/YYYY HH:MM:SS [time-stamp]
+    \item \textbf{Author:} The \textit{Flickr} username of the media object author [text]
+    \item \textbf{Author id:} Unique author identifier [text] 
+    \item \textbf{Author origin:} User given geographical information regarding the authors origin [text]
+    \item \textbf{Title:} User generated media object title [text]
+    \item \textbf{Description:} User generated media object description [text]
+    \item \textbf{Tags:} Keywords similar to \textInstagram hashtags that describe the media object but which are extracted by an image recognition algorithm similar to Google Cloud Vision \parencite{Flickr2019}. (therefore already includes smart image labels) [text]
+    \item \textbf{Views:} Amount of media object calls [bigint]
+    \item \textbf{Favourites:} Amount of approves - similar to 'likes' on \textit{Instagram} - a media object received by other \textit{Flickr} users [bigint]
 \end{itemize}
 
 \paragraph{Location tag} \label{flickr_location_tag}
-Unlike Instagram provides Flickr location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
-Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{geocoding_api}
+Unlike \textit{Instagram} provides \textit{Flickr} location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
+Additional location related information (address and location type) was gathered for all the media objects via the \textit{Google Geocoding} API. More information can be found in chapter \ref{geocoding_api}
 
 \subsection{Foursquare} \label{foursquare}
 Foursquare is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). All the stored ' infrastructure' which is categorised into different sectors such as ' Travel \& Transport', ' Arts and Entertainment' but also ' Outdoors \& Recreation' can be accessed via the official Foursquare API.
@@ -110,12 +110,12 @@ Only the following excerpt of the returned venue meta-data was used with the app
 Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{geocoding_api}
 
 \subsubsection{Data verification} \label{foursquare_data_verification}
-The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 USD for venues outside of the United States of America \parencite{Foursquare2019}. \\
-Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge. XY venues belonged to said categories of which XY were verified by the author of this thesis.
+The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 US-Dollars for venues outside of the United States of America \parencite{Foursquare2019}. \\
+Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the \textit{Foursquare} API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge.
 
 \section{Database Setup} \label{database_setup}
 During the course of this thesis a PostgreSQL database (\texttt{https://www.postgresql.org/}) was used which functioned as a centralised place to store the Flickr, Instagram and Foursquare data related to this project. The advantage of this approach compared to reading and storing in common txt- or csv-files is the possibility of computational efficient data-retrieval as by indexing conditional columns and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among other, smart table joins through primary and foreign key relation and conditional statements for advanced filtering \parencite{PostgreSQL2019}.\\
-Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is compatible with PostgreSQL - was used for the manually performed training-data verification process that is described in chapter \ref{XY}.\\
+Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is compatible with PostgreSQL - was used for the manually performed training's data verification process that is described in chapter \ref{precision_unseen_data}.\\
 The following tables were created for the housing of the used data in this format: [object-type]\_[data-origin]\_[data-source] \\
 \newline
 
@@ -133,8 +133,8 @@ Location tables:\\
     \item locations\_unionzug\_instagram
 \end{itemize}
 
-In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subchapters above. Furthermore are the outputs from the data- and text-processing steps (see chapter \ref{XY}) stored in the database.\\ 
-The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
+In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subchapters above. Furthermore are the outputs from the data- and text-processing steps (see chapter \ref{data_processing}) stored in the database.\\ 
+The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{add_location_data}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
 \newline
 The exact structure and table specific content of the database is visible in figure \ref{fig:database}
 
@@ -155,16 +155,16 @@ In total, three different, partly spatially overlapping Instagram queries were r
 \subsection{Acquisition of additional location information} \label{add_location_data}
 Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subchapters will elaborate on this process for the different data sources Instagram and Flickr.
 
-\subsubsection{Via the Instagram API}
-The Instagram data that was provided by Netlytic was enhanced by using the \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
+\subsubsection{Via the Instagram API} \label{geolocation_via_instagramapi}
+The Instagram data that was provided by Netlytic was enhanced by using the \\ \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
 
 \subsubsection{Via the Google Geocoding API} \label{geocoding_api}
 Each coordinate of every Flickr media object was run through the Google Geocoding API. Detailed information regarding the media objects address and location type was returned. The location type attribute is evidence of the API' s accuracy. Everything besides 'ROOFTOP' returns an address that is close but not exactly at the given coordinate and therefore an approximation.\\
 The API has been called by modifying the following HTTPS-request:\\
-\texttt{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]\&key=[API\_KEY]}
+\texttt{\footnotesize{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]\&key=[API\_KEY]}}
 
 \subsection{Populating the database} \label{populate_db}
-The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subchapters above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{XY} and the needed \textit{psycopg 2} library that functioned as linkage.
+The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subchapters above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{python_code} and the needed \textit{psycopg 2} library that functioned as linkage.
 
 \subsection{In boundary condition check} \label{in_boundary}
 Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the \texttt{in\_boundary} column in the corresponding database entries to TRUE for the provided media objects.
@@ -279,7 +279,7 @@ These links with the corresponding media\_object\_id's were iteratively queried 
    \label{fig:vision_illustration}
 \end{figure}
 
-The placement of this entire step in relation to the other data- and text-processes is visualised in step 2 of figure \ref{XY}.
+The placement of this entire step in relation to the other data- and text-processes is visualised in step 2 of figure \ref{fig:ml_visualisation}.
 
 \subsection{Query costs} \label{vision_query_cost}
 Google allows the creation of one Google Cloud trial account (needs a valid Credit Card for verification) per user which comes with 300 US Dollars' worth of credit to one's disposal. This credit can be used among others to rent virtual machines (VM's), API's and other Google Cloud services.\\
@@ -340,7 +340,7 @@ Additionally, a class 'None' is also implemented, which describes a media object
 If one is familiar with all the classes in the mentioned recreation types guidebook cited above, then the absence of the NBRA 'Swimming/Bathing' would become apparent and questionable. The reasoning behind the exclusion of said class is based on the Instagram-data acquisition period from the 30.09.2018 till the 11.12.2018. During this time little training's data was available on outdoor swimming due to the low lake temperatures. Additionally, the spatial occurrence of people swimming is less diverse and corresponds to certain, well known locations. Considering these circumstances and the additional needed effort, the decision against including 'swimming' as an independent class was made.
 
 \subsection{Acquisition and preparation of the training- and test dataset} \label{preparation_training_data}
-Due to a limited amount of available Instagram and Flickr data of the research area and the entire canton of Zug respectively, it was certain that not enough training-data for each of the recreations-types was available without training and testing the model on the identical data. Therefore, a larger additional Instagram dataset was drawn upon, which originated from a forest recreation assessment of the University of Zurich (\parencite{forest recreation assessment}). The dataset consisted of ten locations in Switzerland which differed in topography, local language spoken and demographical factors. The locations were the following: Aarau, Arosa, Ebmatingen, LocarnoNord, Neuchatel, Ovronnaz, Schanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018.
+Due to a limited amount of available Instagram and Flickr data of the research area and the entire canton of Zug respectively, it was certain that not enough training-data for each of the recreations-types was available without training and testing the model on the identical data. Therefore, a larger additional \textit{Instagram} dataset was drawn upon, which was collected by the geocomputation team of the University of Zurich (\parencite{Gruzd2016}). The dataset consisted of ten locations in Switzerland which differed in topography, local language spoken and demographical factors. The locations were the following: Aarau, Arosa, Ebmatingen, LocarnoNord, Neuchatel, Ovronnaz, Schanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018.
 Ten merge files for every location were created to firstly eliminate any duplicate media objects and secondly to add the location name as an additional column to the data rows for easier database filtering later on.\\
 \newline
 After considering the different topographic attributes, the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training-data due to their similarity to the research area and to the overall canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 / 68'522 post data-processing respectively. (include graph of dominant user, bulk threshold) Attentive readers will have noticed, that the resulting ML model will be purely based on Instagram data, even though Flickr data will be predicted with it later on also. This observation is correct and can be legitimated with the assumption, that user generated text does not differ to heavily between different social media platforms.\\
@@ -350,7 +350,6 @@ The next step encompassed the coarse identification of potential training's data
 These 1'890 coarse pre-determined classifications were in a following step manually verified and adapted if needed. This led to a deduction to a total of 1'499 remaining training's data objects (see \ref{tab:trainingsdata}). No media object with the pre-determined classification of 'None' was manually verified.\\
 \newline
 One issue that became apparent during the manual verification procedure was the problem of consistent class-definitions, especially for classes that were closely related, such as 'walking' and 'hiking'. As already touched upon further up in my work, people tend to have different interpretations of what hiking and what walking is. Also hiking might sound more adventurous then walking, which could explain an even more interchangeable usage in the field of social media. The following rules were established to differentiate between the three most similar classes, being: hiking, jogging and walking. A violation of these rules would lead to a reclassification during the manual verification process.\\
-\newline
 \begin{enumerate}
     \item Mentioned equipment: If equipment related keywords are present that give a strong incentive towards one class over the rest. E.g. 'backpack' for hiking.
     \item Mentioned adjectives, adverbs: It is assumed, that these NBRAs can be allocated on an axis that goes from relaxing to adventurous. Walking being on the far left, followed by jogging and hiking on the far-right side corresponding to adventurous. If adjectives or adverbs are used, that allow the allocation of a media object on this axis, then the closest most fitting class is chosen.
@@ -417,26 +416,26 @@ Decision trees are prone to overfitting due to their infinite possible depth by 
  The book from \parencite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see chapter \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be significantly faster than the one of the linear support vector classifier model (in this thesis roughly 20\% faster). 
 
 \subsection{Model setup} \label{model_setup}
-In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library allowed pipelining (see figure \ref{XY}- pycharm screenshot) which consisted of the following steps:
+In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library \parencite{2018Scikit-learnExtraction} allowed pipelining which consisted of the following steps:
 
 \begin{enumerate}
     \item \textbf{TfidfVectorizer} Converts a collection of raw documents (media objects) to a matrix of TF-IDF features which stands for the frequency over the inverse document frequency of a given (word-) token. This function is equivalent to applying 'CountVectorizer' followed by 'TfidfTransformer' \parencite{Scikit-learn2018}.\\
     This step is visualised in figure \ref{fig:ml_visualisation} under step 5 and 6.\\
     Tuned hyper-parameters:
-    \begin{itemize}
+    \begin{itemize}[label={}]
         \item \textbf{Min\_df} This parameter stands for the minimal required document frequency of a word token in the entire corpus to be included for further processing.
         \item \textbf{Ngram\_range} This parameter defines how word tokens are interpreted by the model. Given a minimal and a maximal token number the function is able to create new features by concatenating tokens that appear in succession. This enables the extraction of semantic meaning that would stay unseen if only individual token were considered.
     \end{itemize}
     
     \item \textbf{SelectKBest} This function allows for a further selection of the features generated by the vectorizer. Score functions such as ANOVA F-value and Chi-squared allow the selection of the most deterministic features in the set. Limiting the number of features can help to prevent model overfitting and can increase model generalisation.\\
     Tuned hyper-parameters:
-    \begin{itemize}
+    \begin{itemize}[label={}]
         \item \textbf{k} Defines the number of features with the highest score that are accepted.
     \end{itemize}
     
     \item \textbf{ML algorithm} LinearSVC (Support vector classifier) and random forest classifiers (see chapter \ref{ml_algorithms}) were used to find the most well-rounded model.\\
     Tuned hyper-parameters:
-    \begin{itemize}
+    \begin{itemize}[label={}]
         \item \textbf{LinearSVC C} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training's point. Reducing this parameter allows more generalisation and counteracts to overfitting, increasing the parameter increases model trainings-accuracy (see figure \ref{fig:over_underfitting}).
         
         \item \textbf{LinearSVC Penalty} This function introduces a regularisation penalty to prevent overfitting by minimising the data term as well as the regularisation. There are two commonly used L\textsubscript{p}-norms:
@@ -534,14 +533,14 @@ A total of \textbf{52} interviews were performed in the afternoon during slightl
 Every interview started out with a small introduction to the author's persona, the motivation behind the interviews and that all the gathered information will be kept anonymous and will solely be used for the course of this thesis. The purpose of these interviews was to gain information on three topics.\\
 \newline
 The first one being \textbf{location} related:
-\begin{itemize}
+\begin{itemize}[label={}]
     \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
     \item \textbf{Activity} Which NBRA is most frequently practised by the person in this location?
     \item \textbf{Frequency} How often does the person visit the location? (In the case of 'Schattenw\"aldli', it was also asked what the destination of the trip was.)
 \end{itemize}
 
 The second one was related to \textbf{social media}:
-\begin{itemize}
+\begin{itemize}[label={}]
     \item \textbf{Member} Do they own an account on any social media platform and if yes on which?
     \item \textbf{Habits} How do they interact with social media? Do they share own content (if yes in what frequency?), or do they rather look at foreign contributions?
     \item \textbf{Intent} Do they consider sharing their visit to the given location on social media and if yes on which platform?
