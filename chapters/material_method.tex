@@ -1,7 +1,7 @@
 \chapter{Materials and methods} \label{material_methods}
 
 \section{Research area} \label{research_area}
-The Canton of Zug was chosen by the author - who was raised in Cham - as the area of interest since important local knowledge was already present. The specific areas for which social media data (SMD) was acquired are visible in the map below (see figure \ref{fig:research_area}). The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter of the Canton of Zug and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept - named 'Leitbild Lorzenebene' has been created for it which was used as reference in this thesis \parencite{BaudirektiondesKantonsZug2012}. The second area resembles the jurisdiction of the City of Zug which partly encompasses the 'Lorzenebene'. This area is distinctive by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their sport and recreation value. \\
+The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extend. The specific areas for which social media data (SMD) was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreation services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreation value. \\
 There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subsection.
 
 \begin{figure}[h]
@@ -13,14 +13,14 @@ There is no perimeter concordance due to varying constraints in the data acquisi
 
 
 \section{Data acquisition and composition} \label{data_acquisition}
-The following subsections will elaborate on the data-acquisition process and the data-composition of the three SMP used in this thesis. 
+The following subsections will elaborate on the data-acquisition process and the data-composition of the three SMPs used in this thesis. 
 
 \subsection{Instagram} \label{instagram}
-Instagram is a SMP which supports the sharing of geo-referenced image and video content. The platform is mostly financed by web-advertisement and belongs to \textit{Facebook Inc.} It can be accessed via the URL \texttt{https://www.instagram.com/} or the corresponding mobile application.
+Instagram is a SMP which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook. It can be accessed via the URL \texttt{https://www.instagram.com/} or the corresponding mobile application.
 Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780' 000). The gender distribution was at 49.4\% women and 50.6\% men \parencite{2013}. This popularity was the determining factor that lead to including Instagram data into this thesis.\\
 
 \subsubsection{Query} \label{netlytic}
-Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser \textit{Netlytic} \parencite{Gruzd2016}. \textit{Netlytic} can be accessed via \texttt{https://netlytic.org/} and allows for hashtag (\# + keyword) or location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows location based query for Instagram media objects of public accounts in a 5km radius around a given point. The used \textit{Netlytic} query points with their given perimeter are visible in figure \ref{fig:research_area}. The exact latitude / longitude coordinate pairs are the following:\\
+Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser Netlytic \parencite{Gruzd2016}. Netlytic can be accessed via \texttt{https://netlytic.org/} and allows for hashtag (\# + keyword) or location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows to collect Instagram media objects of public accounts in a 5km radius around a given coordinate. These Netlytic query points with their given perimeter are also visible in figure \ref{fig:research_area}. The exact latitude / longitude pairs are the following:\\
 \begin{enumerate}
   \item 47.177068, 8.494803
   \item 47.129913, 8.533604
@@ -28,22 +28,22 @@ Licensed Instagram data of the research area visible in figure \ref{fig:research
 \end{enumerate}
 
 \subsubsection{Time-span} \label{Instagram_timespan}
-Data collection has been continuously performed over all three queries from the 30.09.2018 till the 11.12.2018. Due to the retirement of the Instagram Application Program Interface (API) on the 11.12.2018 \parencite{Instagram2018} this period could not be extended.
+Data collection has been continuously performed on all three coordinates from the 30.09.2018 till the 11.12.2018. Due to the retirement of the Instagram Application Program Interface (API) on the 11.12.2018 \parencite{Instagram2018} this period could not be extended.
 
 \subsubsection{Data} \label{Instagram_data}
 The data-collection accounted for 28'246 raw Instagram media objects. After the dominant authors and bulk-upload data-processing steps referenced further down (see section \ref{data_processing}) 11'777 remained.
-The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
+The data provided by Netlytic came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
 \begin{itemize}[label={}]
-    \item \textbf{Id:} Unique media object identifier. [varchar(30)] if the media object contains location information, [numeric(20)] if not.
-    \item \textbf{Latitude and longitude
-    :} Coordinate information in the WGS84 reference system of a specific \textit{Instagram} location [double precision]
-    \item \textbf{Link:} URL to the actual media object on \texttt{https://www.Instagram.com/} [text]
-    \item \textbf{media-link:} URL directing solely to the image content [text]
-    \item \textbf{publication date:} Date and time when the media object was uploaded with the data-format YYYY-MM-DD HH:MM:SS [timestamp]
-    \item \textbf{author:} The \textit{Instagram} username of the media object author [text]
-    \item \textbf{title:} User generated media object title [text]
-    \item \textbf{description:} User generated media object description [text] 
-    \item \textbf{like-count:} Amount of likes the media object received on the SMP \textit{Instagram} [bigint]
+    \item \textbf{id:} Unique media object identifier. \big[varchar(30)\big] if the media object contains location information, \big[numeric(20)\big] if not.
+    \item \textbf{latitude and longitude
+    :} Coordinate information in the WGS84 reference system of a specific Instagram location \big[double precision\big]
+    \item \textbf{link:} URL to the actual media object on \texttt{https://www.Instagram.com/} \big[text\big]
+    \item \textbf{media-link:} URL directing solely to the image content \big[text\big]
+    \item \textbf{publication date:} Date and time when the media object was uploaded with the data-format YYYY-MM-DD HH:MM:SS \big[timestamp\big]
+    \item \textbf{author:} The Instagram username of the media object author \big[text\big]
+    \item \textbf{title:} User generated media object title \big[text\big]
+    \item \textbf{description:} User generated media object description \big[text\big ]
+    \item \textbf{like-count:} Amount of likes the media object received on the SMP Instagram \big[bigint\big]
 \end{itemize}
 
 \paragraph{Location tag} \label{instagram_location_tag}
@@ -52,7 +52,7 @@ It has been shown that roughly 85\% of Instagram media objects lack a location t
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in section \ref{geolocation_via_instagramapi}.
 
 \subsection{Flickr} \label{flickr}
-\textit{Flickr} is photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload georeferenced images similar to Instagram. The corresponding free of charge \textit{Flickr} API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2005. The popularity of \textit{Flickr} according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role also as data foundation for scientific studies due to the simple and unbounded data-access. <ADD REFERENCES>
+Flickr is photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload georeferenced images similar to Instagram. The corresponding free of charge Flickr API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2005. The popularity of Flickr according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role also as data foundation for scientific studies due to the simple and unbounded data-access. <ADD REFERENCES>
 DEMOGRPAHIC INFORMATION
 WHY WAS IT CHOSEN
 \subsubsection{Query} \label{flickr_query}
@@ -63,24 +63,24 @@ The all the individual bounding-box API requests described above were queried fo
 The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
 
 \begin{itemize}[label={}]
-    \item \textbf{Id:} Unique media object identifier [bigint]
-    \item \textbf{Latitude and longitude:} Coordinate information in the WGS84 reference system [double precision]
-    \item \textbf{Link:} URL in the form \texttt{https://www.flickr.com/photos/[author]/[ID]/} to the actual media object [text]
-    \item \textbf{Date taken:} Time-stamp from the image meta-data stating when it was taken. 
-    \item \textbf{Publication date:} Time-stamp when the media object was uploaded to \textit{Flickr} with the data-format MM/DD/YYYY HH:MM:SS [time-stamp]
-    \item \textbf{Author:} The \textit{Flickr} username of the media object author [text]
-    \item \textbf{Author id:} Unique author identifier [text] 
-    \item \textbf{Author origin:} User given geographical information regarding the authors origin [text]
-    \item \textbf{Title:} User generated media object title [text]
-    \item \textbf{Description:} User generated media object description [text]
-    \item \textbf{Tags:} Keywords similar to \textInstagram hashtags that describe the media object but which are extracted by an image recognition algorithm similar to Google Cloud Vision \parencite{Flickr2019}. (therefore already includes smart image labels) [text]
-    \item \textbf{Views:} Amount of media object calls [bigint]
-    \item \textbf{Favourites:} Amount of approves - similar to 'likes' on \textit{Instagram} - a media object received by other \textit{Flickr} users [bigint]
+    \item \textbf{id:} Unique media object identifier \big[bigint\big]
+    \item \textbf{latitude and longitude:} Coordinate information in the WGS84 reference system \big[double precision\big]
+    \item \textbf{link:} URL in the form \texttt{https://www.flickr.com/photos/[author]/[ID]/} to the actual media object \big[text\big]
+    \item \textbf{date taken:} Time-stamp from the image meta-data stating when it was taken \big[timestamp\big]
+    \item \textbf{publication date:} Time-stamp when the media object was uploaded to Flickr with the data-format MM/DD/YYYY HH:MM:SS \big[time-stamp\big]
+    \item \textbf{author:} The Flickr username of the media object author \big[text\big]
+    \item \textbf{author id:} Unique author identifier \big[text\big] 
+    \item \textbf{author origin:} User given geographical information regarding the authors origin \big[text\big]
+    \item \textbf{title:} User generated media object title \big[text\big]
+    \item \textbf{description:} User generated media object description \big[text\big]
+    \item \textbf{tags:} Keywords similar to Instagram hashtags that describe the media object but which are extracted by an image recognition algorithm similar to Google Cloud Vision \parencite{Flickr2019}. (therefore already includes smart image labels) \big[text\big]
+    \item \textbf{views:} Amount of media object calls \big[bigint\big]
+    \item \textbf{Favourites:} Amount of approves - similar to 'likes' on Instagram - a media object received by other Flickr users \big[bigint\big]
 \end{itemize}
 
 \paragraph{Location tag} \label{flickr_location_tag}
-Unlike \textit{Instagram} provides \textit{Flickr} location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
-Additional location related information (address and location type) was gathered for all the media objects via the \textit{Google Geocoding} API. More information can be found in section \ref{geocoding_api}
+Unlike Instagram provides Flickr location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in section \ref{geocoding_api}
 
 \subsection{Foursquare} \label{foursquare}
 Foursquare is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). All the stored ' infrastructure' which is categorised into different sectors such as ' Travel \& Transport', ' Arts and Entertainment' but also ' Outdoors \& Recreation' can be accessed via the official Foursquare API.
@@ -94,24 +94,24 @@ The first step of the information acquirement involved a spatial search for venu
 To obtain more specific information about each venue, a second (premium) Foursquare API endpoint was used. This venue details endpoint only allowed 50 requests per day for regular users which spread the data acquisition over 9 days. Insight among others on a more concrete subcategory description, the formatted address, the user rating as well as if the venue was verified or not was the result.
 
 \subsubsection{Data} \label{fq_data}
-The data returned by the Foursqure API and the above mentioned endpoints was in the JSON format - the same as the Flickr data.
+The data returned by the Foursquare API and the above mentioned endpoints was in the JSON format - the same as the Flickr data.
 Only the following excerpt of the returned venue meta-data was used with the appropriate PostgreSQL data types in square brackets: \\
-\begin{itemize}
-    \item venue id : Unique venue identifier [text]
-    \item venue name : Locally used name to address the venue [text]
-    \item latitude and longitude : Coordinate information in the WGS84 reference system [double precision]
-    \item country name : Name of the country the venue is located in - used as additional data-verification [text]
-    \item rating : Venue rating generated through Foursquare users [real]
-    \item category id : Unique Foursquare venue category identifier [text]
-    \item category name : Foursquare venue category name
-    \item verified : Takes the values TRUE or FALSE. States if the venue data is verified by Foursquare
+\begin{itemize}[label={}]
+    \item \textbf{venue id:} Unique venue identifier \big[text\big]
+    \item \textbf{venue name:} Locally used name to address the venue \big[text\big]
+    \item \textbf{latitude and longitude:} Coordinate information in the WGS84 reference system \big[double precision\big]
+    \item \textbf{country name:} Name of the country the venue is located in - used as additional data-verification \big[text\big]
+    \item \textbf{rating:} Venue rating generated through Foursquare users \big[real\big]
+    \item \textbf{category id:} Unique Foursquare venue category identifier \big[text\big]
+    \item \textbf{category name:} Foursquare venue category name \big[text\big]
+    \item \textbf{verified:} Takes the values TRUE or FALSE. States if the venue data is verified by Foursquare \big[boolean\big]
 \end{itemize}
 
-Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in section \ref{geocoding_api}
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in section \ref{geocoding_api}.
 
 \subsubsection{Data verification} \label{foursquare_data_verification}
 The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 US-Dollars for venues outside of the United States of America \parencite{Foursquare2019}. \\
-Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the \textit{Foursquare} API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge.
+Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified according to the data provided by the Foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were evaluated by the author - who grew up in the area - to its best knowledge.
 
 \section{Database Setup} \label{database_setup}
 During the course of this thesis a PostgreSQL database (\texttt{https://www.postgresql.org/}) was used which functioned as a centralised place to store the Flickr, Instagram and Foursquare data related to this project. The advantage of this approach compared to reading and storing in common txt- or csv-files is the possibility of computational efficient data-retrieval as by indexing conditional columns and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among other, smart table joins through primary and foreign key relation and conditional statements for advanced filtering \parencite{PostgreSQL2019}.\\
@@ -211,7 +211,7 @@ After the entity check of each word versus all three of the above mentioned word
 The core text processing encompasses the following alteration steps and serves the purpose of creating universally similar structured and comparable word tokens out of the noisy user generated text data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated machine learning model to accurately predict the NBRA contained in the media objects.\\
 \newline
 The function \texttt{text\_processing\_core()} is called with the language detection corresponding word lists regarding spell checking, stop words, the corresponding stemmer object to attribute each word to its stem or root and the actual text string. If the Swiss German language was detected or none of the remaining two, then the mentioned function was called with no specific word lists and the steps regarding spell checking, stemming and the removal of stop words was skipped due to a lack of sophisticated methods. The provided text string consisted out of a concatenation of the title and the description of the given media object, unlike just the title for the shortened text processing step applied in the language detection function.\\
-Flickr tags were not neglected from this step, even though they were also created by an image detection algorithm similar to the \textit{Google Cloud Vision} algorithm which was used in this thesis to acquire image content tags.
+Flickr tags were not neglected from this step, even though they were also created by an image detection algorithm similar to the Google Cloud Vision algorithm which was used in this thesis to acquire image content tags.
 
 \paragraph*{Match and remove special text patterns} \label{text_patterns}
 The first step of the text alteration included the regular expression matching (see definitions for reverence) of any URI (which includes \texttt{https://, http://, www.} beginnings as well as the domain ending), HTML related tags (e.g. \texttt{<a>\dots<$\backslash$a>}), Instagram mentions (e.g. \texttt{@madmax}) and character/number combination-patterns (e.g. \texttt{zugersee2018}). If found, they were replaced by a whitespace (\texttt{$\backslash$s}) character. This step was done before prior to any other text processing step, due to the high risk of creating character artefacts which occur if those patterns remain in the text string.
@@ -255,7 +255,7 @@ The reason for removing as stop words identified tokens is to prevent the inflat
 
 \paragraph*{Topographic related words}
 Swiss topographic names and descriptions consisting of a dictionary of towns and cities \parencite{Swisstopo2018O} and geographical names from the topographical survey of Switzerland \parencite{Swisstopo2018a} were ignored, ensuring that the resulting model is not trained on  specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis, where the training's data originated from a different area than the actual research area, this factor should not be neglected. 
-The possibility to use this additional locational information in the form of topographic terms to narrow down the location of the NBRA's was not considered but could be a potential further improvement to this method. 
+The possibility to use this additional location information in the form of topographic terms to narrow down the location of the NBRA's was not considered but could be a potential further improvement to this method. 
 Additionally, 20 language variations of the country name 'Switzerland' where also removed \parencite{101languages2018}. 
 During the text processing testing a crucial issue of location- and word token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to run) were being wrongfully removed based on the existing town 'Laufen' in Switzerland. To counter this problem, the list of to be excluded topographic descriptions was run against the word dictionaries of the English, German and French language which were already used for the language detection of the media objects. The 1'032 matched words of a total of 66'133 topographic list entities were not further considered.
 
@@ -265,8 +265,8 @@ The generated word tokens and the identified language are saved in the correspon
 \section{Image recognition} \label{image_recognition}
 The extraction of structural elements from a media object's image enables an additional information gain to further describe its overall context and content besides the user generated text.\\
 \newline
-Since image recognition is a scientific field of its own, an independent service was used for this task. At the time of writing, there were multiple suitable solutions on the market - two of which were the \textit{Amazon Rekognition Service} and the \textit{Google Cloud Vision API}. The latter was applied in this thesis based on the given pricing (see subsection XY) and initialisation conditions at that time.\\
-The \textit{Google Cloud Vision API} allows users to draw upon a deep-learning algorithm that is constantly trained on Google's rich image pool to identify and classify structural elements in images.
+Since image recognition is a scientific field of its own, an independent service was used for this task. At the time of writing, there were multiple suitable solutions on the market - two of which were the Amazon Rekognition Service and the Google Cloud Vision API. The latter was applied in this thesis based on the given pricing (see subsection XY) and initialisation conditions at that time.\\
+The Google Cloud Vision API allows users to draw upon a deep-learning algorithm that is constantly trained on Google's rich image pool to identify and classify structural elements in images.
 
 \subsection{Process}
 Every Flickr and Instagram media object stored in the database comes with a media link that allows accessing the post's image. 
@@ -294,7 +294,7 @@ ML in its core refers to the process of a computer to understand or 'learn' the 
 One simple example of potential features could be different body-measurements of a specific animal with the aim to differentiate between different types of the same species. The training's data would then consist of multiple entries, where most likely a human measured all the needed body parts of several individuals and entered the numerical value in the corresponding feature field.\\
 
 One can differentiate between two general types of ML - supervised and unsupervised learning. To illustrate the difference - imagine a set of training's data where each entry is represented by a point in an n-dimensional space where n corresponds to the number of features present and the coordinates of each point correspond to the feature's values. If we make the link back to the example above, then unsupervised learning would mean that the training's data consists of only the training's data without any labels. The labels in this case would have been the names of the animal species that the measurements were taken from. In this way the model is forced to find natural breaks / boundaries on its own in the training data by clustering similar data points together and regarding them as an independent class. The hypothesis here is, that points closer to each other in space are more related / similar to one another than distant ones. This model given class name does not correspond in any way to the actual name of the animal, because the model has no information on it what so ever. It is up to the user to appropriately label the clusters / classes the model isolated.
-Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term 'supervised' therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training-data set takes time, but it allows for a better performing model and its direct validation. Validation is done by splitting the original training-data set into two parts. Generally, a bigger portion is used for training the model and the other one - which the model has never seen during the fitting phase - is used to assess the model's performance.\\
+Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term 'supervised' therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training-data set takes time, but it allows for a better performing model and its direct validation. Validation is done by splitting the original training-data set into two parts. Generally, a bigger portion is used for training the model and the other one - which the model has never seen during the fitting phase - is used to test the model's performance.\\
 \newline
 These terms correspond to two extremes of how the model and its incorporated (boundary-) function is fitted to the provided test-data (see point in figure \ref{XY}). Underfitting describes the state, where the model does not seem to extract and comprehend any logic from the dataset and therefore over-generalises the classification problem at hand (see outer left graph of figure \ref{fig:over_underfitting}). The other extreme is known by the term overfitting where the model tries to correctly classify every single training-data point to its proper class. This results in the model being extremely tuned to the provided training-data but not being able to generalise well on new, unseen data (see outer right graph in figure \ref{fig:over_underfitting}).\\
 Underfitting is more easily detected and corrected than overfitting but more on that topic in section \ref{ml_text_data} Machine learning on non-numerical text data.
@@ -312,7 +312,7 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 \begin{wrapfigure}{l}{0.3\textwidth} %0.3 and 0.28
   \vspace{-0.5cm}
   %\begin{center}
-    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/ML_text_data_visualization_cropped.pdf}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/ML_text_data_visualization_cropped.pdf}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
   \caption{Core ML workflow}
@@ -340,7 +340,7 @@ Additionally, a class 'None' is also implemented, which describes a media object
 If one is familiar with all the classes in the mentioned recreation types guidebook cited above, then the absence of the NBRA 'Swimming/Bathing' would become apparent and questionable. The reasoning behind the exclusion of said class is based on the Instagram-data acquisition period from the 30.09.2018 till the 11.12.2018. During this time little training's data was available on outdoor swimming due to the low lake temperatures. Additionally, the spatial occurrence of people swimming is less diverse and corresponds to certain, well known locations. Considering these circumstances and the additional needed effort, the decision against including 'swimming' as an independent class was made.
 
 \subsection{Acquisition and preparation of the training- and test dataset} \label{preparation_training_data}
-Due to a limited amount of available Instagram and Flickr data of the research area and the entire canton of Zug respectively, it was certain that not enough training-data for each of the recreations-types was available without training and testing the model on the identical data. Therefore, a larger additional \textit{Instagram} dataset was drawn upon, which was collected by the geocomputation team of the University of Zurich (\parencite{Gruzd2016}). The dataset consisted of ten locations in Switzerland which differed in topography, local language spoken and demographical factors. The locations were the following: Aarau, Arosa, Ebmatingen, LocarnoNord, Neuchatel, Ovronnaz, Schanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018.
+Due to a limited amount of available Instagram and Flickr data of the research area and the entire canton of Zug respectively, it was certain that not enough training-data for each of the recreations-types was available without training and testing the model on the identical data. Therefore, a larger additional Instagram dataset was drawn upon, which was collected by the geocomputation team of the University of Zurich (\parencite{Gruzd2016}). The dataset consisted of ten locations in Switzerland which differed in topography, local language spoken and demographical factors. The locations were the following: Aarau, Arosa, Ebmatingen, LocarnoNord, Neuchatel, Ovronnaz, Schanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018.
 Ten merge files for every location were created to firstly eliminate any duplicate media objects and secondly to add the location name as an additional column to the data rows for easier database filtering later on.\\
 \newline
 After considering the different topographic attributes, the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training-data due to their similarity to the research area and to the overall canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 / 68'522 post data-processing respectively. (include graph of dominant user, bulk threshold) Attentive readers will have noticed, that the resulting ML model will be purely based on Instagram data, even though Flickr data will be predicted with it later on also. This observation is correct and can be legitimated with the assumption, that user generated text does not differ to heavily between different social media platforms.\\
@@ -381,12 +381,12 @@ None & - & 279'285 & 279'490 \\ \hline
 \end{table}
 
 \subsection{Issue of expired Instagram media links} \label{expired_media_links}
-Every media object acquired by Instagram or any similar third-party API contains a media links which points towards the actual Instagram post with the corresponding image, video or Instagram story. According to a \textit{Stackoverflow} post \parencite{Wayne2018}, contain all these generated Instagram media links a time-stamp component which functions as an expiration date upon which the links become invalid. At the time of writing, the training-data set dates back more then one year and all the links already turned invalid.\\
+Every media object acquired by Instagram or any similar third-party API contains a media links which points towards the actual Instagram post with the corresponding image, video or Instagram story. According to a Stackoverflow post \parencite{Wayne2018}, contain all these generated Instagram media links a time-stamp component which functions as an expiration date upon which the links become invalid. At the time of writing, the training-data set dates back more then one year and all the links already turned invalid.\\
 \newline
-The links to the full Instagram media object (see section \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
+The links to the full Instagram media object (see section \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the Google Cloud Vision API for the image recognition.
 
 \subsection{Machine learning model} \label{ml_model}
-The following subsections encompass the entire pipeline of functions that were used to build \textbf{two kinds of models}. These models should provide inside on the effect of combining text and image content data regarding model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned form the \textit{Google Cloud Vision API}. Besides that, the models were setup, trained, tuned and implemented in exactly the same fashion.\\
+The following subsections encompass the entire pipeline of functions that were used to build \textbf{two kinds of models}. These models should provide inside on the effect of combining text and image content data regarding model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned form the Google Cloud Vision API. Besides that, the models were setup, trained, tuned and implemented in exactly the same fashion.\\
 Scores for evaluating ML model performance are also introduced which are referenced again in the results \ref{XY}. The entire implementation of the subsequent steps with the corresponding code and comments can be viewed in the Appendix \ref{python_code}.
 
 \subsubsection{Considered algorithms} \label{ml_algorithms}
