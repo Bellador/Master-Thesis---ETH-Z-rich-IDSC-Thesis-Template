@@ -2,7 +2,7 @@
 
 \section{Research area} \label{research_area}
 The Canton of Zug was chosen by the author - who was raised in Cham - as the area of interest since important local knowledge was already present. The specific areas for which social media data (SMD) was acquired are visible in the map below (see figure \ref{fig:research_area}). The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter of the Canton of Zug and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept - named 'Leitbild Lorzenebene' has been created for it which was used as reference in this thesis \parencite{BaudirektiondesKantonsZug2012}. The second area resembles the jurisdiction of the City of Zug which partly encompasses the 'Lorzenebene'. This area is distinctive by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their sport and recreation value. \\
-There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subchapter.
+There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subsection.
 
 \begin{figure}[h]
    \centering
@@ -31,7 +31,7 @@ Licensed Instagram data of the research area visible in figure \ref{fig:research
 Data collection has been continuously performed over all three queries from the 30.09.2018 till the 11.12.2018. Due to the retirement of the Instagram Application Program Interface (API) on the 11.12.2018 \parencite{Instagram2018} this period could not be extended.
 
 \subsubsection{Data} \label{Instagram_data}
-The data-collection accounted for 28'246 raw Instagram media objects. After the dominant authors and bulk-upload data-processing steps referenced further down (see chapter (\ref{data_processing}) 11'777 remained.
+The data-collection accounted for 28'246 raw Instagram media objects. After the dominant authors and bulk-upload data-processing steps referenced further down (see section \ref{data_processing}) 11'777 remained.
 The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
 \begin{itemize}[label={}]
     \item \textbf{Id:} Unique media object identifier. [varchar(30)] if the media object contains location information, [numeric(20)] if not.
@@ -49,7 +49,7 @@ The data provided by \textit{Netlytic} came in the Comma Separated Values (CSV) 
 \paragraph{Location tag} \label{instagram_location_tag}
 The provided location information or tag consists of the above mentioned coordinates of a Instagram location. Instagram locations are points of interest which can be user-generated and do not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity by mitigating the divulging of sensitive location data. This implies that media objects that do not originate from the same location can still be 'snapped' to the same Instagram location and therefore show the same coordinate pair in the meta-data \parencite{Instagram}.
 It has been shown that roughly 85\% of Instagram media objects lack a location tag \parencite{Flatow2015} and most users only use them on vacation or when being abroad.
-Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in chapter \ref{geolocation_via_instagramapi}.
+Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in section \ref{geolocation_via_instagramapi}.
 
 \subsection{Flickr} \label{flickr}
 \textit{Flickr} is photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload georeferenced images similar to Instagram. The corresponding free of charge \textit{Flickr} API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2005. The popularity of \textit{Flickr} according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role also as data foundation for scientific studies due to the simple and unbounded data-access. <ADD REFERENCES>
@@ -80,7 +80,7 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
 
 \paragraph{Location tag} \label{flickr_location_tag}
 Unlike \textit{Instagram} provides \textit{Flickr} location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image itself and can come in different accuracies ranging from 0 (global scale) to 16 (street level) dependant on the users preference or the GPS signal strength. \\
-Additional location related information (address and location type) was gathered for all the media objects via the \textit{Google Geocoding} API. More information can be found in chapter \ref{geocoding_api}
+Additional location related information (address and location type) was gathered for all the media objects via the \textit{Google Geocoding} API. More information can be found in section \ref{geocoding_api}
 
 \subsection{Foursquare} \label{foursquare}
 Foursquare is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). All the stored ' infrastructure' which is categorised into different sectors such as ' Travel \& Transport', ' Arts and Entertainment' but also ' Outdoors \& Recreation' can be accessed via the official Foursquare API.
@@ -107,7 +107,7 @@ Only the following excerpt of the returned venue meta-data was used with the app
     \item verified : Takes the values TRUE or FALSE. States if the venue data is verified by Foursquare
 \end{itemize}
 
-Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in chapter \ref{geocoding_api}
+Additional location related information (address and location type) was gathered for all the media objects via the Google Geocoding API. More information can be found in section \ref{geocoding_api}
 
 \subsubsection{Data verification} \label{foursquare_data_verification}
 The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. If a business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 US-Dollars for venues outside of the United States of America \parencite{Foursquare2019}. \\
@@ -115,7 +115,7 @@ Of all 405 venues located inside the canton of Zug, 13 (3.2\%) are verified acco
 
 \section{Database Setup} \label{database_setup}
 During the course of this thesis a PostgreSQL database (\texttt{https://www.postgresql.org/}) was used which functioned as a centralised place to store the Flickr, Instagram and Foursquare data related to this project. The advantage of this approach compared to reading and storing in common txt- or csv-files is the possibility of computational efficient data-retrieval as by indexing conditional columns and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among other, smart table joins through primary and foreign key relation and conditional statements for advanced filtering \parencite{PostgreSQL2019}.\\
-Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is compatible with PostgreSQL - was used for the manually performed training's data verification process that is described in chapter \ref{precision_unseen_data}.\\
+Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is compatible with PostgreSQL - was used for the manually performed training's data verification process that is described in section \ref{precision_unseen_data}.\\
 The following tables were created for the housing of the used data in this format: [object-type]\_[data-origin]\_[data-source] \\
 \newline
 
@@ -133,8 +133,8 @@ Location tables:\\
     \item locations\_unionzug\_instagram
 \end{itemize}
 
-In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subchapters above. Furthermore are the outputs from the data- and text-processing steps (see chapter \ref{data_processing}) stored in the database.\\ 
-The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see chapter \ref{add_location_data}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
+In more detail, the media object tables store all data related to an object retrieved from one of the three SMP as stated in the corresponding subsections above. Furthermore are the outputs from the data- and text-processing steps (see section \ref{data_processing}) stored in the database.\\ 
+The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table, where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated location provided by Netlytic (Instagram) by acquiring additional geographic information via Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Time-stamps were normalised across all SMP to the YYYY-MM-DD HH-MM-SS format \\
 \newline
 The exact structure and table specific content of the database is visible in figure \ref{fig:database}
 
@@ -153,7 +153,7 @@ The following processes cover the entire workflow of data manipulation on the da
 In total, three different, partly spatially overlapping Instagram queries were run via Netlytic. All of them returned one CSV file. they were merged to reduce the complexity of handling multiple files for the consecutive processes. Media object duplicates were also addressed in this step. This entire data-processing step was not needed for the Flickr-data since merging and duplicates were already handled during the data-mining.
 
 \subsection{Acquisition of additional location information} \label{add_location_data}
-Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subchapters will elaborate on this process for the different data sources Instagram and Flickr.
+Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subsections will elaborate on this process for the different data sources Instagram and Flickr.
 
 \subsubsection{Via the Instagram API} \label{geolocation_via_instagramapi}
 The Instagram data that was provided by Netlytic was enhanced by using the \\ \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
@@ -164,7 +164,7 @@ The API has been called by modifying the following HTTPS-request:\\
 \texttt{\footnotesize{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]\&key=[API\_KEY]}}
 
 \subsection{Populating the database} \label{populate_db}
-The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subchapters above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{python_code} and the needed \textit{psycopg 2} library that functioned as linkage.
+The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subsections above were used to populate the initial PostgreSQL database. This process was entirely done through the Python script provided in the Appendix \ref{python_code} and the needed \textit{psycopg 2} library that functioned as linkage.
 
 \subsection{In boundary condition check} \label{in_boundary}
 Additional area beyond the actual research area perimeters were queried due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object had to be checked to be inside the actual perimeter boundary. This process was accomplished with the open source Geographical Information Software (GIS) QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV file. This CSV file was read by the Python script which updated the \texttt{in\_boundary} column in the corresponding database entries to TRUE for the provided media objects.
@@ -226,7 +226,7 @@ Eventually the text string is split at the occurrence of one or more whitespaces
 Basic spell checking is done for the English, German and French language. The purpose again lies in the reduction of the vocabulary for the machine learning model. This is achieved by ensuring the same spelling and therefore the same word token for a given word by reducing word variety created through spelling mistakes. Each given word token is checked for being part of the same corresponding language word list (dictionary) already used for the determination of the media object language. If the token has been determined to be an entity of the given list, it is returned without any alteration. If no match was found, a suitable word correction is suggested. The entire process makes use of the Python library \textit{pyenchant} which handles the smart entity search as well as the word suggestion and word correction process. Spell checking was skipped for the Italian language due to a missing \textit{pyenchant} dictionary.
 
 \paragraph*{Stemming} \label{word_stemming}
-Stemming refers to the process of reducing a word to its linguistic root which yields many advantages for information retrieval (IR) in general and more particular for text-based machine learning models as demonstrated further down in CHAPTER \ref{XY}. The following paper \parencite{Lovins1968} distinguishes between root and stem where the root is the stem minus any prefixes. This differentiation was not applied here. 
+Stemming refers to the process of reducing a word to its linguistic root which yields many advantages for information retrieval (IR) in general and more particular for text-based machine learning models as demonstrated further down in section \ref{XY}. The following paper \parencite{Lovins1968} distinguishes between root and stem where the root is the stem minus any prefixes. This differentiation was not applied here. 
 \parencite{Weissweiler2018} described the purpose of a stemmer as not being exclusive to finding the morphological correct root for a word, but to reduce it to a form it shares with all words that are sufficiently semantically related. The exact nature of that form is irrelevant, but it boils down to removing all prefixes and suffixes - leaving only the pure stem of the former word. Lemmatisation is another term that gets used in computational linguistics together with stemming. The difference being that lemmatisation considers the context of the entire sentence or document while algorithmically determining the lemma (stem) of a word. Stemming was used over lemmatisation due to the reduced processing cost and the increased recall accuracy.\\
 \newline
 Regarding machine learning, stemming is important to enhance the performance of the model by merging tokens with similar meaning to fewer ones with more informational gain. A model will not necessarily associate the same meaning and importance to different words even if they share the same stem. But rather will handle them as different features. Therefore, stemming is often applied to machine learning models that operate on heterogeneous user generated text.\\
@@ -297,7 +297,7 @@ One can differentiate between two general types of ML - supervised and unsupervi
 Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term 'supervised' therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training-data set takes time, but it allows for a better performing model and its direct validation. Validation is done by splitting the original training-data set into two parts. Generally, a bigger portion is used for training the model and the other one - which the model has never seen during the fitting phase - is used to assess the model's performance.\\
 \newline
 These terms correspond to two extremes of how the model and its incorporated (boundary-) function is fitted to the provided test-data (see point in figure \ref{XY}). Underfitting describes the state, where the model does not seem to extract and comprehend any logic from the dataset and therefore over-generalises the classification problem at hand (see outer left graph of figure \ref{fig:over_underfitting}). The other extreme is known by the term overfitting where the model tries to correctly classify every single training-data point to its proper class. This results in the model being extremely tuned to the provided training-data but not being able to generalise well on new, unseen data (see outer right graph in figure \ref{fig:over_underfitting}).\\
-Underfitting is more easily detected and corrected than overfitting but more on that topic in chapter \ref{ml_text_data} Machine learning on non-numerical text data.
+Underfitting is more easily detected and corrected than overfitting but more on that topic in section \ref{ml_text_data} Machine learning on non-numerical text data.
 
 \begin{figure}[h]
    \centering
@@ -312,17 +312,17 @@ Underfitting is more easily detected and corrected than overfitting but more on 
 \begin{wrapfigure}{l}{0.3\textwidth} %0.3 and 0.28
   \vspace{-0.5cm}
   %\begin{center}
-    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/ML_visualisation.pdf}}
+    \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/ML_text_data_visualization_cropped.pdf}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
   \caption{Core ML workflow}
   \label{fig:ml_visualisation}
 \end{wrapfigure}
-One approach to transform text-based data into machine readable information will be covered in this chapter. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
+One approach to transform text-based data into machine readable information will be covered in this section. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to process text, but outputting numbers at the end in one form or the other is what they all have in common.\\
 In this project the 'bag-of-words' representation has been applied \parencite{Joulin2016}. This method learns the 'vocabulary' of a corpus of documents - in this case referred to as media objects. Then associates a sequence of numbers representing words present and missing from the corpus vocabulary to each individual media as a 'fingerprint'. The entire process can be boiled down into three steps which explain more thoroughly what has been said above:
 
-\paragraph*{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in chapter \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
+\paragraph*{Tokenization} The input - consisting of the concatenated text strings and the image recognition labels - of each media object is processed into word tokens by a sequence of various functions as seen in section \ref{text_processing} 'Text-processing' and step 4 of figure \ref{fig:ml_visualisation}. This homogenisation enables a reduced model complexity by merging similar features and neglecting features with little semantic meaning. The generated string outputs (see \ref{fig:ml_visualisation} step 5) are fed into:
 
 \paragraph*{Vocabulary building} By assessing the individual word tokens of each media object, the 'bag-of-words' constructor assembles a vocabulary of unique tokens found in the corpus. This 'vocabulary' so to speak appears in the shape of an alphabetic ordered array where each column represents a word token. These columns are from now on referred to as a (model) features.
 
@@ -383,14 +383,14 @@ None & - & 279'285 & 279'490 \\ \hline
 \subsection{Issue of expired Instagram media links} \label{expired_media_links}
 Every media object acquired by Instagram or any similar third-party API contains a media links which points towards the actual Instagram post with the corresponding image, video or Instagram story. According to a \textit{Stackoverflow} post \parencite{Wayne2018}, contain all these generated Instagram media links a time-stamp component which functions as an expiration date upon which the links become invalid. At the time of writing, the training-data set dates back more then one year and all the links already turned invalid.\\
 \newline
-The links to the full Instagram media object (see chapter \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
+The links to the full Instagram media object (see section \ref{Instagram_data}) on the other hand were still valid - given the author of the media object did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} container. The source (\texttt{src}) attribute of that image container provided the media link that could be passed to the \textit{Google Cloud Vision API} for the image recognition.
 
 \subsection{Machine learning model} \label{ml_model}
-The following subchapters encompass the entire pipeline of functions that were used to build \textbf{two kinds of models}. These models should provide inside on the effect of combining text and image content data regarding model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned form the \textit{Google Cloud Vision API}. Besides that, the models were setup, trained, tuned and implemented in exactly the same fashion.\\
+The following subsections encompass the entire pipeline of functions that were used to build \textbf{two kinds of models}. These models should provide inside on the effect of combining text and image content data regarding model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned form the \textit{Google Cloud Vision API}. Besides that, the models were setup, trained, tuned and implemented in exactly the same fashion.\\
 Scores for evaluating ML model performance are also introduced which are referenced again in the results \ref{XY}. The entire implementation of the subsequent steps with the corresponding code and comments can be viewed in the Appendix \ref{python_code}.
 
 \subsubsection{Considered algorithms} \label{ml_algorithms}
-The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding chapter \ref{results_models}.
+The following algorithms were tested and evaluated for the creation of the final ML model. The results will be presented in the corresponding section \ref{results_models}.
 
 \paragraph{Linear support vector machines (SVMs)}
 A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data.
@@ -411,9 +411,9 @@ For the calculation of the mentioned hyperplane are only the marginal vectors of
 \paragraph{Decision Tree algorithm}
 Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data the further down in the tree they wander. The determination of the node's operation and their position inside the tree is seen as the fitting / training of the model.\\
 One specific variation of the generic decision tree - which has been tested for this project - is the so-called random forest. It creates a defined amount of individual decision trees which are trained on different random test and train splits of the training's dataset - which comes close to performing a cross-validation. At the end these trees are logically merged where among others deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training's data while reducing the trend to overfitting.\\
-Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's data. This can be countered by limiting the maximal depth of the tree. This process is called pre-pruning (see also chapter \ref{XY} model tuning).\\
+Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's data. This can be countered by limiting the maximal depth of the tree. This process is called pre-pruning (see also section \ref{XY} model tuning).\\
 \newline
- The book from \parencite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see chapter \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be significantly faster than the one of the linear support vector classifier model (in this thesis roughly 20\% faster). 
+ The book from \parencite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see section \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be significantly faster than the one of the linear support vector classifier model (in this thesis roughly 20\% faster). 
 
 \subsection{Model setup} \label{model_setup}
 In addition to the previously mentioned data and text-processing some extra functions were used before the actual fitting algorithm was applied. The entire model building was setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library \parencite{2018Scikit-learnExtraction} allowed pipelining which consisted of the following steps:
@@ -433,7 +433,7 @@ In addition to the previously mentioned data and text-processing some extra func
         \item \textbf{k} Defines the number of features with the highest score that are accepted.
     \end{itemize}
     
-    \item \textbf{ML algorithm} LinearSVC (Support vector classifier) and random forest classifiers (see chapter \ref{ml_algorithms}) were used to find the most well-rounded model.\\
+    \item \textbf{ML algorithm} LinearSVC (Support vector classifier) and random forest classifiers (see section \ref{ml_algorithms}) were used to find the most well-rounded model.\\
     Tuned hyper-parameters:
     \begin{itemize}[label={}]
         \item \textbf{LinearSVC C} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training's point. Reducing this parameter allows more generalisation and counteracts to overfitting, increasing the parameter increases model trainings-accuracy (see figure \ref{fig:over_underfitting}).

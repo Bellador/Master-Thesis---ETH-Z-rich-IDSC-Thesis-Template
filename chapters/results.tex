@@ -1,5 +1,5 @@
 \chapter{Results} \label{results}
-This chapter will encompass the result of the two ML models for NBRA prediction in Instagram and Flickr media objects as well as the evaluation of the in-situ interviews and the passive observation statistic of NBRAs.
+This section will encompass the result of the two ML models for NBRA prediction in Instagram and Flickr media objects as well as the evaluation of the in-situ interviews and the passive observation statistic of NBRAs.
 \section{Data-processing} \label{results_dataprocessing}
 The following table \ref{tab:data_reduction_values}will provide data-reduction values for each data-source and dataset used. These reductions were the result of the different data-processing steps described in \ref{data_processing} which will be shortly listed again below:
 \begin{itemize}
@@ -34,21 +34,21 @@ Similar graphs to figure \ref{img:dominant_users_flickr} were created for all th
 \end{figure}
 
 \section{Models} \label{results_models}
-The following subsections will cover the  performance results of each of the two created models (see chapter \ref{ml_model} that were solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table:\\ \texttt{media\_objects\_trainingdata\_instagram} (see figure \ref{database_setup}). For each model the random forest classifier and the linearSVC fitting algorithm was independently tested. The hyperparameters were tuned to yield the best possible average F1-score over all classes excluding the None-class. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
+The following subsections will cover the  performance results of each of the two created models (see section \ref{ml_model} that were solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table:\\ \texttt{media\_objects\_trainingdata\_instagram} (see figure \ref{database_setup}). For each model the random forest classifier and the linearSVC fitting algorithm was independently tested. The hyperparameters were tuned to yield the best possible average 10-Fold cross-validated F1-score over all classes excluding the None-class. The training's data was consistently split into 75\% data for training and 25\% data for verification/testing. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
 These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr} from the Canton Zug.\\
-Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.
-
-\texttt{Remark:} The entire data presented in the following subchapters is available on the enclosed CD to this thesis. This includes the actual M1 and M2 dump files, tuning and cross-validation logs as well as the most important performance graphs (see chapter \ref{CD_content}).
+Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
+\newline
+\texttt{Remark:} The entire data presented in the following subsections is available on the enclosed CD to this thesis. This includes the actual M1 and M2 dump files, tuning and cross-validation logs as well as the most important performance graphs (see section \ref{CD_content}).
 
 \subsection{Model 1: untrained on image labels}
-The first model (M1) that was trained exclusively on the processed user generated text-data (see chapter \ref{text_processing}). Therefore, it did not include any information about the image and its content. This leads to the model vocabulary potentially missing the associated image labels that the image recognition would yield.
+The first model (M1) that was trained exclusively on the processed user generated text-data (see section \ref{text_processing}). Therefore, it did not include any information about the image and its content. This leads to the model vocabulary potentially missing the associated image labels that the image recognition would yield.
 
 \subsubsection{M1 - Random forest}
 The model tuning with the parameter grid visible in figure \ref{code:randomForest_parameters} resulted in the following best hyper-parameter performing constellation:\\
 
 \begin{table}[h!]
 \begin{center}
-\caption{Best hyperparameter setting for the random forest algorithm. The parameter descriptions can be found in Chapter \ref{model_setup}}\vspace{1ex}
+\caption{Best hyperparameter setting for the random forest algorithm. The parameter descriptions can be found in section \ref{model_setup}}\vspace{1ex}
 \label{tab:m1_randomForest_bestParams}
 \begin{tabular}{ccccc}\hline
 k & max\_depth & min\_df & ngram\_range & none\_objects \\ \hline
@@ -75,7 +75,7 @@ The model tuning with the parameter grid visible in figure \ref{code:linear_svc_
 
 \begin{table}[h!]
 \begin{center}
-\caption{Best hyperparameter setting for the linearSVC algorithm. The parameter descriptions can be found in chapter \ref{model_setup}}\vspace{1ex}
+\caption{Best hyperparameter setting for the linearSVC algorithm. The parameter descriptions can be found in section \ref{model_setup}}\vspace{1ex}
 \label{tab:m1_linearSVC_bestParams}
 \begin{tabular}{llccc}\hline
 k & C & min\_df & ngram\_range & none\_objects \\ \hline
@@ -98,14 +98,14 @@ Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without none clas
 \end{table}
 
 \subsection{Model 2: trained on image labels and text-data}
-The second model (M2) was trained on the Google Cloud Vision API image labels and the processed user generated text-data (see chapter \ref{text_processing}).
+The second model (M2) was trained on the Google Cloud Vision API image labels and the processed user generated text-data (see section \ref{text_processing}).
 
 \subsubsection{M2 - Random forest}
 The model tuning with the parameter grid visible in figure \ref{code:randomForest_parameters} resulted in the following best hyper-parameter performing constellation:\\
 
 \begin{table}[h!]
 \begin{center}
-\caption{Best hyperparameter setting for the random forest algorithm. The parameter descriptions can be found in Chapter \ref{model_setup}}\vspace{1ex}
+\caption{Best hyperparameter setting for the random forest algorithm. The parameter descriptions can be found in section \ref{model_setup}}\vspace{1ex}
 \label{tab:m2_randomForest_bestParams}
 \begin{tabular}{llccc}\hline
 k & max\_depth & min\_df & ngram\_range & none\_objects \\ \hline
@@ -122,7 +122,7 @@ This hyper-parameter setting visible in the table \ref{tab:m2_randomForest_bestP
 \label{tab:m2_randomForest_bestscores}
 \begin{tabular}{cccccc}\hline
 Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without none class)\\ \hline
-0.998 & 0.892 & 0.903 & 0.901 & 0.892 & 0.745\\ \hline
+0.998 & 0.892 & 0.903 & 0.901 & 0.892 & \textbf{0.745}\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -132,7 +132,7 @@ The model tuning with the parameter grid visible in figure \ref{code:linear_svc_
 
 \begin{table}[h!]
 \begin{center}
-\caption{Best hyperparameter setting for the linearSVC algorithm. The parameter descriptions can be found in chapter \ref{model_setup}}\vspace{1ex}
+\caption{Best hyperparameter setting for the linearSVC algorithm. The parameter descriptions can be found in section \ref{model_setup}}\vspace{1ex}
 \label{tab:m2_linearSVC_bestParams}
 \begin{tabular}{llccc}\hline
 k & C & min\_df & ngram\_range & none\_objects \\ \hline
@@ -149,7 +149,7 @@ This hyper-parameter setting visible in the table \ref{tab:m2_linearSVC_bestPara
 \label{tab:m2_linearSVC_bestscores}
 \begin{tabular}{cccccc}\hline
 Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without none class)\\ \hline
-0.993 & 0.882 & 0.883 & 0.886 & 0.882 & 0.835 \\ \hline
+0.993 & 0.882 & 0.883 & 0.886 & 0.882 & \textbf{0.835} \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -189,11 +189,11 @@ The effect of different ngram\_range settings in combination with varying C valu
 \texttt{Remark:} If different hyperparameter settings produce the same model performance (F1-score) than the setting which produces fewer features is prioritised due to better generalisation capabilities. Regarding figure \ref{fig:m1_heatmap} for instance, the n\_gram setting of either (1, 1), (1, 2) or (1, 3) in combination with C = 1 all produce a F1-score of 0.932. (1, 1) has been chosen as best hyperparameter configuration due to the lowest feature count.
 
 \subsubsection{Classification specific F1-scores}
-
+As already seen above M1 performed on the test set with an 10-Fold cross-validated F1-score excluding the None-class of \textbf{0.870} compared to \textbf{0.835} of M2. Figure \ref{fig:m1_m2_class_f1_scores} gives more insight on the classification specific model performances. The worst performances are recorded for the both random forest classifiers. Also the M2 linearSVC picnic class sticks out with a score of 0.48. The actual performance and generalisation potential of both model on unseen data is shown in section \ref{precision_unseen_data}.
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{img/m1_m2_class_f1_scores_bigger_font.pdf}
-   \caption{Comparison of the classification specific F1-scores of the linearSVC and random forest fitting algorithm of M1 and M2}
+   \caption{Comparison of the classification specific 10-Fold cross-validated F1-scores of the linearSVC and random forest fitting algorithm of M1 and M2}
    \label{fig:m1_m2_class_f1_scores}
 \end{figure}
 
@@ -203,7 +203,7 @@ In the end the model M1 and M2 were trained on the entire training's dataset whi
 It can be noted at this point that the best M1 and M2 performance yielded similar feature counts during testing (626 and 775 respectively) and after training it on the entire dataset (845 and 958 respectively).  
 \begin{table}[h]
 \begin{center}
-\caption{M2 linearSVC performance scores during testing (except accuracy train)}\vspace{1ex}
+\caption{M2 linearSVC performance scores during testing (except accuracy train) with 10-Fold cross-validation}\vspace{1ex}
 \label{tab:m1_m2_linearSVC_final_scores}
 \begin{tabular}{cccccc}\hline
 Model & Accuracy & Precision & Recall & F1 & F1 (without none class) & Features\\ \hline
@@ -215,7 +215,7 @@ M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 & 958\\ \hline
 
 \subsubsection{Precision on unseen data} \label{precision_unseen_data}
 This section will present the results of the model performance on new data. All Instagram and Flickr media objects of the Canton of Zug on which these results are based were excluded from the M1 and M2 model training.\\
-Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview see chapter \ref{database_setup}):\\
+Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview see section \ref{database_setup}):\\
 \texttt{media\_objects\_unionzug\_instagram} \\ \texttt{media\_objects\_cantonzug\_flickr}\\
 
 One time the final text-string provided for the prediction was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
@@ -306,13 +306,11 @@ Flickr & 5.989 & 2.164 & 2.768\\
 M1 and M2 showed in both cases the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained.\\
 The model prediction accuracy was less dependant on the SMP the media objects originated from but more if image labels were parsed or not.\\
 The best observed accuracy of M2 with \textbf{0.776} (average: 0.749) was only slightly better than the \textbf{0.764} of M1 (average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at roughly \textbf{6\%} for M2 but only at \textbf{1.8\%} for M1.
-M2 with a slightly higher accuracy yielded (937-451=)486 more true positive NBRA-predictions than M1 which is an increase by factor two. Therefore M2 predicted less False Negatives (FN) which concludes that M2 also possess a \textbf{higher recall score} than M1 and generalises better on new data.
-
-
+M2 with a slightly higher accuracy yielded (937-451=)486 more true positive NBRA-predictions than M1 which is an increase by factor two. Therefore, M2 predicted less False Negatives (FN) which concludes that M2 also possess a \textbf{higher recall score} than M1 and generalises better on new data.
 
 \section{Media object languages}
 One assumption that was made earlier stated that the training's data from Zurich and the media objects from Zug share a similar written language by their author base. This would legitimise the usage of training's data that did not originate from the same region as the region the model would later be applied to.\\
-To investigate on that assumption the five actively detected Instagram media object languages (see chapter \ref{langauge_detection}) of both regions (see figure \ref{fig:det_languages}) were compared with a paired two sample t-test for means. The result showed that the probability that T is smaller or equal t is 0.56 and therefore smaller than t\textsubscript{crit} of 2.78. Therefore, h0 (no difference present) cannot be rejected and the written languages of both areas are with high certainty of similar composition.
+To investigate on that assumption the five actively detected Instagram media object languages (see section \ref{langauge_detection}) of both regions (see figure \ref{fig:det_languages}) were compared with a paired two sample t-test for means. The result showed that the probability that T is smaller or equal t is 0.56 and therefore smaller than t\textsubscript{crit} of 2.78. Therefore, h0 (no difference present) cannot be rejected and the written languages of both areas are with high certainty of similar composition.
 
 \begin{figure}[h!]
    \centering
@@ -324,9 +322,9 @@ To investigate on that assumption the five actively detected Instagram media obj
 \texttt{Remark:} Often times hashtags remain written in English due to their comprehensive meaning and purpose to connect media objects of similar content. Due to the big share hashtags normally have on the entire text, the language detection tends to identify a media object language as English above others.
 
 \section{Ground truth evaluation}
-The following subsections will cover the results from the \textit{in-situ} ground truth through passive observations and the 52 interviews over the three different locations 'Br\"uggli', 'R\"ossliwiese' and 'Schattenw\"aldli' (see chapter \ref{fig:locations_ground_truthing}) in the research area (Canton of Zug, Switzerland).
+The following subsections will cover the results from the \textit{in-situ} ground truth through passive observations and the 52 interviews over the three different locations 'Br\"uggli', 'R\"ossliwiese' and 'Schattenw\"aldli' (see section \ref{fig:locations_ground_truthing}) in the research area (Canton of Zug, Switzerland).
 
-\texttt{Remark:} The entire data presented in the following subchapters is available on the enclosed CD to this thesis. This includes the actual transcript-data from the passive observation and the interviews (see chapter \ref{CD_content}).
+\texttt{Remark:} The entire data presented in the following subsections is available on the enclosed CD to this thesis. This includes the actual transcript-data from the passive observation and the interviews (see section \ref{CD_content}).
 
 \subsection{Passive observation analysis}
 The passive NBRA-observation was performed by an assistant of the author. The thereby collected data is visible in figure \ref{fig:passive_observation} and shows the recorded NBRAs based on location sorted from left to right by decreasing observation frequency. Walking and hiking were by far the most recorded classes which corresponds to the interviews results visible in figure \ref{fig:interview_activities}. These two classes were merged due to differentiation difficulties just by observation and the demanded recording speed. 'Biking' follows second with a dominant occurrance in the location 'Br\"uggli' and no occurrence at 'R\"ossliwiese'. Third is 'jogging' shortly followed by 'dog walking' which have roughly the same occurrence frequency distribution across all three locations. 
@@ -400,9 +398,9 @@ None & 10'898 & 3'511 & 14'409\\
 \end{center}
 \end{table}
 
-As already described in chapter \ref{instagram_location_tag} Instagram locations can be user generated and are often general descriptions of the area at hand. This results in a lot of media objects being snapped to the same point on the map and therefore a lower spatial resolution. To illustrate this a bit further let's compare the two SMPs:
+As already described in section \ref{instagram_location_tag} Instagram locations can be user generated and are often general descriptions of the area at hand. This results in a lot of media objects being snapped to the same point on the map and therefore a lower spatial resolution. To illustrate this a bit further let's compare the two SMPs:
 There are \textbf{152} unique Instagram locations of which the top three are named 'Zug' with 1'970, 'Canton of Zug' with 1'590 and 'lake Zug' with 400 associated Instagram media objects.
-The processed Flickr dataset on the other hand consists of \textbf{1'144} unique locations of which the top three are named 'Baarerstrasse 12' with 112, 'Bahnhofsplatz' with 84 and 'Landsgemeindeplatz' with 69 associated media objects. This additional geo-information in form of an address is not provided by the \textit{Flickr API} by default but rather through the \textit{Google Geocoding API} as stated in chapter \ref{geocoding_api}.
+The processed Flickr dataset on the other hand consists of \textbf{1'144} unique locations of which the top three are named 'Baarerstrasse 12' with 112, 'Bahnhofsplatz' with 84 and 'Landsgemeindeplatz' with 69 associated media objects. This additional geo-information in form of an address is not provided by the \textit{Flickr API} by default but rather through the \textit{Google Geocoding API} as stated in section \ref{geocoding_api}.
 One has to keep in mind that the processed Flickr dataset holds only roughly a third of the media objects compared to the processed Instagram dataset in the area of interest. 
 
 \begin{figure}[h!]
@@ -446,7 +444,7 @@ The ground truthing did not yield any information on that classification.
 \paragraph*{None} The M2 'None' classification signal shows as expected a homogeneous distribution (especially the Flickr-data with the higher spatial resolution) without any visible patterns. Because non-NBRAs were not actively recorded during the ground truthing, a direct comparison cannot be made.
 
 \paragraph*{Summary}
-Overall provides the model classification-specific spatial distribution patterns which were to be expected of the available ground truth data. Only 'hiking' shows some discrepancy and overlaps with the classification 'walking' which might be related to superordinate Instagram locations positioned in the urban areas. Refer to chapter \ref{XY} discussion for further insight/explanations on this topic. 
+Overall provides the model classification-specific spatial distribution patterns which were to be expected of the available ground truth data. Only 'hiking' shows some discrepancy and overlaps with the classification 'walking' which might be related to superordinate Instagram locations positioned in the urban areas. Refer to section \ref{XY} discussion for further insight/explanations on this topic. 
 
 
 \subsection{Comparison to Foursquare}
