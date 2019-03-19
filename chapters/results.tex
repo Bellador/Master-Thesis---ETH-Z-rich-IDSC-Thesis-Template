@@ -18,13 +18,12 @@ Instagram Zug & 6 & 6 & 28'246 & 11'777 & 58.3\% \\
 Instagram Zurich Uetliberg & 10 & 5 & 74'742 & 68'522 & 8.3\% \\
 Instagram Zurich Dolder & 7 & 5 &  206'454 &  191'584 & 7.2\% \\
 Flickr Zug & 12 & 7 &  14'236 &  3'790 & 73.4\% \\ 
-Foursquare Zug & - & - & 405 & 405 & 0.0\% \\ \hline
+Foursquare Zug & - & - & 405 & 378 & 6.7\% \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-The noticeably high data-reduction of the Flickr dataset was mostly due to high user upload activity. As seen in figure \ref{img:dominant_users_flickr} a small portion of Flickr-users (authors) uploading up to  1'190 posts since the SMP Flickr was launched in 2005 account for a big share of the entire dataset. As a result to reduce this bias, roughly 5'700 media objects were removed alone in the 'dominant user' data-processing step.\\
-Similar graphs to figure \ref{img:dominant_users_flickr} were created for all the datasets according to which the thesis author decided the thresholds in \ref{tab:data_reduction_values} manually. 
+The noticeably high data-reduction of the Flickr dataset was mostly due to high user upload activity. As seen in figure \ref{img:dominant_users_flickr} a small portion of Flickr-users (authors) uploading up to 1'190 posts since the SMP Flickr was launched in 2004 account for a big share of the entire dataset. As a result roughly 5'700 media objects were removed alone in the 'dominant user' data-processing step.
 
 \begin{figure}[h!]
    \centering
@@ -32,6 +31,17 @@ Similar graphs to figure \ref{img:dominant_users_flickr} were created for all th
    \caption{The top 12 Flickr authors which account for roughly 5'700 media objects (left to the red line) were excluded from further data-analysis}
    \label{img:dominant_users_flickr}
 \end{figure}
+
+As seen in figure \ref{img:bulk_uploads_flickr} an additional, roughly 3'000 Flickr media objects were removed in the 'bulk-upload' process. The y-values of that figure correspond to the potentially removed amount of media objects if a certain threshold on the x-axis is applied. The data visible in this graph only includes media objects which were not already excluded by preceding data-processing steps.
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.75\textwidth]{img/cantonzug_flickr_bulkuploads_cropped.pdf}
+   \caption{Shows the impact of different 'bulk-upload' thresholds on the Flickr dataset of the Canton of Zug}
+   \label{img:bulk_uploads_flickr}
+\end{figure}
+
+Similar graphs to figure \ref{img:dominant_users_flickr} and \ref{img:bulk_uploads_flickr} were created for all the datasets according to which the thresholds visible in \ref{tab:data_reduction_values} were manually declared. 
 
 \section{Models} \label{results_models}
 The following subsections will cover the  performance results of each of the two created models (see section \ref{ml_model} that were solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table:\\ \texttt{media\_objects\_trainingdata\_instagram} (see figure \ref{database_setup}). For each model the random forest classifier and the linearSVC fitting algorithm was independently tested. The hyperparameters were tuned to yield the best possible average 10-Fold cross-validated F1-score over all classes excluding the None-class. The training's data was consistently split into 75\% data for training and 25\% data for testing. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
@@ -212,7 +222,6 @@ M2 & 0.991 & 0.991 & 0.991 & 0.991 & 0.993 & 958\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-
 \subsubsection{Precision on unseen data} \label{precision_unseen_data}
 This section will present the results of the model performance on new data. All Instagram and Flickr media objects of the Canton of Zug on which these results are based were excluded from the M1 and M2 model training.\\
 Two separate predictions per model were performed on the media objects contained in the following two database-tables (database overview see section \ref{database_setup}):\\
