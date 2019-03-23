@@ -19,7 +19,7 @@ The following subsections will elaborate on the data-acquisition process and the
 Instagram is a SMP which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook. It can be accessed via \texttt{https://www.instagram.com/} or the corresponding mobile application.
 Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780' 000). The gender distribution was at 49.4\% women and 50.6\% men \parencite{2013}. This popularity was the determining factor for using Instagram data in this thesis.\\
 
-\subsubsection{Query} \label{netlytic}
+\subsubsection*{Query} \label{netlytic}
 Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser Netlytic \parencite{Gruzd2016}. Netlytic can be accessed via \texttt{https://netlytic.org/} and allows for hashtag (\# + keyword) as well as location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows to collect Instagram media objects of public accounts in a 5km radius around a given coordinate. These Netlytic query points with their given perimeter are also visible in figure \ref{fig:research_area}. The exact latitude / longitude pairs are the following:\\
 \begin{enumerate}
   \item 47.177068, 8.494803
@@ -27,10 +27,10 @@ Licensed Instagram data of the research area visible in figure \ref{fig:research
   \item 47.104457, 8.570291
 \end{enumerate}
 
-\subsubsection{Time-span} \label{Instagram_timespan}
+\subsubsection*{Time-span} \label{Instagram_timespan}
 Data collection has been continuously performed on all three coordinates from the 30.09.2018 till the 11.12.2018. Due to the retirement of the Instagram Application Program Interface (API) on the 11.12.2018 \parencite{Instagram2018} this period could not be extended.
 
-\subsubsection{Data} \label{Instagram_data}
+\subsubsection*{Data} \label{Instagram_data}
 The data-collection accounted for 28'246 raw Instagram media objects. After the dominant authors and bulk-upload data-processing steps referenced further down (see section \ref{data_processing}) 11'777 remained.
 The data provided by Netlytic came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
 \begin{itemize}[label={}]
@@ -53,13 +53,13 @@ Additional location related information (address) was gathered for all the media
 
 \subsection{Flickr} \label{flickr}
 Flickr is a photo sharing website (\texttt{https://www.flickr.com/}) that allows users to upload georeferenced images similar to Instagram. The corresponding free of charge Flickr API gives access to the entire database of Flickr media objects since the launch of the platform in the year 2004. The popularity of Flickr according to the 'Alexa Global Rank' lies at 349 \parencite{Alexa.com2019a} which is significantly lower than to the one of Instagram which lies at 16 \parencite{Alexa.com2019}. Flickr still plays an important role as data foundation for scientific studies due to the simple and unbounded data-access. 
-\subsubsection{Query} \label{flickr_query}
+\subsubsection*{Query} \label{flickr_query}
 The entire Flickr database was queried via the publicly accessible official Flickr API. Media objects with a georeference-accuracy level of 12 or higher (maximum of 16) were of interest which resolves to city level up to street level. Multiple queries with variable bounding boxes were performed which together cover the entire perimeter of the legal boundaries of the Canton of Zug. Each bounding box was defined by two coordinate pairs, describing the bottom left and top right corner of a rectangle. This process of subdividing the area was necessary due to a maximum return threshold of 4'000 media objects per request. Therefore, to ensure the acquisition of the entire available dataset each bounding box had to hold less than 4'000 media objects.
 
-\subsubsection{Time-span} \label{flickr_timespan}
+\subsubsection*{Time-span} \label{flickr_timespan}
 All Flickr API requests described above were queried for the time-spawn 2004 (launch of the SMP Flickr) until the 23rd of November 2018.
 
-\subsubsection{Data} \label{flickr_data}
+\subsubsection*{Data} \label{flickr_data}
 The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
 
 \begin{itemize}[label={}]
@@ -85,14 +85,14 @@ Additional location related information (address and location type) was gathered
 \subsection{Foursquare} \label{foursquare}
 Foursquare is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). This stored infrastructure which is categorised into different sectors such as \textit{Travel \& Transport}, \textit{Arts \& Entertainment} but also \textit{Outdoors \& Recreation} can be accessed via the official Foursquare API.
 
-\subsubsection{Query} \label{foursquare_query}
+\subsubsection*{Query} \label{foursquare_query}
 The following two API endpoints which return different information were used for this thesis.
 \paragraph*{Venue search (regular endpoint)} \label{foursquare_endpoint1}
 The first step of the data-acquisition involved a spatial search for venue ids of the category \textit{Outdoors \& Recreation} that lie within the boundaries of the Canton of Zug. This request was done with the regular venue search API endpoint. There is a limitation to the maximum number of results per request in place similar to the bounding box request of Flickr. Therefore, a spatial subdivision of the research areas was again used to query all the available venues so that each individual request returned less than 50 results.
 \paragraph*{Acquiring venue details (premium endpoint)} \label{foursquare_endpoint2}
 To obtain more specific information about each venue a second (premium) Foursquare API endpoint was used. This venue endpoint allows regular (non-paying) users 50 requests per day which spread the data acquisition over 9 days for a total of 405 available venues. The results included insight on a more concrete subcategory description, the formatted venue address, the users rating as well as if the venue was verified or not.
 
-\subsubsection{Data} \label{fq_data}
+\subsubsection*{Data} \label{fq_data}
 The data returned by the Foursquare API with the above mentioned endpoints was in the JSON format - the same as the Flickr data.
 The following excerpt of the returned venue meta-data was further used in this thesis with the appropriate PostgreSQL data types in square brackets: \\
 \begin{itemize}[label={}]
@@ -108,7 +108,7 @@ The following excerpt of the returned venue meta-data was further used in this t
 
 Additional location related information (address and location type) was gathered for all the Foursquare venues via the Google Geocoding API. More information can be found in section \ref{geocoding_api}.
 
-\subsubsection{Data verification} \label{foursquare_data_verification}
+\subsubsection*{Data verification} \label{foursquare_data_verification}
 The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. A business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 US-Dollars for venues outside of the United States of America \parencite{Foursquare2019}. \\
 Of all 405 venues located inside the Canton of Zug, 13 (3.2\%) are verified according to the data provided by the Foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were validated by the author to its best knowledge. The final Foursquare dataset encompassed 378 venues.
 
@@ -187,7 +187,7 @@ All as bulk upload marked media objects will be excluded from further analysis b
 \subsection{Text-processing} \label{text_processing}
 Text processing is required to turn noisy user-generated character input (text) into normalised word-tokens which are comparable between media objects. These tokens are a prerequisite for the following machine learning (ML) text-classification approach. The text-processing encompasses the following steps in corresponding order which have been visualised under step 3 in figure \ref{fig:ml_visualisation}: Firstly, iterating over all media objects which lie inside the research area boundary and are included after the data-processing while acquiring the corresponding text-data from the database.
 
-\subsubsection{Language detection} \label{langauge_detection}
+\subsubsection*{Language detection} \label{language_detection}
 The language detection serves the purpose of optimally adjusting the parameters for the later performed core text-processing step. By identifying the language, a matching word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see \ref{core_text_processing}).\\
 To accomplish a text string which consists of the media object's title is parsed to the function. Firstly, basic text-processing is necessary to ensure a reliable prediction which consists of splitting the text-string at white spaces. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as the city of Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly, all characters are turned lowercase. The resulting word-tokens are only further considered if they have a minimum length of three characters. This minimum length was chosen according to conducted tests to avoid short character-artefacts that can occur during the described process.\\
 In a following step each created word-token is run against five different word lists of the English, German, Swiss German, French and Italian language.
@@ -200,7 +200,7 @@ The entity check of each word versus all five of the above mentioned word lists 
 \newline
 \texttt{Remark 2:} A lot of hashtags used across different languages are dominantly in English. Therefore, even a media object which in its core was not written exclusively in English can be classified as English by the algorithm due to the present hashtags.
 
-\subsubsection{Core text-processing} \label{core_text_processing}
+\subsubsection*{Core text-processing} \label{core_text_processing}
 The core text processing encompasses the following alteration steps described in the following subsection and serves the purpose of creating universally similar structured and comparable word-tokens out of the noisy user generated text-data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated ML model to accurately predict the NBRA contained in the media objects.\\
 The function \texttt{text\_processing\_core()} (see Appendix \ref{python_code}) is called with the matching word lists for spell checking, stop words exclusion and the correct stemmer object corresponding to the performed language detection. The provided text string consists of a concatenation of the media object's title and description unlike just the title for the shortened text processing algorithm applied in the language detection function.\\
 Flickr tags were not neglected from this step even though they were also generated by an image detection algorithm similar to the Google Cloud Vision algorithm which was used in this thesis to acquire image content tags.
@@ -390,7 +390,7 @@ The links to the full Instagram media object (see section \ref{Instagram_data}) 
 The following subsections encompass the entire pipeline of functions that were used to build \textbf{two} kinds of models. These models should provide insight on the effect of combining text and image content data in regards to model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned from the Google Cloud Vision API. Aside from that the models were setup, trained, tuned and implemented in exactly the same fashion.\\
 Scores for evaluating ML model performance are also introduced which are referenced again in the results. The entire code implementation of the subsequent steps can be found in the Appendix \ref{python_code} and in digital form in the enclosed CD.
 
-\subsubsection{Considered algorithms} \label{ml_algorithms}
+\subsubsection*{Considered algorithms} \label{ml_algorithms}
 The following algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
 
 \paragraph*{Linear support vector machines (SVMs)}
@@ -473,7 +473,7 @@ linear_svc_parameters = {
 
 \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
 
-\subsection{ML evaluation scores} \label{ml_evaluation_scores}
+\subsection{Evaluation scores} \label{ml_evaluation_scores}
 There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
 
 \begin{wrapfigure}{LR}{0.5\textwidth} %0.3 and 0.28
@@ -499,10 +499,10 @@ F1 = 2*\frac{(precision*recall)}{(precision+recall)}
 
 \clearpage
 
-\subsection{Ground truthing} \label{groud_truthing}
+\section{Ground truthing} \label{groud_truthing}
 Interviews and passive observations were performed to gain insight on how well the social media data approximates to actual visitation rates and spatial NBRA dispersion. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
 
-\subsubsection*{Locations for ground truth data acquisition} \label{locations_ground_truthing_data}
+\subsection{Locations for ground truth data acquisition} \label{locations_ground_truthing_data}
 
 \begin{wrapfigure}{LR}{0.4\textwidth} %0.3 and 0.28
   %\vspace{-0.5cm}
@@ -519,7 +519,7 @@ Three locations (see figure \ref{fig:locations_ground_truthing}) with different 
 The second location includes the 'R\"ossliwiese' which is a meadow located close to the city centre at the lake side. There people like to go for short walks (with their dog), eat lunch, relax (after shopping). Its high attractiveness is mostly given by the closeness to the residential area.\\
 The last and most nature-near location was the adventure playground 'Schattenw\"aldli' on the Zugerberg. It appeals to various groups of people due to its wide spectrum of activities the environment allows. Young families with kids are the most dominant visitor group due to the playground and the possibility to have a picnic. But also people hiking, walking (their dog) and mountain-bikers can be frequently encountered there.
 
-\subsubsection*{Passive observation setup} \label{passive_observation_setup}
+\subsection{Passive observation setup} \label{passive_observation_setup}
 The passive observation encompassed the recording of NBRAs performed by people that passed through the location during the same time the interviews were held. More specific the group size, the approximate average group age, the NBRA and the time were captured. The term 'passive' implies that no direct interaction with the recorded people occurred. Therefore, the data is entirely based on perception.
 Since the thesis's author held all the interviews, the passive observation was performed by an unaffiliated assistant (see \nameref{acknowledgements}).\\
 The durations of these passive observations were the following:
@@ -531,8 +531,8 @@ The durations of these passive observations were the following:
 The time spend in one location was dependant on the time needed to hold the required interviews therefore the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
 The passive observation template used in this thesis can be found under the Appendix \ref{passive_obs_templates}.
 
-\subsubsection*{Interview setup} \label{interview_setup}
-A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25th of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
+\subsection{Interview setup} \label{interview_setup}
+A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25\textsuperscript{th} of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
 Every interview started out with a small introduction to the author's persona and the motivation behind the interviews. Additionally, the interviewees were informed that all the gathered information will be kept anonymous and used only within the scope of this thesis. The purpose of these interviews was to gain information on three topics.\\
 \newline
 The first one being \textbf{location} related:
