@@ -398,7 +398,7 @@ Insight on dominantly represented ages groups in social media data can be drawn 
 \end{figure}
 
 \section{Spatial distribution of model predicted NBRAs}
-This section will present the maps which resulted from the M2 NBRA-predictions on both Instagram and Flickr media objects from the Canton of Zug. The arrangement of maps in figure \ref{fig:map_cluster_2} shows the NBRAs spatial distribution in parallel comparison between the two SMPs. The amount of M2 predictions per classification and SMP are listed in table \ref{tab:amount_class_NBRAs} as well as in the maps themselves as \textit{feature count}.
+This section will present the maps which resulted from the M2 NBRA-predictions on both Instagram and Flickr media objects from the Canton of Zug. The maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2} show the NBRAs spatial distribution in parallel comparison between the two SMPs. The amount of M2 predictions per classification and SMP are listed in table \ref{tab:amount_class_NBRAs} as well as in the maps themselves as \textit{feature count}.
 
 \begin{table}[h!]
 \begin{center}
@@ -428,45 +428,48 @@ One has to keep in mind that the processed Flickr dataset holds only roughly a t
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_1.pdf}
+   \caption{Part 1 - Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions
+which were conducted on text strings containing processed text-data and image labels from
+the Instagram / Flickr media objects.}
    \label{fig:map_cluster_1}
 \end{figure}
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_2.pdf}
-   \caption{Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \caption{Part 2 - Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
    \label{fig:map_cluster_2}
 \end{figure}
 
 \subsection{Comparison to ground truth}
-Comparisons between the recorded NBRA-occurrences from the ground truthing consisting of the passive observation (see figure \ref{fig:passive_observation} and figure \ref{fig:interview_activities}) and the model were conducted to further evaluate its plausibility. 
+The modelled output of M2 (see maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2}) was visually compared to the ground truth visible in figure \ref{fig:passive_observation} and figure \ref{fig:interview_activities} to further evaluate the model's plausibility.
 
 \paragraph*{Biking}
 The model predicts a strong occurrence of biking in the area of 'R\"ossliwiese' where the ground truthing consisting of the passive observation and the interviews did not record a single sighting (to the knowledge of the author: biking is not prohibited there and normally performed regularly).\\
 In the area of 'Schattenw\"aldli' and 'B\"uggli' the ground truth recorded a moderate to strong occurrence of (mountain-)bikers. Only the former is also registered by the model. 
 
 \paragraph*{Hiking}
-'Schattenw\"aldli' is according to the interviews the only location of the three where interviewees said they performed the NBRA 'hiking'. The maps show also a strong signal of 'hiking' in the mountainous region. Inconsistency lies in the as 'hiking' classified media objects in the urban area of the city of Zug.
+'Schattenw\"aldli' is according to the interviews the only location of the three where the NBRA 'hiking' is performed. The model shows also a strong signal of 'hiking' in the mountainous region. Inconsistency lies in the as 'hiking' classified media objects located in the urban area of the city of Zug.
 
 \paragraph*{Jogging}
-The maps as well as the ground truth show moderate signals in all three locations and are therefore congruent.
+The maps as well as the ground truth show moderate congruent signals in all three locations.
 
 \paragraph*{Walking}
-M2 shows a predominant signal in the urban areas over the mountainous areas. Especially the lake side is strongly represented which coincides with the interviewee given motivation 'lake' listed in figure \ref{fig:interview_visitation_motivation} as well as with the performed activities in the locations 'Br\"uggli' and 'R\"ossliwiese' visible in figure \ref{fig:interview_activities}.
+M2 records a predominant signal in the urban areas over the mountainous areas. Especially the lake side is strongly represented which coincides with the interviewee given motivation 'lake' listed in figure \ref{fig:interview_visitation_motivation} as well as with the high recorded interview 'walking' frequency in the locations 'Br\"uggli' and 'R\"ossliwiese' visible in figure \ref{fig:interview_activities}.
 
 \paragraph*{Picnic}
-The ground truthing did not yield any information on that classification.
+The ground truth does not yield any information on that classification.
 
 \paragraph*{Dog walking}
-The classification 'dog walking' is according to the ground truth performed in all three locations in a comparably low frequency similar to 'jogging'.  The M2 Instagram-data shows a signal densification in the urban area of the city of Zug whereas the Flickr-data shows a homogeneous distribution without any visible hot-spots.
+The NBRA 'dog walking' is according to the ground truth performed in all three locations in a comparably low frequency similar to 'jogging'. The M2 Instagram-data shows a signal densification in the urban area of the city of Zug whereas the Flickr-data shows a homogeneous distribution without any clear hot-spots.
 
 \paragraph*{Horse riding}
-The ground truthing did not yield any information on that classification.
+The ground truth does not yield any information on that classification.
 
-\paragraph*{None} The M2 'None' classification signal shows as expected a homogeneous distribution (especially the Flickr-data with the higher spatial resolution) without any visible patterns. Because non-NBRAs were not actively recorded during the ground truthing, a direct comparison cannot be made.
+\paragraph*{None} The M2 'None' classification signal shows as expected a homogeneous distribution (especially the Flickr-data with the higher spatial resolution) without any visible patterns. Because non-NBRAs were not actively recorded during the ground truthing a direct comparison cannot be made.
 
 \paragraph*{Summary}
-Overall provides the model classification-specific spatial distribution patterns which were to be expected of the available ground truth data. Only 'hiking' shows some discrepancy and overlaps with the classification 'walking' which might be related to superordinate Instagram locations positioned in the urban areas. Refer to section \ref{XY} discussion for further insight/explanations on this topic. 
+Essentially predicted the model spatial patterns which coincide with the available ground truth data. An exception is the classification 'hiking' which shows discrepancy and overlaps with the classification 'walking'.  This observation might be related to superordinate Instagram locations positioned in the urban areas. Refer to section \ref{discussion_rec_bias} in the discussion for further insight on this topic. 
 
 
 \subsection{Comparison to Foursquare}
@@ -474,7 +477,7 @@ Overall provides the model classification-specific spatial distribution patterns
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/foursquare_compare_cropped.pdf}
-   \caption{Locations of all 404 Foursquare venues in relation to the M2 predicted spatial NBRA-occurrence.}
+   \caption{Locations of all 378 Foursquare venues in relation to the M2 predicted spatial NBRA-occurrence.}
    \label{fig:map_foursquare_comparison}
 \end{figure}
 

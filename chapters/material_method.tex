@@ -1,4 +1,4 @@
-\chapter{Materials and methods} \label{material_methods}
+\chapter{Materials and Methods} \label{material_methods}
 
 \section{Research area} \label{research_area}
 The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extend. The specific areas for which social media data (SMD) was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreation services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreation value. \\
@@ -119,19 +119,21 @@ The following tables were created for housing the used data in this format:\\ \t
 \newline
 
 Media object tables:
+
 \begin{itemize}
     \item \texttt{media\_objects\_cantonzug\_flickr}
     \item \texttt{media\_objects\_unionzug\_instagram}
     \item \texttt{media\_objects\_trainingdata\_instagram}
     \item \texttt{media\_objects\_cantonzug\_foursquare}
 \end{itemize}
-\newline
+
 Location tables:
+
 \begin{itemize}
     \item \texttt{locations\_cantonzug\_flickr}
     \item \texttt{locations\_unionzug\_instagram}
 \end{itemize}
-\newline
+
 In more detail the media object tables store all data related to an object retrieved from one of the three SMP as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is visible in figure \ref{fig:database}. The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Time-stamps were normalised across all SMP to the \texttt{YYYY-MM-DD HH-MM-SS} format.
 
 \begin{figure}[h]
