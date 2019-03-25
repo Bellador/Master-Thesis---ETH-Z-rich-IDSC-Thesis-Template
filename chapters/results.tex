@@ -177,7 +177,7 @@ Both linearSVC models consist of more than 600 features. The information gain or
 The above presented models will subsequently be thoroughly compared in terms of classification specific aspects, hyperparameter behaviour and performance on unseen data (data the models were not trained on). 
 
 \subsubsection*{Hyperparameter interaction}
-The effect of different \textit{ngram\_range} settings in combination with varying \textit{C} values of the linearSVC fitting algorithm is illustrated in the heatmaps of figure \ref{fig:heatmaps} for M1 and M2 respectively. The red circles mark the combination with the highest F1-score which corresponds to the best hyperparameter setting of the respective models (see M1 - table \ref{tab:m1_linearSVC_bestParams}; M2 - table \ref{tab:m2_linearSVC_bestParams}). It becomes apparent that the (2, 2) \textit{ngram\_range} as well as the \textit{C} value 0.01 underperform across the board. The F1-scores in the heatmaps are not completely identical to the values found in the corresponding model performance tables \ref{tab:m1_linearSVC_bestscores} (M1) and \ref{tab:m2_linearSVC_bestscores} (M2). This variation is due to randomisation effects of the None media object selection from the database as well as from the model train and test splits (this is partly taken care of by cross-validation).\\
+The effect of different \textit{ngram\_range} settings in combination with varying \textit{C} values of the linearSVC fitting algorithm is illustrated in the heatmaps of figure \ref{fig:heatmaps} for M1 and M2 respectively. The red circles mark the combination with the highest F1-score which corresponds to the best hyperparameter setting of the respective models (see M1 - table \ref{tab:m1_linearSVC_bestParams} and M2 - table \ref{tab:m2_linearSVC_bestParams}). It becomes apparent that the (2, 2) \textit{ngram\_range} as well as the \textit{C} value 0.01 underperform across the board. The F1-scores in the heatmaps are not completely identical to the values found in the corresponding model performance tables \ref{tab:m1_linearSVC_bestscores} (M1) and \ref{tab:m2_linearSVC_bestscores} (M2). This variation is due to randomisation effects of the None media object selection from the database as well as from the model train and test splits (this is partly taken care of by cross-validation).\\
 
 \begin{figure}[h!]
  \begin{subfigure}{0.5\textwidth}
@@ -428,16 +428,14 @@ One has to keep in mind that the processed Flickr dataset holds only roughly a t
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_1.pdf}
-   \caption{Part 1 - Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions
-which were conducted on text strings containing processed text-data and image labels from
-the Instagram / Flickr media objects.}
+   \caption{Part 1 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
    \label{fig:map_cluster_1}
 \end{figure}
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_2.pdf}
-   \caption{Part 2 - Spatial occurrence of NBRAs in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \caption{Part 2 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
    \label{fig:map_cluster_2}
 \end{figure}
 
@@ -455,7 +453,7 @@ In the area of 'Schattenw\"aldli' and 'B\"uggli' the ground truth recorded a mod
 The maps as well as the ground truth show moderate congruent signals in all three locations.
 
 \paragraph*{Walking}
-M2 records a predominant signal in the urban areas over the mountainous areas. Especially the lake side is strongly represented which coincides with the interviewee given motivation 'lake' listed in figure \ref{fig:interview_visitation_motivation} as well as with the high recorded interview 'walking' frequency in the locations 'Br\"uggli' and 'R\"ossliwiese' visible in figure \ref{fig:interview_activities}.
+M2 records a predominant signal in the urban areas over the mountainous areas. Especially the lake side is strongly represented which coincides with the interviewee given motivation 'lake' listed in figure \ref{fig:interview_visitation_motivation} as well as with the high recorded interview 'walking' frequency in the locations 'Br\"uggli' and 'R\"ossliwiese' visible in figure \ref{fig:interview_activities}. Flickr recorded one obvious false occurrence of 'walking' on the lake of Zug which resembles a media object with the title "walk on water" of a stand-up paddler.
 
 \paragraph*{Picnic}
 The ground truth does not yield any information on that classification.
@@ -473,11 +471,15 @@ Essentially predicted the model spatial patterns which coincide with the availab
 
 
 \subsection{Comparison to Foursquare}
+The SMP Foursquare holds records of categorised infrastructure (venues). The map in figure \ref{fig:map_foursquare_comparison} visualises 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted NBRA-occurrences in the Instagram and Flickr dataset of the Canton of Zug.\\
+For reasons of time a spatial similarity analysis between the datasets could not be conducted. Instead a visual evaluation shall give insight on the spatial concordance. The NBRA-types were not analysed individually due to the considerable overlap in supporting infrastructure between them. \\
+The map shows a plausible densification of venues in or near urban areas. The occurrences of NBRAs and venues seem to match spatially quite well which suggests that the supporting infrastructure is already efficiently allocated to fit the peoples recreation needs. This claim has to be further analysed with an appropriate statistical evaluation. \\
+The Foursquare dataset in conjunction with the modelled NBRA occurrences shall moreover give agencies a tool to plan the allocation of sport and recreation related infrastructure in case of rezoning or land conversion.
 
 \begin{figure}[h!]
    \centering
-   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/foursquare_compare_cropped.pdf}
-   \caption{Locations of all 378 Foursquare venues in relation to the M2 predicted spatial NBRA-occurrence.}
+   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/foursquare_comparison_cropped.pdf}
+   \caption{Locations of all 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted spatial NBRA-occurrence of the SMPs Instagram and Flickr.}
    \label{fig:map_foursquare_comparison}
 \end{figure}
 
