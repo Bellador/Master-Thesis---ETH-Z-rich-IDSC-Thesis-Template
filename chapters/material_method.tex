@@ -1,7 +1,7 @@
 \chapter{Materials and Methods} \label{material_methods}
 
 \section{Research area} \label{research_area}
-The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extend. The specific areas for which social media data (SMD) was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreation services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreation value. \\
+The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extent. The specific areas for which social media data (SMD) was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreation services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreation value. \\
 There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subsection.
 
 \begin{figure}[h]
@@ -113,7 +113,7 @@ The data verification on Foursquare is not an automated process. It is done by m
 Of all 405 venues located inside the Canton of Zug, 13 (3.2\%) are verified according to the data provided by the Foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were validated by the author to its best knowledge. The final Foursquare dataset encompassed 378 venues.
 
 \section{Database Setup} \label{database_setup}
-A PostgreSQL database was used (\texttt{https://www.postgresql.org/}) as a centralised storage hub for the Flickr, Instagram and Foursquare data. The advantage of a database compared to reading and storing data in txt- or csv-files is the computational efficient data-retrieval and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among others smart table joins and advanced filtering \parencite{PostgreSQL2019}.\\
+A PostgreSQL database was used (\texttt{https://www.postgresql.org/}) as a centralised storage hub for the Flickr, Instagram and Foursquare data. The advantage of a database compared to reading and storing data in TXT- or CSV-files is the computational efficient data-retrieval and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among others smart table joins and advanced filtering \parencite{PostgreSQL2019}.\\
 Additionally, a Graphical User Interface (GUI) named pgAdmin4 (\texttt{https://www.pgadmin.org/}) - which is build on top of PostgreSQL - was used for the manually performed training's data verification process that is described in section \ref{precision_unseen_data}.\\
 The following tables were created for housing the used data in this format:\\ \texttt{[object-type]\_[data-origin]\_[SMP]} \\
 \newline
@@ -148,7 +148,7 @@ In more detail the media object tables store all data related to an object retri
 \section{Data-processing} \label{data_processing}
 The following processes cover the entire workflow of data manipulation on the database in the order they were performed.
 \subsection{Merging of Instagram files} \label{netlytic_files_merge}
-In total, three different partly spatially overlapping Netlytic queries were run to acquire the needed Instagram data. All of them returned one CSV file. These files were merged for simplicity reasons and media object duplicates were simultaneously removed in the process. This entire step was not needed for the Flickr-data since merging and duplicates were already handled during the data-mining process.
+In total, three different partly spatially overlapping Netlytic queries were run to acquire the needed Instagram data. All of them returned one CSV-file. These files were merged for simplicity reasons and media object duplicates were simultaneously removed in the process. This entire step was not needed for the Flickr-data since merging and duplicates were already handled during the data-mining process.
 
 \subsection{Acquisition of additional location information} \label{add_location_data}
 Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subsections will elaborate on this process for the different data sources Instagram and Flickr.
@@ -164,7 +164,7 @@ Each coordinate of every Flickr media object was run through the Google Geocodin
 The merged Instagram CSV-files and the Flickr CSV-files which were extended by the additional location information described in the subsections above were used to populate the initial PostgreSQL database. This process was entirely performed with the script provided in Appendix \ref{python_code} and the needed \textit{psycopg 2} Python library that functions as linkage to the database.
 
 \subsection{In boundary condition check} \label{in_boundary}
-Additional unwanted data beyond the actual research area boundaries was included due to the circular (Netlytic) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object was checked to be inside the actual perimeter boundary. This process was accomplished with an open source Geographical Information System (GIS) named QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV-file. This CSV-file was read by the Python script which updated the \texttt{in\_boundary} column to \textit{True} for the provided media objects.
+Additional unwanted data beyond the actual research area boundaries was included due to the circular (Netlytic; see figure \ref{research_area}) or rectangular (Flickr API) shape of the spatial query perimeters. As consequence each acquired media object was checked to be inside the actual perimeter boundary. This process was accomplished with an open source Geographical Information System (GIS) named QGIS. The point data of all media objects was clipped to the appropriate research area and exported to a new CSV-file. This CSV-file was read by the Python script which updated the \texttt{in\_boundary} column to \textit{True} for the provided media objects.
 
 \subsection{Addressing sources of data-bias} \label{sources_data_bias}
 This part of the data-processing is a filtering step as seen in step 1 of figure \ref{fig:ml_visualisation} to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: Where are people performing NBRAs?
@@ -390,7 +390,7 @@ The links to the full Instagram media object (see section \ref{Instagram_data}) 
 
 \subsection{Machine learning model} \label{ml_model}
 The following subsections encompass the entire pipeline of functions that were used to build \textbf{two} kinds of models. These models should provide insight on the effect of combining text and image content data in regards to model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned from the Google Cloud Vision API. Aside from that the models were setup, trained, tuned and implemented in exactly the same fashion.\\
-Scores for evaluating ML model performance are also introduced which are referenced again in the results. The entire code implementation of the subsequent steps can be found in the Appendix \ref{python_code} and in digital form in the enclosed CD.
+Scores for evaluating ML model performance are also introduced which are referenced again in the results. The entire code implementation of the subsequent steps can be found in Appendix \ref{python_code} and in digital form in the enclosed CD.
 
 \subsubsection*{Considered algorithms} \label{ml_algorithms}
 The following algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
@@ -531,7 +531,7 @@ The durations of these passive observations were the following:
     \item \textbf{Schattenw\"aldli} 1h45min
 \end{itemize}
 The time spend in one location was dependant on the time needed to hold the required interviews therefore the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
-The passive observation template used in this thesis can be found under the Appendix \ref{passive_obs_templates}.
+The passive observation template used in this thesis can be found under Appendix \ref{passive_obs_templates}.
 
 \subsection{Interview setup} \label{interview_setup}
 A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25\textsuperscript{th} of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
@@ -551,7 +551,7 @@ The second one was related to \textbf{social media}:
     \item \textbf{Intent} Do they consider sharing their current visit to the given location on social media and if yes on which platform?
 \end{itemize}
 The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\
-The interview template used in this thesis can be found under the Appendix \ref{interview_templates}.
+The interview template used in this thesis can be found under Appendix \ref{interview_templates}.
 
 
 
