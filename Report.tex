@@ -25,7 +25,8 @@
 \usepackage[english,mt]{ethidsc} % Special IDSC styles and commands      	
 								 % {german}/english: language of headings, etc.
 								 % {st}/bt/mt: {semester}/bachelor/master thesis
-								
+%Footnotes
+\renewcommand{\thefootnote}{\arabic{footnote}}
 % for image positioning
 \usepackage[export]{adjustbox}
 \usepackage{wrapfig}
@@ -33,6 +34,7 @@
 % defining the bibliography settings
 \usepackage[backend=biber, citestyle=authoryear]{biblatex}
 \addbibresource{library.bib}
+
 % placing figures next to each other with subfigures
 \usepackage{subcaption}
 % for displaying code snipplets
@@ -94,6 +96,10 @@
 \pagenumbering{arabic}				% Begin arabic page numbering (1,2,...)
 
 \input{chapters/introduction}
+\cleardoublepage
+\input{chapters/state_of_the_art.tex}
+\cleardoublepage
+\input{chapters/research_questions.tex}
 \cleardoublepage
 \input{chapters/material_method}
 %\input{chapters/howto}

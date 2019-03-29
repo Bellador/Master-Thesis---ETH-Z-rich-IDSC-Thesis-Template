@@ -19,10 +19,25 @@
 
 \chapter*{Abstract}
  \addcontentsline{toc}{chapter}{Abstract}
- XXXstart with a questions maybeXXX
- Can social media data function as a supplement to traditional survey data to evaluate spatial distributions of nature-based recreation activities?
+Where do people perform nature-based recreation activities (NBRAs) and what factors draw them to specific areas? Recreation as a form of stress relief has become more important with increased rates of mental illnesses. This thesis fosters the information retrieval related to the recreational usage of space and shall support future planning. Thereby, georeferenced social media data (SMD) of the social media platforms (SMP) Instagram and Flickr is used to predict the occurrences of seven distinct NBRA-classes in the research area located inside the Canton of Zug, Switzerland. 'Walking', 'hiking', 'jogging', 'biking', 'dog walking', 'horse riding' and 'picnicking' are the considered classes. \\
+Machine learning (ML) in combination with the deep-learning image recognition algorithm \textit{Google Cloud Vision} is used to train two individual classification models. By comparing these models the effect on model performance by combining user generated text and image-data is investigated.The Linear Support Vector Classifier (linearSVC) and the decision tree based randomForest fitting algorithms were tested. This approach functions as a complement to conventional data-acquisition methods such as surveys and interviews but with the benefits of potentially higher spatial and temporal resolutions as well as a cheaper implementation. Ground truth data in the form of passive observations of NBRAs and 52 interviews was additionally acquired. This data is used on one hand to justify the models legitimacy and on the other hand to acquire behavioural and demographic information about the social media presence of the interviewees. Finally, Foursquare data was drawn upon to evaluate the allocation efficiency of recreation related infrastructure compared to the model predicted NBRA-occurrences in the research area.\\
+\newline
+The results revealed a slightly higher performance for the model trained on text as well as image-data with a manually verified precision of 0.749 on unseen data. But the major improvement lies in the achievement of twice as many true positive predictions compared to the model that was solely trained on text-data. Therefore, a recall and generalisation increase were additional improvements. No significant precision difference could be detected for predictions on media objects from different SMPs. \\
+The model outputs enabled the creation of maps which show the spatial distribution of the seven NBRA-classes in the Canton of Zug.
 
-Blah blah \dots
+no significant difference between SMPs
+include:
+- geographic closeness
+- Foursqure
+- research area
+- research question -> what makes this topic important? worthwhile? (important for stress release to counter mental illnesses)
+- models
+- ground truth
+- comparison to baseline-models
+- 3Parts (Introduction / Body / Conclusion)
+- 5 to 10 important keywords
+
+\textbf{Keywords:} social media, machine learning, recreation activities, spatial distribution
 
 \cleardoublepage
 
