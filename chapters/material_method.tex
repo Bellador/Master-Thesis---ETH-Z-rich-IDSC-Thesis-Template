@@ -16,7 +16,7 @@ There is no perimeter concordance due to varying constraints in the data acquisi
 The following subsections will elaborate on the data-acquisition process and the data-composition of the three SMPs used in this thesis. 
 
 \subsection{Instagram} \label{instagram}
-Instagram\footnote{https://www.instagram.com/} is a SMP which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook\footnote{https://www.facebook.com/}. Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780' 000). The gender distribution was at 49.4\% women and 50.6\% men \parencite{2013}. This popularity was the determining factor for using Instagram data in this thesis.\\
+Instagram\footnote{https://www.instagram.com/} is a SMP which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook\footnote{https://www.facebook.com/}. Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780'000). The gender distribution was at 49.4\% women and 50.6\% men\footnote{https://napoleoncat.com/stats/instagram-users-in-switzerland/2019/02, accessed: 30.03.2019}. This popularity was the determining factor for using Instagram data in this thesis.\\
 
 \subsubsection*{Query} \label{netlytic}
 Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser Netlytic\footnote{https://netlytic.org/} \parencite{Gruzd2016}. Netlytic allows for hashtag (\# + keyword) as well as location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows to collect Instagram media objects of public accounts in a 5km radius around a given coordinate. These Netlytic query points with their given perimeter are also visible in figure \ref{fig:research_area}. The exact latitude / longitude pairs are the following:\\
@@ -148,7 +148,7 @@ In more detail the media object tables store all data related to an object retri
 \begin{figure}[h]
    \centering
    \includegraphics[width=0.75\textwidth]{img/fusion_db_overview}
-   \caption{Visualisation of the database, its associated tables and columns}
+   \caption{Visualisation of the database, its associated tables and columns. \\ Created with https://www.draw.io/}
    \label{fig:database}
 \end{figure}
 
@@ -254,9 +254,9 @@ English, German, French and Italian stop word lists - also provided by the \text
 The reason for removing as stop words identified tokens is to prevent the inflation of the general word space while not proportionally enriching the overall contextual meaning of the entire text string. The more common words across different media objects are retained the more similar they seem to the ML model which hinders high prediction accuracies.
 
 \paragraph*{Topographic related words}
-Topographic names and descriptions from Switzerland were ignored. A list of towns and cities \parencite{Swisstopo2018} and geographical names from the topographical survey of Switzerland \parencite{Swisstopo2018a} are used for identification. This text-processing step ensures that the resulting model is not trained on specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis where the training's data did not originated from the actual research area this factor holds great importance. 
+Topographic names and descriptions from Switzerland were ignored. A list of towns and cities\footnote{http://data.geo.admin.ch/ch.swisstopo-vd.ortschaftenverzeichnis\_plz/PLZO\_CSV\_LV95.zip, accessed: 31.03.2019} and geographical names\footnote{https://shop.swisstopo.admin.ch/de/products/landscape/names3D, accessed: 31.03.2019} from the topographical survey of Switzerland are used for identification. This text-processing step ensures that the resulting model is not trained on specific geographic locations to avoid misleading associations when applying the model to another research area. Regarding this thesis where the training's data did not originated from the actual research area this factor holds great importance. 
 The possibility to use this additional location information contained in these neglected topographic terms to further narrow down the location of the NBRAs was not considered. Further investigation in this regard is considered for future improvements to the method. Additionally, 20 language variations of the country name 'Switzerland'\footnote{https://www.101languages.net/countries/switzerland-in-other-languages/, accessed: 29.03.2019} where removed. \\
-During the text-processing testing a crucial issue of location- and word-token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to walk) were being wrongfully removed based on the existing town 'Laufen' in Switzerland. To resolve this problem the list of topographic descriptions was run against the word dictionaries of the English, German, French and Italian language which were already used for the media object language detection. 1'032 matches on a total of 66'133 topographic list entities were the result which were not further considered.
+During the text-processing testing a crucial issue of location- and word-token names overlapping became apparent. Important action verbs among others of dominantly the German language such as 'laufen' (to walk) were being wrongfully removed based on the existing town 'Laufen' in Switzerland. To resolve this problem the list of topographic descriptions was run against the word dictionaries of the English, German, French and Italian language which were already used for the media object language detection. 1'032 matches on a total of 66'133 topographic list entities were the result which were removed.
 
 \paragraph*{Feed-back to the database}
 The generated word-tokens and the identified language are saved in the database table columns \texttt{processed\_text} and \texttt{detected\_language} respectively where they are accessible for the ML training and testing phase.
@@ -267,15 +267,13 @@ The extraction of structural elements from a media object's image enables an add
 \subsection{Process}
 Every Flickr and Instagram media object stored in the database comes with a media link that allows direct access to the associated image. These links with the corresponding media object id's were iteratively queried and parsed to the Google Cloud Vision API for analysis. The basic processes is illustrated in figure \ref{fig:vision_illustration}. The output consists of text labels with their corresponding confidence score. These values are fed back into the \texttt{vision\_labels} database column of the row with the matching media object id the media link belonged to.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\begin{minipage}{\textwidth}
-\centering
-\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
 \includegraphics[width=0.75\textwidth]{img/vision_illustration}
-\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API. The image source\protect\footnote{https://allaboutlimassol.com/assets/images/primary-image/51024-0.downhill\_mountain\_biking.jpg, accessed: 29.03.2019} was altered by the author.}
+\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API.}
+\source{(1) Mountain biker - https://allaboutlimassol.com/assets/images/primary-image/ \\ 51024-0.downhill\_mountain\_biking.jpg, accessed: 30.03.2019 \\
+(2) Vision emblem - https://cloud.google.com/vision/?hl=de, accessed: 30.03.2019}
 \label{fig:vision_illustration}
-\end{minipage}
 \end{figure}
 
 The placement of this entire step in relation to the other data- and text-processes is visualised in step 2 of figure \ref{fig:ml_visualisation}.
@@ -284,40 +282,7 @@ The placement of this entire step in relation to the other data- and text-proces
 Google allows the creation of one Google Cloud trial account (needs a valid Credit Card for verification) per user which comes with 300 US Dollars' worth of credit. This credit can be used among others to rent virtual machines (VM's), access API's and other Google Cloud services.The Google Cloud Vision API can also be paid with that available credit and comes with the following rates: The first 1'000 requests per month are free of charge. Subsequent requests up to 5 million requests per month are charged at \$1.50 per 1'000 requests - this applies specifically to the API specific label detection feature. Therefore, the 300\$ worth of credit would allow the processing of around 201'000 images. These rates\footnote{https://cloud.google.com/vision/pricing, accessed: 29.03.2019} were in place during the time of writing (March 2019) and will mostly likely vary with time.
 
 \section{Machine Learning for text classification} 
-\subsection{Background}
-To understand how machine learning (ML) functions on text-data one first has to understand how it works on machine readable numerical-data. ML in its core refers to the process of a computer to understand or 'learn' the relationships inside a dataset with the help of algorithms to be able to make predictions on data the model has never seen before. \\
-The training's data normally consists of different features which identify and characterise a given entry. The constellation of feature-values which can be metaphorical seen as a 'fingerprint' of a given data point are the reason why a model can potentially make out patterns and relate them to a certain output. This output can either be a class (in the case of a classification problem) or a continuous number (in the case of a regression problem) of new data point. \\
-An example of potential features of a regression problem could be different body measurements of a specific animal with the aim to differentiate between different types of the same species. The training's data would then consist of multiple entries where most likely a human measured the needed body parts of several individuals and entered the continuous numerical value in the corresponding feature field.\\
-\newline
-One can differentiate between two types of ML - supervised and unsupervised learning. To illustrate the difference imagine a set of training's data where each entry is represented by a point in an n-dimensional space where \textit{n} corresponds to the number of features present and the coordinates of each point (position vector of that point) correspond to the feature's values. If we make the link back to the example above then unsupervised learning would mean that the training's data consists of only the training's data without any labels. The labels in this case would have been the names of the animal species that the measurements were taken from. In this way the model is forced to find natural breaks / boundaries on its own in the training's data by clustering similar data points together and regarding them as an independent class. The hypothesis here is that points closer to each other in space are more related to one another than distant ones - similar to the first law of geography. These model given class names do not correspond in any way to the actual names of the animals because the model has no information on it what so ever. It is up to the user to appropriately label the clusters / classes the model isolated. \\
 
-\begin{wrapfigure}{r}{0.6\textwidth}
-   \centering
-   \begin{minipage}{\textwith}
-   \renewcommand{\thempfootnote}{\arabic{mpfootnote}}
-   \includegraphics[width=0.59\textwidth]{img/over_underfitting}
-   \caption{Visualisation of under- and overfitting on a dataset. The image source\footnote{https://medium.com/greyatom/what-is-underfitting-and-overfitting-in-machine-learning-and-how-to-deal-with-it-6803a989c76, accessed: 29.03.2019} was altered by the author.}
-   \label{fig:over_underfitting}
-   \end{minipage}
-\end{wrapfigure}
-
-Supervised learning on the other hand happens when the model is fed and trained upon example data with their correct classification labels present. The term 'supervised' therefore relates to the fact that presumably a human told the model which data points belong to which class. This approach is understandably more laborious because the creation of a labelled training's dataset takes time. The benefits are generally better performing models and the possibility to directly test the model. \\
-The testing is done by splitting the original training's dataset into two parts. Generally, a bigger portion ($\sim$ 75\%) is used for training the model and the other one ($\sim$ 25\%) - which the model has never seen during the fitting phase - is used to test the model's performance. \\
-\newline
-Frequently used terms in relation to ML are under- and overfitting. These terms correspond to two extremes of how the model and its incorporated (boundary-) function is fitted to the provided test-data (see points in figure \ref{fig:over_underfitting}). Underfitting describes the state, where the model does not seem to extract and comprehend any logic from the dataset and therefore over-generalises the classification or regression problem at hand (see outer left graph of figure \ref{fig:over_underfitting}). \\
-The other extreme is known by the term overfitting where the model tries to correctly classify every single training-data point to its proper class. This results in the model being extremely tuned to the provided training-data but not being able to generalise well on new unseen data (see outer right graph in figure \ref{fig:over_underfitting}). In other words overfitting basically means that the model learned the training's data by hard which results in misleadingly high performance scores. \\
-The process of finding the balance between a model that is able to generalise on new data while identifying the underlying data-patterns is further described in section \ref{ml_text_data}.
-
-%\begin{figure}[h]
-%   \centering
- %  \includegraphics[width=0.3\textwidth]{img/over_underfitting}
-  % \caption{Visualisation of under- and overfitting on a dataset. \textit{Image source:} \parencite{Bhande2018} altered by author}
-%   \label{fig:over_underfitting}
-%\end{figure}
-
-\clearpage
-
-%\vspace{1cm}
 \subsection{Machine learning on non-numerical text data} \label{ml_text_data}
 
 \begin{wrapfigure}{l}{0.3\textwidth} %0.3 and 0.28
@@ -363,9 +328,12 @@ Due to a limited amount of available Instagram and Flickr data of the research a
 \newline
 After considering the different topographic attributes ,the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training's data due to their similarity to the research area and to the overall Canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 and 68'522 post data-processing respectively. Attentive readers will notice that the resulting ML model is purely based on Instagram data even though Flickr data is predicted with it as well. This observation is correct and can be legitimatised with the assumption that user generated text does not differ to heavily between SMPs. That this hypothesis hols true is shown in section \ref{precision_unseen_data}.\\
 \newline
-The next step encompassed the coarse identification of potential training's data for the seven given NBRAs. This was done with tailored SQL queries to the database (see Appendix \ref{sql_queries_for_trainingdata}) containing case insensitive regular expressions in the form of:
-\[processed\_text \sim * (\backslash s | \wedge)KEYWORD(\backslash s | \$)\] 
-Potential keywords that are likely to occur in a media object of interest of a certain class are embedded in the query. The used keywords needed to be run through the same text-processing algorithm - the way every media object in the database did - to allow for successful matching. Media objects that were selected through this process were labelled according to the matching NBRA by changing the classification column in the corresponding row in the database. The order in which these NBRAs were queried impacted the amount of entities a given class would acquire after the entire set was classified. This is given by the fact that certain media objects fit the criteria of multiple queries or NBRAs. Therefore, an already classified media object could be reclassified by a later query. The order in which the queries were eventually executed corresponds to the order in the table below (see table \ref{tab:trainingsdata}). The idea behind this approach was to reduce reclassification of media objects that belonged to an already weakly represented NBRA such as 'horse riding' or 'dog walking'. Simultaneously, this would help even out the number of training's data per classification which is sought-after for the ML training's process. It has to be noted at this point that any media object that was not targeted by any of the class specific SQL queries was automatically assumed to be of the None-class which resembles media objects that are unrelated to any of the mentioned NBRAs.\\
+The next step encompassed the coarse identification of potential training's data for the seven given NBRAs. This was done with tailored SQL queries (see Appendix \ref{sql_queries_for_trainingdata}) to the \texttt{processed\_text}-column of the \texttt{media\_objects\_trainingdata\_instagram} database-table containing case insensitive regular expressions (see definitions) in the form of:
+
+\[processed\_text \sim * (\backslash s | \wedge)KEYWORD(\backslash s | \$)\]
+
+The following break-down of the query explains the parameters and search criteria in more detail. The SQL syntax \texttt{$\sim$*} initiates a case-insensitive regular expression matching with the database \texttt{processed\_text}-column of each media object. A regular expression (short: regex) is a sequence of characters used to describe and match a specific string pattern. The regex \texttt{($\backslash$ s | $\wedge$)} defines that the string-pattern of interest must either start with a whitespace ($\backslash$ s) or must be located at the beginning of the string ($\wedge$). Next follows the placeholder for potential keywords that are likely to occur in a media object of interest of a certain class. The used keywords must be run through the same text-processing algorithm - the way every media object in the database did - to allow for successful matching. Lastly, ($\backslash$ s | \$) defines that the string-pattern must either end on a whitespace or must be located at the end of the string.\\ 
+Media objects that were selected through this process were labelled according to the matching NBRA by changing the classification column in the corresponding row in the database. The order in which these NBRAs were queried impacted the amount of entities a given class would acquire after the entire set was classified. This is given by the fact that certain media objects fit the criteria of multiple queries or NBRAs. Therefore, an already classified media object could be reclassified by a later query. The order in which the queries were eventually executed corresponds to the order in the table below (see table \ref{tab:trainingsdata}). The idea behind this approach was to reduce reclassification of media objects that belonged to an already weakly represented NBRA such as 'horse riding' or 'dog walking'. Simultaneously, this would help even out the number of training's data per classification which is sought-after for the ML training's process. It has to be noted at this point that any media object that was not targeted by any of the class specific SQL queries was automatically assumed to be of the None-class which resembles media objects that are unrelated to any of the mentioned NBRAs.\\
 These 1'890 coarse pre-determined classifications were in a following step manually verified and changed if needed. This led to a deduction to a total of 1'046 remaining training's data objects (see \ref{tab:trainingsdata}). No media object with the pre-determined classification of 'None' was manually verified.\\
 \newline
 One issue that became apparent during the manual verification procedure was the problem of consistent class-definitions especially for classes that were closely related such as 'walking' and 'hiking'. As already touched upon before people tend to have different interpretations of what hiking and what walking is. Also hiking might sound more adventurous then walking which could explain an even more interchangeable usage in the field of social media. The following rules were established to differentiate between the three most similar classes: hiking, jogging and walking. A violation of these rules would lead to a reclassification during the manual verification process.
@@ -411,8 +379,8 @@ Scores for evaluating ML model performance are also introduced which are referen
 \subsubsection*{Considered algorithms} \label{ml_algorithms}
 The following algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
 
-\paragraph*{Linear support vector machines (SVMs)}
-A support vector machine can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data.
+\paragraph*{Support Vector Machines (SVMs)}
+A SVM can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training's data.
 
 \begin{wrapfigure}{l}{0.5\textwidth} %0.3 and 0.28
   %\vspace{-0.5cm}
@@ -420,7 +388,8 @@ A support vector machine can be used for classification and regression applicati
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/Svm_separating_hyperplanes}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Visualisation of possible SMV fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}. Image source: https://en.wikipedia.org/wiki/Linear\_classifier, accessed: 29.03.2019}
+  \caption{Visualisation of possible SVM fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
+  \source{https://en.wikipedia.org/wiki/ \\ Linear\_classifier, accessed: 29.03.2019}
   \label{fig:SVM_visualisation}
 \vspace{-0.5cm}
 \end{wrapfigure}
@@ -501,10 +470,11 @@ There are different measurements to evaluate a ML model. All of them can be extr
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.49\textwidth]{img/Confusion_matrix_edited}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Confusion matrix with \textit{n} classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). The image source\footnotemark was altered by the author.}
+  \caption{Confusion matrix with \textit{n} classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red).}
+  \source{https://www.researchgate.net/figure/Confusion-matrix-for-multi-class-classification-The-confusion-matrix-of-a\_fig7\_314116591, author: Frank Kr\"uger, accessed: 29.03.2019}
   \label{fig:confusion_matrix_illustration}
 \end{wrapfigure}
-\footnotetext{Frank Kr\"uger, https://www.researchgate.net/figure/Confusion-matrix-for-multi-class-classification-The-confusion-matrix-of-a\_fig7\_314116591, accessed: 29.03.2019}
+
 Measurements that were calculated (Abbreviations explained in the legend of figure \ref{fig:confusion_matrix_illustration}):
 
 \begin{gather*}
@@ -529,7 +499,8 @@ Interviews and passive observations were performed to gain insight on how well t
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.39\textwidth]{img/interviews_locations}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were performed. \textit{Image source:} \copyright Google, map-data 2019}
+  \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were performed.}
+  \source{\copyright Google, map-data 2019}
   \label{fig:locations_ground_truthing}
 %\vspace{-0.5cm}
 \end{wrapfigure}

@@ -37,6 +37,8 @@
 
 % placing figures next to each other with subfigures
 \usepackage{subcaption}
+\usepackage{caption}
+\newcommand{\source}[1]{\caption*{Source: {#1}} }
 % for displaying code snipplets
 \usepackage{listings}
 \usepackage{enumitem}
@@ -110,8 +112,8 @@
 \cleardoublepage
 \input{chapters/conclusion.tex}
 \cleardoublepage
-\input{chapters/ethics.tex}
-\cleardoublepage
+%\input{chapters/ethics.tex}
+%\cleardoublepage
 % ...
 \input{chapters/used_software}
 
