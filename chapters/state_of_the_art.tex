@@ -1,7 +1,7 @@
 \chapter{State of the Art} \label{state_of_the_art}
 This chapter will cover related scientific work regarding the usage and application of UGC, comparisons of different data-sources, nature-based recreation as well as text-classification models. The presented key literature starts out at providing a general overview of the mentioned topics and becomes more specific in the progress. According to the presented current state of the art the research gap this thesis tries to fill is displayed and put into context.
 
-\section{Applications of UGC-data}
+\section{Applications of UGC}
 The following subsections provides a general overview of the wide scientific spectrum for which UGC or more specifically VGI and SMD have been used.
 
 \subsection{Quantifying ecosystem services}
@@ -27,17 +27,21 @@ The results of the paper allowed for a comparison of the strengths and weaknesse
 The mobility of people is an highly valued necessity. Correspondingly, the planing and optimisation of transportation systems such as road nets especially in urban areas is important. 
 
 
-\paragraph*{\textcite{Barchiesi2015}} derived mobility-patterns for the UK using a machine learning algorithm trained on 8 million geo-tagged images of 16'000 individual Flickr users between 2007 and 2013. The model is capable of inferring the probability of people being in a certain location as well as the probability of trajectory-movement between different locations. Considering Flickr-data as a proxy for human mobility comes with the limitation that pictures from the same user with long time-spawns between them potentially lead to false or incomplete travel-pathways. \textcite{Barchiesi2015} were able to show that this issue is mitigated by the fact that "the time elapsedthat the time elapsed between consecutive photos follows a heavy tailed distribution [...] with most photos taken only a few hours or a few days apart, and only a small number of photos taken as much as a few years apart." \\
-The paper concludes that there is fundamental evidence that Flickr derived data can be used to quantify human mobility. Due to a lack of official survey data the presented model could only be partially validated but they appears to be in general agreement.
+\paragraph*{\textcite{Barchiesi2015}} derived mobility-patterns for the UK using a machine learning algorithm trained on 8 million geo-tagged images of 16'000 individual Flickr users between 2007 and 2013. The model is capable of inferring the probability of people being in a certain location as well as the probability of trajectory-movement between different locations. Considering Flickr-data as a proxy for human mobility comes with the limitation that pictures from the same user with long time-spawns between them potentially lead to false or incomplete travel-pathways. \textcite{Barchiesi2015} were able to show that this issue is mitigated by the fact "that the time elapsed between consecutive photos follows a heavy tailed distribution [\dots] with most photos taken only a few hours or a few days apart, and only a small number of photos taken as much as a few years apart." \\
+The paper concludes that there is fundamental evidence that Flickr derived data can be used to quantify human mobility. Due to a lack of official survey data the presented model could only be partially validated but they appear to be in general agreement.
 
-
-
-Grossenbacher2014
+\paragraph*{\textcite{Grossenbacher2014}} conducted an commuter mobility-analysis for entire Switzerland. 1 year worth of geo-tagged Twitter\footnote{https://twitter.com/?lang=en, accessed: 01.04.2019} posts were used as data-foundation to extract transportation flows between major Cities. An intensive literature review revealed flaws of preceding work. \citeauthor{Grossenbacher2014} points out that often times mobility-patterns were inferred from "mere spatial aggregations of individually unreferenced, decoupled content." Correspondingly, the thesis presented an approach of linking Twitter users to specific municipalities inside of Switzerland while estimating home and work locations. This in conjunction with a sophisticated pre-processing of the data enabled the comparison of the results to official data.\\
+The conclusion states that Twitter-data hints at a "socially, culturally, and economically unequally represented population, which raises concerns about the validity of inferences made with such data." Nevertheless it can be used as a potential data-source for studying human-mobility since it provides good indicators for actual flows of people in regions where sufficient geo-tagged data is available.
 
 \subsection{Disease outbreak tracking}
-Lee2016
+Infectious disease epidemiology has recognised big data such as UGC as novel potential sources to complement traditional infectious disease surveillance. The real-time data-acquisition with included locational information from multiple data-streams allows for more accurate predictions and could help formulate future disease-mitigation strategies. Additionally, problems regarding determining origins of epidemic outbreaks as well as identifying locations with risk of new outbreaks will among others be addressed in the subsequent papers.
 
-Schmidt2012
+\paragraph*{\textcite{Lee2016}}
+
+\paragraph*{\textcite{Schmidt2012}}
+
+
+
 
 \section{Data-comparison} \label{data_comparison_SotA}
 \subsection{SMD from different SMP} \label{SMP_vs_SMP}
