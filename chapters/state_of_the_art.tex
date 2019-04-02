@@ -1,7 +1,7 @@
 \chapter{State of the Art} \label{state_of_the_art}
 This chapter will cover related scientific work regarding the usage and application of UGC, comparisons of different data-sources, nature-based recreation as well as text-classification models. The presented key literature starts out at providing a general overview of the mentioned topics and becomes more specific in the progress. According to the presented current state of the art the research gap this thesis tries to fill is displayed and put into context.
 
-\section{Applications of UGC}
+\section{Applications of UGC} \label{applications_UGC}
 The following subsections provides a general overview of the wide scientific spectrum for which UGC or more specifically VGI and SMD have been used.
 
 \subsection{Quantifying ecosystem services}
@@ -55,7 +55,7 @@ Figure \ref{fig:tenkanen_SMP} shows the results of the study. The numerical acqu
    \centering
    \includegraphics[width=\textwidth]{img/tenkanen_2017_SMPs.pdf}
    \caption{Shown are the park rankings inferred from the SMPs Instagram, Twitter and Flickr compared to the official visitor statistics of the 21 and 35 national parks from South Africa and Finland respectively.}
-
+   \source{This figure was taken from \textcite{Tenkanen2017}}
    \label{fig:tenkanen_SMP}
 \end{figure}
 
@@ -64,10 +64,19 @@ The paper concludes that fusions of different data-streams hold the potential to
 It was shown that "[\dots] social media activity is highly associated with park popularity, and social media- based monthly visitation patterns match relatively well with the official visitor counts. However, there were considerable differences between platforms as Instagram clearly outperformed Twitter and Flickr."\parencite{Tenkanen2017}
 
 \subsection{UGC to empirical data} \label{ugc_vs_empirical}
-The previous section presented the application-broadness of UGC. The question arise how well does this data and the therefrom drawn conclusion represent reality? Empirical data is considered to be the closest approximation to reality. This section will introduce papers which investigate the legitimacy of UGS (including SMD) as proxy for real world conditions compared to empirical data acquired through conventional methods such as interviews and surveys.
+Section \ref{applications_UGC} presented the application-broadness of UGC. The question arises how well this data and the therefrom drawn conclusion represent reality. Empirical data is considered to be the closest approximation to reality. This section will introduce papers which investigate the legitimacy of UGS (specifically SMD) as proxy for real world conditions compared to empirical data acquired through conventional methods such as interviews and surveys.
 
-- (Wood et al. 2013) - nur Flickr, globale Untersuchung, Vergleich von Flickr Posts und eigentlichen Besucherfrequenzen
- Resultat: Crowed-sourced information korreliert gut mit empirischer Information wo Leute hingehen
+\paragraph*{\textcite{Wood2013}} examined Flickr in particular and its ability to predict among others visitation rates to 836 recreational sites located around the world in 31 countries. Through the official Flickr API (see \nameref{definitions}) metadata of images inside the site-boundaries were acquired which consisted of the image location, the date it was taken and the author id which was additionally used to predict the visitors origin. The measurement used to compare the empirical visitation rates to the Flickr data is the so called \textit{User-Days per Year}. It was calculated by looking at every individual Flickr author (according to the author id) that ever uploaded pictures inside one of the considered recreational sites. According to the upload-dates of the media objects the length of the visits inside the sites were estimated. The user-days are the sum of all days spent inside the site over all authors. Normalised over the years this measurement is assumed to correlate with regular visitation rates. \\
+Figure \ref{fig:wood_user_days} shows the comparison of these two measurements. Even though they do not resemble a 1:1 relationship as compared to the grey line, a linear correlation can be assumed. The paper concludes that "the crowd-sourced information can indeed serve as a reliable proxy for empirical visitation rates."
+\begin{figure}[h]
+   \begin{center}
+   \includegraphics[width=0.49\textwidth]{img/wood_user_photodays.pdf}
+   \end{center}
+   \caption{Relationship between the user-days per year and the empirical visition rates of both cultural (green circle, \textit{n}=498) and natural (orange rhomb, \textit{n}=338) recreation sites.}
+   \source{This figure was taken from \textcite{Wood2013}}
+   \label{fig:wood_user_days}
+\end{figure}
+
 
 - (Sonter et al. 2016) - nur Flickr, Natur-basierte Naherholungsuntersuchung im Naturschutzgebiet Vermont USA, Vergleich von Flickr und eigentlichen Besucherfrequenzen und Berechnung der durchsch. Reisekosten und somit ‘Wert’ des Gebietes.
 Resultat: ebenfalls sign. Korrelation zwischen Flickr und Umfragebesucherraten. Erholung macht mehr Wert aus als Holzschlag, Holzprodukte, Holzenergie, Papierindustrie zusammen.
