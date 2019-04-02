@@ -34,18 +34,34 @@ The paper concludes that there is fundamental evidence that Flickr derived data 
 The conclusion states that Twitter-data hints at a "socially, culturally, and economically unequally represented population, which raises concerns about the validity of inferences made with such data." Nevertheless it can be used as a potential data-source for studying human-mobility since it provides good indicators for actual flows of people in regions where sufficient geo-tagged data is available.
 
 \subsection{Disease outbreak tracking}
-Infectious disease epidemiology has recognised big data such as UGC as novel potential sources to complement traditional infectious disease surveillance. The real-time data-acquisition with included locational information from multiple data-streams allows for more accurate predictions and could help formulate future disease-mitigation strategies. Additionally, problems regarding determining origins of epidemic outbreaks as well as identifying locations with risk of new outbreaks will among others be addressed in the subsequent papers.
+Infectious disease epidemiology has recognised big data such as UGC as novel potential sources to complement traditional infectious disease surveillance. The real-time data-acquisition with included locational information from multiple data-streams could allow for spatially broader predictions and would help formulate future disease-mitigation strategies. Additionally, determining origins of epidemic outbreaks as well as identifying locations with risk of new outbreaks are tasks for which UGC holds possible answers. The following papers list concrete sources of UGC and critically discuss their incorporated biases when used for disease surveillance.\\
 
-\paragraph*{\textcite{Lee2016}}
+\newline
 
-\paragraph*{\textcite{Schmidt2012}}
-
-
-
+Crowed-sourced data with locational information in some form is essential. According to \textcite{Lee2016, Schmidt2012} there are several options that emerged with the phenomenon of the internet that hold potential. People entering their symptoms into a search engine with their internet protocol address allows for approximations of their location. Google used to host a Flue Trendshttps://www.google.org/flutrends/about/, accessed: 02.04.2019 project\footnote{https://www.google.org/flutrends/about/, accessed: 02.04.2019} from 2008 until 2014 which used their search statistics to try and predict flu outbreaks. The related country specific data is still accessible but the service has been retired. The topic and potential of mobile data has not yet been touched upon in this thesis but will be shortly mentioned here. Cellular data which is linked to known cell-tower locations is knowingly recorded by the providers and holds activity and mobility patterns that could potentially assigned to a specific person according to the used SIM-card. This data "has provided insights into human mobility that have informed risk maps, importation potential, and spatial dynamics of dengue and malaria." \parencite{Buckee2015b} \\
+Reservation cancellations to restaurants over websites like OpenTable\footnote{https://www.opentable.de/, accessed: 02.04.2019} or shopping activity for pharmaceutical goods in drug stores as well as in online shops could be a proxy for the appearance of illnesses. Geo-tagged social media data (e.g. Twitter, Facebook, Instagram) where people share details about their wellbeing online is also mentioned. Both papers point out that aggregations of different data-streams which lead to tools such as HealthMap\footnote{https://www.healthmap.org/en/, accessed: 02.04.2019} bring together the benefits and partially mitigate the bias incorporated in all of them.\\
+The encountered challenges and biases are similar to general SMD applications which encompass incomplete and unrepresented populations as well as invalidated data. Additionally, the usage of sensitive health related data raises many ethical issues. \textcite{DeMontjoye2013} have shown that presumably anonymised data could be de-anonymised by linking it to certain available databases. Considering health insurances, leakage of said personalised data could have shrouded consequences for the individuals involved.  
+\textcite{Lee2016} concludes: "[\dots] there remain untapped opportunities with real-time surveillance, large-scale ecological inference, and adaptive disease mitigation strategies. Harnessing disease data from digital sources may enable epidemiological analyses to be performed at finer spatial scales in areas with poor coverage from traditional public health surveillance [\dots]".
 
 \section{Data-comparison} \label{data_comparison_SotA}
-\subsection{SMD from different SMP} \label{SMP_vs_SMP}
-Tenkanen2017
+Several of the presented papers that worked with UGC compared their results to empirical data for data-validation and for prove of legitimacy. Additionally, it is necessary to comprehend and compare biases, strengths and weaknesses from different sources of UGC to find the most well-fitting data-steam for a certain application. The following literature provides the results to said comparisons in further detail.
+
+\subsection{SMD from different SMPs} \label{SMP_vs_SMP}
+
+\paragraph*{\textcite{Tenkanen2017}} addressed the issue of most studies that analyse recreational use have relied on data from single SMPs. Correspondingly, Instagram, Twitter and Flickr were used as popular SMP to investigate how well they individually or in combination predict visitation rates in 56 national parks in Finland and South Africa. High-precision visitor statistics from the year 2014 were available from these parks which additionally allowed for evaluating the use of SMD as proxy for visitation rates and identifying popular attractions.\\
+Figure \ref{fig:tenkanen_SMP} shows the results of the study. The numerical acquired visitation rates allowed for a popularity ranking of the 52 national parks which were compared to the ranking derived from the three SMP alone as well as combined. The Spearman's rank order correlation of 0.75 in South Africa and 0.84 in Finland revealed that the SMD matches the official ranking well. There are apparent accuracy differences between the two countries and between individual SMP's. Instagram managed to correctly predict the top four of the 21 South African national parks whereas Twitter only managed to correctly predict the top two. The results for the 35 national parks located in Finland showed more variation in the top ranks but were able to approximate better to the general order.
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[width=\textwidth]{img/tenkanen_2017_SMPs.pdf}
+   \caption{Shown are the park rankings inferred from the SMPs Instagram, Twitter and Flickr compared to the official visitor statistics of the 21 and 35 national parks from South Africa and Finland respectively.}
+
+   \label{fig:tenkanen_SMP}
+\end{figure}
+
+\textcite{Tenkanen2017} identified together with involved stakeholders potential explanations for certain mismatches in the data. In summary, the geography and profile of the park, the visitor profile, and sudden events were mentioned as possible reasons.\\
+The paper concludes that fusions of different data-streams hold the potential to describe patterns in the data more thoroughly than on their own. This is mainly due to the fact that people use multiple SMPs simultaneously. Merge these channels allows to capture the bigger picture.
+It was shown that "[\dots] social media activity is highly associated with park popularity, and social media- based monthly visitation patterns match relatively well with the official visitor counts. However, there were considerable differences between platforms as Instagram clearly outperformed Twitter and Flickr."\parencite{Tenkanen2017}
 
 \subsection{UGC to empirical data} \label{ugc_vs_empirical}
 The previous section presented the application-broadness of UGC. The question arise how well does this data and the therefrom drawn conclusion represent reality? Empirical data is considered to be the closest approximation to reality. This section will introduce papers which investigate the legitimacy of UGS (including SMD) as proxy for real world conditions compared to empirical data acquired through conventional methods such as interviews and surveys.
