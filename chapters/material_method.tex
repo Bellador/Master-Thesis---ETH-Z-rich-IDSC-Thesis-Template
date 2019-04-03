@@ -400,7 +400,7 @@ For the calculation of the mentioned hyperplane are only the marginal vectors of
 
 \paragraph*{Decision Tree algorithm}
 Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data with increasing tree depth. The determination of the nodes operation and their position inside the tree is seen as the fitting or training of the model.\\
-One specific variation of the generic decision tree which has been tested for this project is the so-called randomForest. It creates a defined amount of individual decision trees which are trained on different random test- and train-splits of the training's dataset. This process comes close to performing a cross-validation. At the end these trees are logically merged where deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training's data while reducing the trend to overfitting.\\
+One specific variation of the generic decision tree which has been tested for this project is the so-called Random Forest. It creates a defined amount of individual decision trees which are trained on different random test- and train-splits of the training's dataset. This process comes close to performing a cross-validation. At the end these trees are logically merged where deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training's data while reducing the trend to overfitting.\\
 Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training's dataset. This can be countered by limiting the maximal depth of the tree(s) (see listing \ref{coderandomForestparameters}) . This process is called pre-pruning.\\
 \newline
  The book from \textcite{Guido2016} about ML stated that "random forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, this algorithm was tested and did not perform much worse than the linearSVC model (see section \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be faster than the one of the linearSVC model (in this thesis roughly 15\% faster). 
@@ -422,7 +422,7 @@ In addition to the previously mentioned data- and text-processing steps some ext
         \item \textbf{k} Defines the number of further considered features with the highest score.
     \end{itemize}
     
-    \item \textbf{ML algorithm} LinearSVC and randomForest classifiers (see section \ref{ml_algorithms}) were used to find the most well-rounded model.\\
+    \item \textbf{ML algorithm} LinearSVC and Random Forest classifiers (see section \ref{ml_algorithms}) were used to find the most well-rounded model.\\
     \textit{Tuned hyper-parameters:}
     \begin{itemize}[label={}]
         \item \textbf{LinearSVC \textit{C}} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training's point. Reducing this parameter allows for more generalisation and counteracts to overfitting. Increasing the 'C' parameter raise the model's training's accuracy (see figure \ref{fig:over_underfitting}).
@@ -434,15 +434,15 @@ In addition to the previously mentioned data- and text-processing steps some ext
             \item For more detailed information on these two regularisation terms with an in depth comparison please refer to \textcite{Mazilu2011}.
         \end{itemize}
         
-        \item \textbf{randomForest n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the training's data captured. The downside is the computational cost increase.
+        \item \textbf{Random Forest n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the training's data captured. The downside is the computational cost increase.
         
-        \item \textbf{randomForest max\_depth} Defines the number of levels the created decision trees are made of.
+        \item \textbf{Random Forest max\_depth} Defines the number of levels the created decision trees are made of.
     \end{itemize}
     
-    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the result reliability (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the randomForest algorithm is visible in figure \ref{coderandomForestparameters} and the one for the linearSVC algorithm in figure \ref{codelinearsvcparameters}.
+    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the result reliability (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the Random Forest algorithm is visible in figure \ref{coderandomForestparameters} and the one for the linearSVC algorithm in figure \ref{codelinearsvcparameters}.
 \end{enumerate}
 
-\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the randomForest fitting algorithm, label=coderandomForestparameters]
+\begin{lstlisting}[language=Python, caption=Tuned hyperparameters of the Random Forest fitting algorithm, label=coderandomForestparameters]
 randomforest_parameters = {
                     'vect__min_df': [9, 10, 11, 12, 13, 14],
                     'vect__ngram_range': [(1, 1), (1, 2), (2, 2), (1, 3)],

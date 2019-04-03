@@ -100,7 +100,7 @@ The results of the study revealed that the variety of recreation opportunities, 
 
 \subsection{using UGC} 
 
-\paragraph*{\textcite{Monkman2018}} used social media mining to acquire crowed-sourced spatio-temporal information about fishery in Wales as a wildlife recreation activity. Details about fish size and fisher activity (amount, duration and route of trips) were georeferenced using a custom gazetteer to match extracted toponyms. The data consisted of 10'000 blog posts from a total of eight relevant forums regarding fishery in Wales. These extracted URLs were mined through automated web-scraping using Outwit Hub\footnote{https://www.outwit.com/products/hub/, accessed: 03.04.2019} which was ethically acceptable given users used dominantly pseudonymous. Subsequently, the data was analysed and categorised using a text-classification model (not based on machine learning) to identify posts among others related to catch measurements, used equipment, trip duration, trip route and used vessel. This information was extracted together with the georeferenced toponyms to map the activity. \\
+\paragraph*{\textcite{Monkman2018}} used social media mining to acquire crowed-sourced spatio-temporal information about fishery in Wales as a wildlife recreation activity. Details about fish size and fisher activity (amount, duration and route of trips) were georeferenced using a custom gazetteer to match extracted toponyms. The data consisted of 10'000 blog posts from a total of eight relevant forums regarding fishery in Wales. These extracted URLs were mined through automated web-scraping using Outwit Hub\footnote{https://www.outwit.com/products/hub/, accessed: 03.04.2019} which was ethically acceptable given users used dominantly pseudonymous. Subsequently, the data was analysed and categorised using a text-classification algorithm (not based on machine learning) to identify posts among others related to catch measurements, used equipment, trip duration, trip route and used vessel. This information was extracted together with the georeferenced toponyms to map the activity. \\
 The results of the study indicate that crowed-sourced social media can be used to unveil spatial and temporal patterns related to wildlife recreation. The predicted occurrences and intensities of fishery in Wales agreed qualitatively with expert knowledge but the demographic bias in the data requires further research given by e.g. usage of social media.
 
 \paragraph*{\textcite{Mancini2018}} focused on identifying nature-based recreation hotspots in Scotland, specifically of wildlife watching of birds, seals, whales and dolphins for which Flickr data was used. Additionally, comparisons to empirical numbers were conducted to backup their findings and legitimise the usage of Flickr as indicator for spatial and temporal dynamics of nature-based recreation activities.
@@ -109,22 +109,16 @@ The generated output assumes the existence of reliable statistical accordance be
 Also, the identified wildlife watching hotspots match with the recreation and tourism survey data down to a spatial resolution of 10km. The temporal pattern analysis additionally confirmed seasonal movement towards these areas. \textcite{Mancini2018} concludes that Flickr (and potentially other crowed-sensing sources) holds the potential to identify people's preferences and movement which could be used to e.g. monitor the pressure recreational activities impose on the environment.
 
 \section{Existing text-classification models}
-    - REGARDING TEXT-CLASSIFICATION MODELS
-    
-Li2018 - 
-Das2018 - 
+In the current time, text-classification is implemented in a variety of different software systems that deal with text data at scale and is a fundamental component to the majority of natural language processing as well as machine learning use cases. A common application of text-classification models are SPAM-filters that classify Email content according the usefulness to the owner. Sentiment analysis, topic labeling and language as well as intend detection are other frequent applications.\\
+The following two papers present modern comforts of text-classifications models based on machine learning and deep learning. The aim of this section is not to explain certain fitting algorithms or deep-learning concepts, but moreover give a short overview of existing models and the performances they yield. The performances of the following two models will be used as baseline models. Comparisons to the models of this thesis will be presented in the \nameref{discussion} chapter under section '\nameref{model_baseline}'. 
 
+\paragraph*{\textcite{Das2018}} attempted to improve traditional TF-IDF\footnote{Term Frequency times Inverse Document Frequency, see also \nameref{definitions}} bag of words models by implementing Next Word Negation (NWN). Next word negation is an algorithm developed by \textcite{Das2018} which aims to identify forms of negation inside a document corpus. This procedure differs from similar algorithms by negating only the very next word after an identified negation word instead of all preceding words until a punctuation is received. The presented model aims to predict text sentiment on three different datasets with three tested classifiers. Movie reviews, product reviews and SMS\footnote{Short Message Service} spam excerpts were used as individual datasets for training and testing with an split ration of 0.8 (80\% of the data for training, 20\%  for testing). Multinomial Na\"ive Bayes, Max Entropy Random Forest and Linear Support Vector Machines are popular algorithm choices for text-classification whose performances were evaluated on the datasets. \\
+The result show that the implemented NWN is able to improve model performance. The Linear Support Vector Machine classifier performed the best with 10-Fold cross-validated accuracies on the IMDB movie reviews, Amazon product reviews and SMS spam detection dataset of 89.91\%, 96.83\%, 88.58\% respectively.
 
+\paragraph*{\textcite{Li2018}} proposed a new hybrid deep-learning model by combining layers of Long Short-Term Memory (LSTM) and Convolutional Neural Network's (CNN) to classify Chinese and English text. LSTM is capable of processing serialised information while CNN excels in feature extraction. The combination of these methods resulted in the novel BLSTM-C model whereby BLSTM stands for Bi-Directional Long Short-Term Memory while C stands for CNN.\\
+The model-hybrid was tested the Stanford Sentiment Treebank benchmark (SST-1) from \textcite{Socher2013} which is made up of 11'855 movie reviews of which 8'544 (72\%) were used for training, 1101 (9\%) for validation and 2'210 (19\%) for testing.
 
-
-
-    - Conventional methods for information retrieval 
-    - what has been done with SMD in general
-    - what text classification models have been trained on SMD?
-    - Explicitly applied models for SMD    
-
-
-
+\textbf{Disclaimer:} The author of this thesis is not familiar with the exact workings behind the mentioned deep-learning concepts. The paper was merely chosen from the field of neural networks for comparison reasons.
 
 
 
