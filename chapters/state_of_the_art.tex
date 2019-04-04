@@ -123,23 +123,8 @@ of 94.88\% on the English dataset and 96.23\% on the Chinese dataset. This corre
 
 \section{Research gap}
 According to the presented scientific advances in the field of nature-based recreation as a cultural ES and the spectrum of applications of crowed-sourced UGC the research gap this thesis tries to fill will be illustrated. \\
-Previous research harnessed either text-data \parencite{Barchiesi2015, Monkman2018, Wartmann2018} or image contained information \parencite{Richards2018, Heikinheimo2017} from various UGC-sources. Rarely have the two data-streams efficiently been combined to yield potentially more precise predictions of real world circumstances. This thesis tries to accomplish the synthesis of these two data-sources in the form of a sophisticated text-classification model which is trained on processed user-generated text-data and structural elements contained in images of social media posts. 
-relied on multiple SMP as sources to qunatify the spatial occurrences of NBRAs
+Previous research harnessed either text-data \parencite{Barchiesi2015, Monkman2018, Wartmann2018} or image contained information \parencite{Richards2018, Heikinheimo2017} from various UGC-sources. Rarely have the two data-streams efficiently been combined to yield potentially more precise predictions of real world circumstances. This thesis tries to accomplish the synthesis of these two data-sources in the form of a sophisticated text-classification model which is trained on processed user-generated text-data and structural elements contained in images of social media posts. The model is used to map the spatial occurrences of NBRAs based on data from two different SMPs Instagram and Flickr. The SMP specific bias in the data such as the asymmetric representation of the population can thereby be partially mitigated opposed to relying on a single data-source \parencite{Barchiesi2015, Grossenbacher2014, Monkman2018, Mancini2018}. \\
+The approach brings innovation by automating the identification process of NBRAs in UGC. The use of the Google Cloud Vision image recognition algorithm omits expensive labour needed for manual image classification \parencite{Richards2018}. Additionally, the model can be rapidly applied to new study areas and allows modifications such as the implementation of new classes. The approach's reproducibility is assured since dominantly Open Source or free software was used which reduces license costs and simultaneously increases the benefit for small agencies. \\
+Lastly, the acquisition of \textit{in-situ} ground truth data allowed to overall substantiate this thesis' findings and provide further insight on the proxy potential of SMD compared to conventional methods. 
 
-
-(An additional baseline model trained solely on text-data is created to evaluate the data-synthesis effect according to the prediction accuracy of seven different nature-based recreation classes on Instagram and Flickr posts. Also Ground truth data was acquired to justify the models legitimacy.)
-
-
-
-- use multiple SMP as source
-- make predictions on spatial occurrences of NBRAs
-- application of a sophisticated text-classification model which
-- information synthesis contained in the user generated text data and the image. Merge of the two data-streams datasources --> recent work has hardly used both or only with laborous manual image classification.
-- comparison to ground truth data in the form of empirical interview and passive observation data to support the models
-- usage of open source software for reprocability, low license costs
-- trained model -> rapid application to new research areas
-- automated process
-- easily improvable models which can be retrained on bigger training's datasets. additional classes can be added without code alterations.
-
-image: manual classification by Heikinheimo2017, Richards2018
-text: Barchiesi2015, Monkman2018, Wartmann2018 
+ 
