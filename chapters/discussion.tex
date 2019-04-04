@@ -1,10 +1,10 @@
 \chapter{Discussion} \label{discussion}
 
-\section{Reflection on the research questions}
-\subsection{RQ1}
-.
-.
-.
+\section{Reflection on the RQ 1}
+
+
+\section{Reflection on the RQ 2}
+xxxxxDISCUSS PRODUCED MAPSxxxx
 
 \section{Recorded biases} \label{discussion_rec_bias}
 Multiple different data-sources have been used in the course of this thesis. All data contain some form of bias given either by its origin, composition, the way it was obtained or processed. 
@@ -20,7 +20,7 @@ It is known that SMD from SMP such as Instagram and Flickr contain various forms
 
 \subsubsection*{Data-processing} Dataset integrated bias such as dominant users and bulk-uploads that distort the general perception of the data were mitigated by subjectively defined and implemented thresholds during the data-processing phase described in section \ref{bias_dominant_authors} and \ref{bias_bulk_uploads} respectively. These thresholds as already mentioned are set by the author which simultaneously adds a subjective view and alteration to every dataset. Also, it is to be expected that these are not the only biases present. Media objects for instance by tourists and locals were treated with equal importance, even though the latter should have a better knowledge over the optimal places to perform certain activities. Additionally, media objects which try to promote e.g. a product, a location, an activity or which are influenced or sponsored by a third party were not specifically filtered out.\\
 
-\subsubsection*{Training's data} The composition, origin and quantity of the training's data is linked to numerous known flaws of which the majority were investigated. They will be listed and discussed here in their entirety. \\
+\subsubsection*{Training's data} The composition, origin and quantity of the training's data is linked to numerous known flaws of which the majority were investigated. All findings will be listed and discussed here. \\
 The fact that both models were solely trained on Instagram data but used to predict also Flickr media objects is a known bias. The associated magnitude of this flaw in regards to the performance of M1 and M2 was investigated in table \ref{tab:m1_actual_precision} and table \ref{tab:m2_actual_precision} respectively and proven to be not significant on a 5\% level. \\
 The issue of using media objects for training that originate from a different area than the media objects on which the models predict is problematic and doubtful. This decision was not made by choice but rather because of a too small available dataset from the research area. The short data-acquisition period (see section \ref{Instagram_timespan}) and the retirement of the Instagram API on the 11.12.2018 did not allow for enough media objects per NBRA-class to train a sophisticated model. The absence of a significant language difference between the two regions which is considered to be one of the crucial requirements was investigated in section \ref{fig:det_languages} and could not be disproven.
 Even with the multiple times bigger dataset from Zurich were some classes such as 'horse riding' with 13 entries (see table \ref{tab:trainingsdata}) poorly represented. This is not a bias in its usual sense but rather a weakness of the model as a whole.
@@ -30,7 +30,7 @@ The classifications between which the models differentiate were chosen based on 
 Taking this into consideration a merge of these two NBRA-classes could be considered.
 
 \subsubsection*{Predictions}
-The spatial distribution accuracy and the associated interpretation bias of Instagram media objects has been discussed in section \ref{instagram_location_tag}. User generated location tags impose the issue of imprecise or simply wrong positions. To mitigate these effects superordinate and general location tags could be excluded as done by \textcite{Heikinheimo2017} to increase the overall NBRA spatial distribution accuracy. Inaccuracies in spatial locations of media objects was also described by \textcite{Lee2016} which might lead to the inclusion of unwanted data.
+The spatial distribution accuracy and the associated interpretation bias of Instagram media objects has been discussed in section \ref{instagram_location_tag}. User generated location tags impose the issue of imprecise or simply wrong positions as also described by \textcite{Lee2016}. To mitigate these effects superordinate, general location tags associated with a specific region could be excluded as performed by \textcite{Heikinheimo2017} to increase the overall spatial distribution accuracy of NBRAs.
 
 \section{Model performance} \label{disussion_model_performance}
 The comparison between model performances during model-tuning (see M1 - table \ref{tab:m1_linearSVC_bestscores} and M2 - table \ref{tab:m2_linearSVC_bestscores}), model-testing on the entire training's dataset (see figure \ref{tab:m1_m2_linearSVC_final_scores}) and model-validation on new data (see table \ref{precision_unseen_data}) revealed some inconsistency. M1 solely showed a better performance while fitting on fewer training points. This was the case during model-tuning due to the necessary testing subset which accounts for 25\% of the total available data. Besides that M2 showed better final model performance as well as a better performance on new (unseen) data. This discrepancy suggests that the size of the training's dataset used in this thesis was considerably small since 25\% more training's data still led to an significant performance increase for both models but especially for M2. The enhanced M2 performance on unseen data also indicates that M2 possesses a better generalisation capability compared to M1 which is also reflected in the reduced False Negative predictions - indicating a higher M2 recall score.
@@ -38,3 +38,4 @@ The comparison between model performances during model-tuning (see M1 - table \r
 \subsection*{Comparable model baselines} \label{model_baseline}
 The models presented in this thesis can be compared to text-classification models of similar research papers to acquire a baseline reference. Recent work of \textcite{Das2018} presents a text sentiment classification model which is based on NF-IDF (also used in this thesis) in conjunction with an additional algorithm to enhance sentiment prediction. Three different classifiers were tested of which also the linearSVC showed the best performance on used review datasets. The presented 10-Fold cross-validated model accuracy on the main IMBD movie review dataset was 89.91\% with a train-test split of 80\% and 20\% respectively.\\
 Another reference is the deep-learning based model created by \textcite{Li2018} which is optimised to classify Chinese text. The observed accuracy of the tuned model on the Chinese and English dataset lies at 96.23\% and 94.88\% respectively. The latter should function as better comparison to M1 and M2 from this thesis which achieved a test accuracy of 93.7\% and 88.2\% respectively.
+
