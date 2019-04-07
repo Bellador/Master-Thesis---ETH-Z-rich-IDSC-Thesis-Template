@@ -44,7 +44,7 @@ As seen in figure \ref{img:bulk_uploads_flickr} an additional, roughly 3'000 Fli
 Similar graphs to figure \ref{img:dominant_users_flickr} and \ref{img:bulk_uploads_flickr} were created for all the datasets. The functioned as a basis for manually declaring the thresholds visible in \ref{tab:data_reduction_values}. 
 
 \section{Models} \label{results_models}
-The performance results of the two in section \ref{ml_model} introduced models will subsequently be presented. These models were both solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table: \texttt{media\_objects\_trainingdata\_instagram} (database overview visible in figure \ref{database_setup}). For each model the Random Forest classifier and the linearSVC fitting algorithm were independently tested. The hyperparameters were tuned to yield the best possible 10-Fold cross-validated F1-score averaged over all classes excluding the None-class. The training's data was consistently split into 75\% for training and 25\% for testing. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
+The performance results of the two in section \ref{ml_model} introduced models will subsequently be presented. These models were both solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table: \texttt{media\_objects\_trainingdata\_instagram} (database overview visible in figure \ref{database_setup}). For each model the Random Forest classifier and the linearSVC fitting algorithm were independently tested. The hyperparameters were tuned to yield the best possible 10-fold cross-validated F1-score averaged over all classes excluding the None-class. The training's data was consistently split into 75\% for training and 25\% for testing. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
 These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr}\\
 Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
 \newline
@@ -199,11 +199,11 @@ The effect of different \textit{ngram\_range} settings in combination with varyi
 \texttt{Remark:} If different hyperparameter settings produce the same model performance (F1-score) than the setting which produces fewer features is prioritised due to better generalisation and regularisation capabilities. Regarding figure \ref{fig:m1_heatmap} for instance the \textit{ngram\_range} setting of either (1, 1), (1, 2) or (1, 3) in combination with \textit{C} = 1 all produce a F1-score of 0.932. (1, 1) has been chosen as best hyperparameter configuration due to the lowest feature count.
 
 \subsubsection*{Classification specific F1-scores}
-As already seen above M1 performed on the test set with an 10-Fold cross-validated F1-score excluding the None-class of \textbf{0.870} compared to \textbf{0.835} of M2. Figure \ref{fig:m1_m2_class_f1_scores} gives more insight on the classification specific model performances. The worst performances are recorded for both Random Forest classifiers. Also the M2 linearSVC picnic class sticks out with a score of 0.48. The actual performance and generalisation potential of both model on 'unseen data' is presented further down.
+As already seen above M1 performed on the test set with an 10-fold cross-validated F1-score excluding the None-class of \textbf{0.870} compared to \textbf{0.835} of M2. Figure \ref{fig:m1_m2_class_f1_scores} gives more insight on the classification specific model performances. The worst performances are recorded for both Random Forest classifiers. Also the M2 linearSVC picnic class sticks out with a score of 0.48. The actual performance and generalisation potential of both model on 'unseen data' is presented further down.
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{img/m1_m2_class_f1_scores_bigger_font.pdf}
-   \caption{Overview of the classification specific 10-Fold cross-validated F1-scores of the linearSVC and Random Forest fitting algorithm of M1 and M2}
+   \caption{Overview of the classification specific 10-fold cross-validated F1-scores of the linearSVC and Random Forest fitting algorithm of M1 and M2}
    \label{fig:m1_m2_class_f1_scores}
 \end{figure}
 
@@ -213,7 +213,7 @@ It can be noted at this point that the best M1 and M2 performance yielded simila
 
 \begin{table}[h]
 \begin{center}
-\caption{linearSVC 10-Fold cross-validated final performance scores of M1 and M2 while being fitted according to the entire training's dataset available.}\vspace{1ex}
+\caption{linearSVC 10-fold cross-validated final performance scores of M1 and M2 while being fitted according to the entire training's dataset available.}\vspace{1ex}
 \label{tab:m1_m2_linearSVC_final_scores}
 \begin{tabular}{cccccc}\hline
 Model & Accuracy & Precision & Recall & F1 & F1 (without None-class) & Features\\ \hline
@@ -243,15 +243,15 @@ The model performance evaluation was done manually by the author. 100 media obje
 where the class-specific model precision (\textit{precision}\textsubscript{class}) is based on the manual evaluation of 100 media objects of that class which can be a subset of the total amount of predicted media objects of that class by the model.
 
 \paragraph*{Model 1}
-The best M1 precision of \textbf{0.764} was recorded for the media objects of the SMP Flickr while the parsed text-string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both SMPs yields accordingly an average precision score of \textbf{0.748}.\\
-While the M1 precision differences between the two SMPs Instagram and Flickr were not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels were significant.
+The best M1 precision of \textbf{0.764} was recorded for the media objects of the social media platform Flickr while the parsed text-string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both social media platforms yields accordingly an average precision score of \textbf{0.748}.\\
+While the M1 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels were significant.
 
 \begin{table}[h!]
 \begin{center}
 \caption{M1 NBRA precision on unseen data}\vspace{1ex}
 \label{tab:m1_actual_precision}
 \begin{tabular}{c|cc?cc}\hline
-SMP & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
+platform & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
 Instagram & 0.664 & 0.732 & 0.698 & 0.907\\
 Flickr & 0.634 & 0.764 & 0.699 & 0.830\\
 \Xhline{2\arrayrulewidth}
@@ -262,17 +262,17 @@ ratio & 1.047 & 0.958
 \end{center}
 \end{table}
 
-The incorporation of image labels into the text-string results in an increase of overall and true positive predictions for both SMPs (see table \ref{tab:m1_actual_recall}).
+The incorporation of image labels into the text-string results in an increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m1_actual_recall}).
 In the case of Instagram the inclusion and exclusion of image labels results in a total of \textbf{668} and \textbf{384} NBRA-identifications which corresponds to 5.67\% and 3.26\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
 In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.\\
-Therefore, the best performing final text-string format which excludes image labels results in a total of \textbf{451} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both SMPs. 
+Therefore, the best performing final text-string format which excludes image labels results in a total of \textbf{451} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
 
 \begin{table}[h!]
 \begin{center}
 \caption{Share of correctly classified NBRA media objects by M1 (except the None-class) in relation to the entire dataset (according to listing \ref{equation_share_TP})}\vspace{1ex}
 \label{tab:m1_actual_recall}
 \begin{tabular}{ccc?cc}\hline
-SMP & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
+platform & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
 Instagram & 5.67\% & 3.26\% & 4.47\% & 1.74\\
 Flickr & 4.25\% & 1.77\% & 3.01\% & 2.40\\
 \Xhline{2\arrayrulewidth}
@@ -283,8 +283,8 @@ ratio & 1.33 & 1.84
 \end{table}
 
 \paragraph*{Model 2}
-The best M2 precision of \textbf{0.776} was recorded for the media objects of the SMP Instagram while the parsed text-string included image labels (see table \ref{tab:m2_actual_precision}). Predicting new data with image labels across both SMPs yields accordingly an average model performance of \textbf{0.749}.\\
-While the M2 precision differences between the two SMPs Instagram and Flickr were not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels were significant.\\
+The best M2 precision of \textbf{0.776} was recorded for the media objects of the social media platform Instagram while the parsed text-string included image labels (see table \ref{tab:m2_actual_precision}). Predicting new data with image labels across both social media platforms yields accordingly an average model performance of \textbf{0.749}.\\
+While the M2 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels were significant.\\
 
 
 \begin{table}[h!]
@@ -292,7 +292,7 @@ While the M2 precision differences between the two SMPs Instagram and Flickr wer
 \caption{M2 NBRA precision on unseen data}\vspace{1ex}
 \label{tab:m2_actual_precision}
 \begin{tabular}{ccc?cc}\hline
-SMP & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
+platform & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
 Instagram & 0.776 & 0.691 & 0.734 & 1.123\\
 Flickr & 0.721 & 0.753 & 0.737 & 0.958\\
 \Xhline{2\arrayrulewidth}
@@ -302,16 +302,16 @@ ratio & 1.076 & 0.918
 \end{center}
 \end{table}
 
-The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both SMPs (see table \ref{tab:m2_actual_recall}).
+The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m2_actual_recall}).
 In the case of Instagram the inclusion and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.03\% and 3.63\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}. In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.99\% and 2.16\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}.\\
-Therefore, the best performing final text-string format which includes image labels results in a total of \textbf{937} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both SMPs. 
+Therefore, the best performing final text-string format which includes image labels results in a total of \textbf{937} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
 
 \begin{table}[h!]
 \begin{center}
 \caption{Share of correctly classified NBRA media objects by M2 (except the None-class) in relation to the entire dataset (according to listing \ref{equation_share_TP})}\vspace{1ex}
 \label{tab:m2_actual_recall}
 \begin{tabular}{ccc?cc}\hline
-SMP & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
+platform & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
 Instagram & 6.03\% & 3.63\% & 4.83\% & 1.66\\
 Flickr & 5.99\% & 2.16\% & 4.08\% & 2.77\\
 \Xhline{2\arrayrulewidth}
@@ -323,8 +323,8 @@ ratio & 1.00 & 1.68
 
 \paragraph*{Summary}
 M1 and M2 showed both the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained.\\
-The model precision was less dependant on the SMP the media objects originated from but rather if image labels were parsed or not.\\
-The best observed precision of M2 with \textbf{0.776} (SMP average: 0.749) was only slightly better than the \textbf{0.764} of M1 (SMP average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
+The model precision was less dependant on the social media platform the media objects originated from but rather if image labels were parsed or not.\\
+The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) was only slightly better than the \textbf{0.764} of M1 (platform average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
 M2 with a slightly higher precision yielded (937-451=)486 more true positive NBRA-predictions than M1 which resolves to an \textbf{increase by factor two}. Therefore, M2 predicted less False Negatives (FN) which concludes that M2 also possess a higher recall score than M1 and generalises better on new data.
 
 \section{Media object languages}
@@ -360,7 +360,7 @@ The passive NBRA-observation was performed by an assistant of the author. The th
 \subsection{Interview analysis}
 
 \subsubsection*{Visitation motivations}
-The top eight motivations or reasons the interviewees mentioned why they visited a given location are displayed in figure \ref{fig:interview_visitation_motivation} sorted from left to right in descending order. According to the results plays \textit{geographic closeness} a dominant role how people choose their recreation location. If a lake was present it was also frequently mentioned as a strong driver that attracts people for NBRAs. The term \textit{sport} was solely mentioned for the location 'Schattenw\"aldli', the terms \textit{shopping}, \textit{low traffic} and \textit{sunset} exclusively for the location 'R\"ossliwiese' and the term \textit{topography} for the location 'Br\"uggli'.
+The top eight motivations or reasons the interviewees mentioned why they visited a given location are displayed in figure \ref{fig:interview_visitation_motivation} sorted from left to right in descending order. According to the results plays \textit{geographic closeness} a dominant role how people choose their location for recreation. If a lake was present it was also frequently mentioned as a strong driver that attracts people for NBRAs. The term \textit{sport} was solely mentioned for the location 'Schattenw\"aldli', the terms \textit{shopping}, \textit{low traffic} and \textit{sunset} exclusively for the location 'R\"ossliwiese' and the term \textit{topography} for the location 'Br\"uggli'.
 
 \begin{figure}[h!]
    \centering
@@ -380,17 +380,17 @@ Figure \ref{fig:interview_activities} corresponds to figure \ref{fig:passive_obs
 \end{figure}
 
 \subsubsection*{Popularity of social media platforms }
-One main part of the interviews next to the information gain related to the performed NBRAs was dedicated to the interviewee's social media usage and engagement. Figure \ref{fig:interview_SMP} visualises the recorded occurrences where interviewees confirmed having an account on one of the given SMPs. Instagram and Facebook are by far the most widespread SMPs that were registered. LinkedIn follows third with less than half of the mentions of first or second place. Many interviewees mentioned the (sometimes forced) requirement of a LinkedIn account for their professional life. A surprisingly low occurrence is registered for Twitter. STRAVA through being a specialised SMP was only mentioned once. Interestingly Flickr was not mentioned once during all 52 interviews.
+One main part of the interviews next to the information gain related to the performed NBRAs was dedicated to the interviewee's social media usage and engagement. Figure \ref{fig:interview_SMP} visualises the recorded occurrences where interviewees confirmed having an account on one of the given social media platforms. Instagram and Facebook are by far the most widespread social media platforms that were registered. LinkedIn follows third with less than half of the mentions of first or second place. Many interviewees mentioned the (sometimes forced) requirement of a LinkedIn account for their professional life. A surprisingly low occurrence is registered for Twitter. STRAVA through being a specialised social media platform was only mentioned once. Interestingly Flickr was not mentioned once during all 52 interviews.
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{img/interview_socialmedia_bigger_font.pdf}
-   \caption{Deviated SMP popularity according to confirmed profiles of 52 interviewees}
+   \caption{Deviated social media platform popularity according to confirmed profiles of 52 interviewees}
    \label{fig:interview_SMP}
 \end{figure}
 
 \subsubsection*{Relationship between age and social media presence}
-Insight on dominantly represented ages groups in social media data can be drawn from figure \ref{fig:interview_age_SMP}. According to the 52 conducted interviews are the most active people on SMPs between the age of 21 and 30 (red bars indicating participation). The age group of 61 to 100 on the other hand has not one recorded social media user. The red and blue line in figure \ref{fig:interview_age_SMP} represent the linear regression lines of the corresponding datasets. Their intersection at roughly age 50 indicates the transition between SMP usage and absence. Instagram and Facebook make out the biggest share of these records as already seen in figure \ref{fig:interview_SMP}.
+Insight on dominantly represented ages groups in social media data can be drawn from figure \ref{fig:interview_age_SMP}. According to the 52 conducted interviews are the most active people on social media platforms between the age of 21 and 30 (red bars indicating participation). The age group of 61 to 100 on the other hand has not one recorded social media user. The red and blue line in figure \ref{fig:interview_age_SMP} represent the linear regression lines of the corresponding datasets. Their intersection at roughly age 50 indicates the transition between social media platform usage and absence. Instagram and Facebook make out the biggest share of these records as already seen in figure \ref{fig:interview_SMP}.
 
 \begin{figure}[h!]
    \centering
@@ -400,7 +400,7 @@ Insight on dominantly represented ages groups in social media data can be drawn 
 \end{figure}
 
 \section{Spatial distribution of model predicted NBRAs}
-This section will present the maps which resulted from the M2 NBRA-predictions on both Instagram and Flickr media objects from the Canton of Zug. The maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2} show the NBRAs spatial distribution in parallel comparison between the two SMPs. The amount of M2 predictions per classification and SMP are listed in table \ref{tab:amount_class_NBRAs} as well as in the maps themselves as \textit{feature count}.
+This section will present the maps which resulted from the M2 NBRA-predictions on both Instagram and Flickr media objects from the Canton of Zug. The maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2} show the NBRAs spatial distribution in parallel comparison between the two social media platforms. The amount of M2 predictions per classification and social media platform are listed in table \ref{tab:amount_class_NBRAs} as well as in the maps themselves as \textit{feature count}.
 
 \begin{table}[h!]
 \begin{center}
@@ -422,7 +422,7 @@ None & 10'898 & 3'511 & 14'409\\
 \end{center}
 \end{table}
 
-As mentioned in section \ref{instagram_location_tag} Instagram locations can be user generated and are often general descriptions of the area at hand. This results in media objects being snapped to the same point on the map which leads to a lower spatial resolution. For further illustration a comparison between the two SMPs in regards to location numbers is made:
+As mentioned in section \ref{instagram_location_tag} Instagram locations can be user generated and are often general descriptions of the area at hand. This results in media objects being snapped to the same point on the map which leads to a lower spatial resolution. For further illustration a comparison between the two social media platforms in regards to location numbers is made:
 There are \textbf{152} unique Instagram locations of which the top three are named 'Zug' with 1'970, 'Canton of Zug' with 1'590 and 'lake Zug' with 400 associated media objects.
 The processed Flickr dataset on the other hand consists of \textbf{1'144} unique locations of which the top three are named 'Baarerstrasse 12' with 112, 'Bahnhofsplatz' with 84 and 'Landsgemeindeplatz' with 69 associated media objects. This additional geo-information in form of an address is not provided by the Flickr API by default but rather through the Google Geocoding API as stated in section \ref{geocoding_api}. \\
 One has to keep in mind that the processed Flickr dataset holds only roughly a third of the media objects compared to the processed Instagram dataset in the area of interest while possessing 7.5 times as many unique locations. 
@@ -473,15 +473,15 @@ Essentially predicted the model spatial patterns which coincide with the availab
 
 
 \subsection{Comparison to Foursquare}
-The SMP Foursquare holds records of categorised infrastructure (venues). The map in figure \ref{fig:map_foursquare_comparison} visualises 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted NBRA-occurrences in the Instagram and Flickr dataset of the Canton of Zug.\\
+The platform Foursquare holds records of categorised infrastructure (venues). The map in figure \ref{fig:map_foursquare_comparison} visualises 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted NBRA-occurrences in the Instagram and Flickr dataset of the Canton of Zug.\\
 For reasons of time a spatial similarity analysis between the datasets could not be conducted. Instead a visual evaluation shall give insight on the spatial concordance. The NBRA-types were not analysed individually due to the considerable overlap in supporting infrastructure between them. \\
-The map shows a plausible densification of venues in or near urban areas. The occurrences of NBRAs and venues seem to match spatially quite well which suggests that the supporting infrastructure is already efficiently allocated to fit the peoples recreation needs. This claim has to be further analysed with an appropriate statistical evaluation. \\
+The map shows a plausible densification of venues in or near urban areas. The occurrences of NBRAs and venues seem to match spatially quite well which suggests that the supporting infrastructure is already efficiently allocated to fit the peoples recreational needs. This claim has to be further analysed with an appropriate statistical evaluation. \\
 The Foursquare dataset in conjunction with the modelled NBRA occurrences shall moreover give agencies a tool to plan the allocation of sport and recreation related infrastructure in case of rezoning or land conversion.
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/foursquare_comparison_cropped.pdf}
-   \caption{Locations of all 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted spatial NBRA-occurrence of the SMPs Instagram and Flickr.}
+   \caption{Locations of all 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted spatial NBRA-occurrence of the social media platforms Instagram and Flickr.}
    \label{fig:map_foursquare_comparison}
 \end{figure}
 

@@ -1,8 +1,8 @@
 \chapter{Materials and Methods} \label{material_methods}
 
 \section{Research area} \label{research_area}
-The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extent. The specific areas for which social media data (SMD) was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which SMD for the social media platforms (SMP) Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreation value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreation services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreation value. \\
-There is no perimeter concordance due to varying constraints in the data acquisition between the different SMPs which will be illustrated in the following subsection.
+The Canton of Zug was chosen by the author who was raised in the town Cham as the area of interest since local knowledge was seen as an important asset and due to the manageable spatial extent. The specific areas for which social media data was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which social media data for the social media platforms Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreational value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreational services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreational value. \\
+There is no perimeter concordance due to varying constraints in the data acquisition between the different social media platforms which will be illustrated in the following subsection.
 
 \begin{figure}[h]
    \centering
@@ -13,10 +13,10 @@ There is no perimeter concordance due to varying constraints in the data acquisi
 
 
 \section{Data acquisition and composition} \label{data_acquisition}
-The following subsections will elaborate on the data-acquisition process and the data-composition of the three SMPs used in this thesis. 
+The following subsections will elaborate on the data-acquisition process and the data-composition of the three social media platforms used in this thesis. 
 
 \subsection{Instagram} \label{instagram}
-Instagram\footnote{https://www.instagram.com/} is a SMP which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook\footnote{https://www.facebook.com/}. Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780'000). The gender distribution was at 49.4\% women and 50.6\% men\footnote{https://napoleoncat.com/stats/instagram-users-in-switzerland/2019/02, accessed: 30.03.2019}. This popularity was the determining factor for using Instagram data in this thesis.\\
+Instagram\footnote{https://www.instagram.com/} is a social media platform which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook\footnote{https://www.facebook.com/}. Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780'000). The gender distribution was at 49.4\% women and 50.6\% men\footnote{https://napoleoncat.com/stats/instagram-users-in-switzerland/2019/02, accessed: 30.03.2019}. This popularity was the determining factor for using Instagram data in this thesis.\\
 
 \subsubsection*{Query} \label{netlytic}
 Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser Netlytic\footnote{https://netlytic.org/} \parencite{Gruzd2016}. Netlytic allows for hashtag (\# + keyword) as well as location driven queries. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows to collect Instagram media objects of public accounts in a 5km radius around a given coordinate. These Netlytic query points with their given perimeter are also visible in figure \ref{fig:research_area}. The exact latitude / longitude pairs are the following:\\
@@ -42,7 +42,7 @@ The data provided by Netlytic came in the Comma Separated Values (CSV) format. E
     \item \textbf{author:} The Instagram username of the media object author \big[text\big]
     \item \textbf{title:} User generated media object title \big[text\big]
     \item \textbf{description:} User generated media object description \big[text\big ]
-    \item \textbf{like-count:} Amount of likes the media object received on the SMP Instagram \big[bigint\big]
+    \item \textbf{like-count:} Amount of likes the media object received on Instagram \big[bigint\big]
 \end{itemize}
 
 \subsubsection*{Location tag} \label{instagram_location_tag}
@@ -66,7 +66,7 @@ Flickr still plays an important role as data foundation for scientific studies d
 The entire Flickr database was queried via the publicly accessible official Flickr API. Media objects with a georeference-accuracy level of 12 or higher (maximum of 16) were of interest which resolves to city level up to street level. Multiple queries with variable bounding boxes were performed which together cover the entire perimeter of the legal boundaries of the Canton of Zug. Each bounding box was defined by two coordinate pairs, describing the bottom left and top right corner of a rectangle. This process of subdividing the area was necessary due to a maximum return threshold of 4'000 media objects per request. Therefore, to ensure the acquisition of the entire available dataset each bounding box had to hold less than 4'000 media objects.
 
 \subsubsection*{Time-span} \label{flickr_timespan}
-All Flickr API requests described above were queried for the time-spawn 2004 (launch of the SMP Flickr) until the 23rd of November 2018.
+All Flickr API requests described above were queried for the time-spawn 2004 (launch of Flickr) until the 23rd of November 2018.
 
 \subsubsection*{Data} \label{flickr_data}
 The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
@@ -124,7 +124,7 @@ Of all 405 venues located inside the Canton of Zug, 13 (3.2\%) are verified acco
 \section{Database setup} \label{database_setup}
 A PostgreSQL\footnote{https://www.postgresql.org/} database was used as a centralised storage hub for the Flickr, Instagram and Foursquare data. The advantage of a database compared to reading and storing data in TXT- or CSV-files is the computational efficient data-retrieval and data-manipulation through SQL queries. SQL is a standalone language for relational database management systems (RDBMS) which allows among others smart table joins and advanced filtering as stated in the official PostgreSQL Documentation\footnote{https://www.postgresql.org/files/documentation/pdf/11/postgresql-11-A4.pdf, accessed: 29.03.2019}.\\
 Additionally, a Graphical User Interface (GUI) named pgAdmin4\footnote{https://www.pgadmin.org/} - which is build on top of PostgreSQL - was used for the manually performed training's data verification process that is described in section \ref{precision_unseen_data}.\\
-The following tables were created for housing the used data in this format:\\ \texttt{[object-type]\_[data-origin]\_[SMP]} \\
+The following tables were created for housing the used data in this format:\\ \texttt{[object-type]\_[data-origin]\_[platform]} \\
 \newline
 
 Media object tables:
@@ -143,7 +143,7 @@ Location tables:
     \item \texttt{locations\_unionzug\_instagram}
 \end{itemize}
 
-In more detail the media object tables store all data related to an object retrieved from one of the three SMP as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is visible in figure \ref{fig:database}. The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Time-stamps were normalised across all SMP to the \texttt{YYYY-MM-DD HH-MM-SS} format.
+In more detail the media object tables store all data related to an object retrieved from one of the three social media platform as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is visible in figure \ref{fig:database}. The Instagram and Flickr media object tables are linked via a primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Time-stamps were normalised across all social media platforms to the \texttt{YYYY-MM-DD HH-MM-SS} format.
 
 \begin{figure}[h]
    \centering
@@ -220,7 +220,7 @@ Flickr tags were not neglected from this step even though they were also generat
 The first step of the text alteration included the regular expression matching (see definitions for reverence) of any URI (which includes \texttt{https://, http://, www.} beginnings as well as the domain ending), HTML related tags (e.g. \texttt{<a>\dots<$\backslash$a>}), Instagram mentions (e.g. \texttt{@madmax}) and character/number combination-patterns (e.g. \texttt{zugersee2018}). If detected they were replaced by a whitespace (\texttt{$\backslash$s}) character. This step was done prior to any other text-processing step due to the high risk of creating character artefacts which occur if those patterns remain in the text string.
 
 \paragraph*{Removal of characters other than letters} \label{remove_eveything_but_letters}
-As a next step all special characters such as Unicode characters of the category 'other symbols' including numbers were removed from the text string and also replaced by a whitespace (\texttt{$\backslash$s}) character. This assures that character objects like emojis, time-stamps and dates that often occur in SMD are removed to achieve a less noisy and purer word-token list. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence. E.g. '\"a' was replaced with 'ae'.
+As a next step all special characters such as Unicode characters of the category 'other symbols' including numbers were removed from the text string and also replaced by a whitespace (\texttt{$\backslash$s}) character. This assures that character objects like emojis, time-stamps and dates that often occur in social media data are removed to achieve a less noisy and purer word-token list. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence. E.g. '\"a' was replaced with 'ae'.
 
 \paragraph*{Whitespace splitting} \label{whitespace_splitting}
 Eventually the text string is split at the occurrence of one or more whitespaces. This creates for the first time individual word-tokens which will be further modified and filtered in the following steps.
@@ -270,8 +270,7 @@ Every Flickr and Instagram media object stored in the database comes with a medi
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.75\textwidth]{img/vision_illustration}
-\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API.}
-\source{(1) Mountain biker - https://allaboutlimassol.com/assets/images/primary-image/ \\ 51024-0.downhill\_mountain\_biking.jpg, accessed: 30.03.2019 \\
+\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API. Source: (1) Mountain biker - https://allaboutlimassol.com/assets/images/primary-image/ \\ 51024-0.downhill\_mountain\_biking.jpg, accessed: 30.03.2019 \\
 (2) Vision emblem - https://cloud.google.com/vision/?hl=de, accessed: 30.03.2019}
 \label{fig:vision_illustration}
 \end{figure}
@@ -319,7 +318,7 @@ The decision which NBRAs the model should capture was built upon and influenced 
     \item horse riding
     \item picnic
 \end{enumerate}
-The observation of similar appearing classes is true and one can argue about its effectiveness and the degree of overlapping. How would people differentiate between e.g. walking, hiking and jogging? The ground truthing as well as the SMD revealed (see results \ref{results}) that some people perceive a journey through a forest as hiking while for others it is still considered going for a walk. Normally, NBRAs can be easily identified and distinguished by the needed equipment. Not so much in the case of the three mentioned NBRAs compared to the other classes like horse riding where you notably need a horse.\\
+The observation of similar appearing classes is true and one can argue about its effectiveness and the degree of overlapping. How would people differentiate between e.g. walking, hiking and jogging? The ground truthing as well as the social media data revealed (see results \ref{results}) that some people perceive a journey through a forest as hiking while for others it is still considered going for a walk. Normally, NBRAs can be easily identified and distinguished by the needed equipment. Not so much in the case of the three mentioned NBRAs compared to the other classes like horse riding where you notably need a horse.\\
 Nevertheless, the classes 1-3 account for the majority of recorded NBRA-occurrences. 77\% of the entire manually verified training's data used to fit the model was classified as one of them. This clearly shows the importance of these NBRAs as well as their spatial distinction.
 Additionally, a class 'None' is also implemented which describes a media object which is not related to nature recreation and therefore is not an entity of any of the above listed NBRAs.\\
 \newline
@@ -328,7 +327,7 @@ If one is familiar with all the classes in the mentioned recreation types guideb
 \subsection{Acquisition and preparation of the training- and test-dataset} \label{preparation_training_data}
 Due to a limited amount of available Instagram and Flickr data of the research area and the entire Canton of Zug respectively it was certain that not enough training-data for each of the NBRA-types was available. Therefore, a larger additional Instagram dataset was drawn upon which was collected by the geocomputation team of the University of Zurich \parencite{Gruzd2016}. The dataset consisted of ten locations in Switzerland which differed in topography, spoken language and demographic factors. The locations were the following: Aarau, Arosa, Ebmatingen, Locarno Nord, Neuch\^{a}tel, Ovronnaz, S-chanf, Scuol, Uetliberg and Zurich Dolder. For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018. A total of ten merge files - one for every location - were created to firstly eliminate any duplicate media objects and secondly to add the location name as an additional column to the data-rows for easier database filtering later on.\\
 \newline
-After considering the different topographic attributes ,the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training's data due to their similarity to the research area and to the overall Canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 and 68'522 post data-processing respectively. Attentive readers will notice that the resulting ML model is purely based on Instagram data even though Flickr data is predicted with it as well. This observation is correct and can be legitimatised with the assumption that user generated text does not differ to heavily between SMPs. That this hypothesis hols true is shown in section \ref{precision_unseen_data}.\\
+After considering the different topographic attributes ,the data-composition and quantity of all ten locations, Zurich Dolder and Uetliberg were chosen as sources for the training's data due to their similarity to the research area and to the overall Canton of Zug. This accounted for a total of 206'454 and 74'742 unique media objects respectively during pre data-processing. After neglecting the top seven authors in the case of Zurich Dolder and the top ten for the Uetliberg dataset (see: \ref{bias_dominant_authors}) as well as applying a common bulk upload threshold of five uploads per day (see: \ref{bias_bulk_uploads}), this led to a dataset reduction to 191'584 and 68'522 post data-processing respectively. Attentive readers will notice that the resulting ML model is purely based on Instagram data even though Flickr data is predicted with it as well. This observation is correct and can be legitimatised with the assumption that user generated text does not differ to heavily between social media platforms. That this hypothesis hols true is shown in section \ref{precision_unseen_data}.\\
 \newline
 The next step encompassed the coarse identification of potential training's data for the seven given NBRAs. This was done with tailored SQL queries (see Appendix \ref{sql_queries_for_trainingdata}) to the \texttt{processed\_text}-column of the \texttt{media\_objects\_trainingdata\_instagram} database-table containing case insensitive regular expressions (see definitions) in the form of:
 
@@ -390,8 +389,7 @@ A SVM can be used for classification and regression applications. Its aim is to 
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.28\textwidth]{img/Svm_separating_hyperplanes}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Visualisation of possible SVM fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}.}
-  \source{https://en.wikipedia.org/wiki/ \\ Linear\_classifier, accessed: 29.03.2019}
+  \caption{Visualisation of possible SVM fitted hyperplanes to separate two data-point clusters. H\textsubscript{3} does not manage to completely separate the clusters. H\textsubscript{1} does separate them entirely but violates the constraint to maximise the space between them, unlike H\textsubscript{2}. Source: https://en.wikipedia.org/wiki/ \\ Linear\_classifier, accessed: 29.03.2019}
   \label{fig:SVM_visualisation}
 \vspace{-0.5cm}
 \end{wrapfigure}
@@ -472,8 +470,7 @@ There are different measurements to evaluate a ML model. All of them can be extr
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.49\textwidth]{img/Confusion_matrix_edited}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Confusion matrix with \textit{n} classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red).}
-  \source{https://www.researchgate.net/figure/Confusion-matrix-for-multi-class-classification-The-confusion-matrix-of-a\_fig7\_314116591, author: Frank Kr\"uger, accessed: 29.03.2019}
+  \caption{Confusion matrix with \textit{n} classes. When considering the class k (0 $\le$ k $\le$ n), the four different classification results can be obtained: true positive (green), true negative (orange), false positive (brown), and false negative (red). Source: https://www.researchgate.net/figure/Confusion-matrix-for-multi-class-classification-The-confusion-matrix-of-a\_fig7\_314116591, author: Frank Kr\"uger, accessed: 29.03.2019}
   \label{fig:confusion_matrix_illustration}
 \end{wrapfigure}
 
@@ -501,8 +498,7 @@ Interviews and passive observations were performed to gain insight on how well t
     \centerline{\includegraphics[trim={0 0 0 0},clip,width=0.39\textwidth]{img/interviews_locations}}
 %if trimming and clip is necessary: \includegraphics[trim={5cm 0 0 0},clip]{example-image-a}
   %\end{center}
-  \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were performed.}
-  \source{\copyright Google, map-data 2019}
+  \caption{Map visualising the locations where ground truthing in the form of interviews and passive NBRA observations were performed. Source: \copyright Google, map-data 2019}
   \label{fig:locations_ground_truthing}
 %\vspace{-0.5cm}
 \end{wrapfigure}
