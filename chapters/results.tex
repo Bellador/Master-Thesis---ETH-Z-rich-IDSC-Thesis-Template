@@ -44,7 +44,7 @@ As seen in figure \ref{img:bulk_uploads_flickr} an additional, roughly 3'000 Fli
 Similar graphs to figure \ref{img:dominant_users_flickr} and \ref{img:bulk_uploads_flickr} were created for all the datasets. The functioned as a basis for manually declaring the thresholds visible in \ref{tab:data_reduction_values}. 
 
 \section{Models} \label{results_models}
-The performance results of the two in section \ref{ml_model} introduced models will subsequently be presented. These models were both solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table: \texttt{media\_objects\_trainingdata\_instagram} (database overview visible in figure \ref{database_setup}). For each model the Random Forest classifier and the linearSVC fitting algorithm were independently tested. The hyperparameters were tuned to yield the best possible 10-fold cross-validated F1-score averaged over all classes excluding the None-class. The training's data was consistently split into 75\% for training and 25\% for testing. Simultaneously, the effect of including different amounts of the None-class training's data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
+The performance results of the two in section \ref{ml_model} introduced models will subsequently be presented. These models were both solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table: \texttt{media\_objects\_trainingdata\_instagram} (database overview visible in figure \ref{database_setup}). For each model the Random Forest classifier and the linearSVC fitting algorithm were independently tested. The hyperparameters were tuned to yield the best possible 10-fold cross-validated F1-score averaged over all classes excluding the None-class. The training data was consistently split into 75\% for training and 25\% for testing. Simultaneously, the effect of including different amounts of the None-class training data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
 These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr}\\
 Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
 \newline
@@ -208,12 +208,12 @@ As already seen above M1 performed on the test set with an 10-fold cross-validat
 \end{figure}
 
 \subsubsection*{Final model scores}
-In the end both models were trained on the entire training's dataset which resulted in the following final performance scores visible in table \ref{tab:m1_m2_linearSVC_final_scores}. This step is important to generate a finalised model that is eventually trained on as much training's data as possible. Keeping a data aside for model testing is no longer necessary because the most well performing hyperparameter configuration is already determined.\\
+In the end both models were trained on the entire training dataset which resulted in the following final performance scores visible in table \ref{tab:m1_m2_linearSVC_final_scores}. This step is important to generate a finalised model that is eventually trained on as much training data as possible. Keeping a data aside for model testing is no longer necessary because the most well performing hyperparameter configuration is already determined.\\
 It can be noted at this point that the best M1 and M2 performance yielded similar feature counts during testing (626 and 775 respectively) as well as after training it on the entire dataset (845 and 958 respectively). Also, contradicting to the already presented model performances during model-tuning M2 now performs slightly better than M1. Possible reasons for this observation will be discussed in the section \ref{disussion_model_performance}.
 
 \begin{table}[h]
 \begin{center}
-\caption{linearSVC 10-fold cross-validated final performance scores of M1 and M2 while being fitted according to the entire training's dataset available.}\vspace{1ex}
+\caption{linearSVC 10-fold cross-validated final performance scores of M1 and M2 while being fitted according to the entire training dataset available.}\vspace{1ex}
 \label{tab:m1_m2_linearSVC_final_scores}
 \begin{tabular}{cccccc}\hline
 Model & Accuracy & Precision & Recall & F1 & F1 (without None-class) & Features\\ \hline
@@ -328,7 +328,7 @@ The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) 
 M2 with a slightly higher precision yielded (937-451=)486 more true positive NBRA-predictions than M1 which resolves to an \textbf{increase by factor two}. Therefore, M2 predicted less False Negatives (FN) which concludes that M2 also possess a higher recall score than M1 and generalises better on new data.
 
 \section{Media object languages}
-One assumption that was made earlier stated that the training's data from Zurich and the media objects from Zug share a similar written language by their author base. This would legitimise the usage of training's data that did not originate from the same region as the region the model would later be applied to.\\
+One assumption that was made earlier stated that the training data from Zurich and the media objects from Zug share a similar written language by their author base. This would legitimise the usage of training data that did not originate from the same region as the region the model would later be applied to.\\
 To investigate on that assumption the five actively detected Instagram media object languages of both regions were compared (see figure \ref{fig:det_languages}) with a paired two sample t-test for means. The result showed on a significance level of 5\% that the probability that T is smaller or equal to t is 0.56 and therefore smaller than t\textsubscript{crit} of 2.78. Therefore, the null-hypothesis \textit{H\textsubscript{0}} (no difference present) cannot be rejected and the written languages of both areas are with high certainty of similar composition.
 
 \begin{figure}[h!]
