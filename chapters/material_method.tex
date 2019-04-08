@@ -264,13 +264,12 @@ The generated word-tokens and the identified language are saved in the database 
 The extraction of structural elements from an image enables an additional information gain to further describe the overall context and content besides the user generated text. Since image recognition is a scientific field of its own a third-party service was used for this task. At the time of writing there were multiple suitable available solutions - two of which were the Amazon Rekognition Service and the Google Cloud Vision API. The latter was applied in this thesis based on the given pricing (see subsection \ref{vision_query_cost}) and initialisation conditions at that time. The Google Cloud Vision API allows users to draw upon a deep-learning algorithm that is constantly trained on Google's rich image pool to identify and classify structural elements in images.
 
 \subsection{Process}
-Every Flickr and Instagram media object stored in the database comes with a media link that allows direct access to the associated image. These links with the corresponding media object id's were iteratively queried and parsed to the Google Cloud Vision API for analysis. The basic processes is illustrated in figure \ref{fig:vision_illustration}. The output consists of text labels with their corresponding confidence score. These values are fed back into the \texttt{vision\_labels} database column of the row with the matching media object id the media link belonged to.
+Every Flickr and Instagram media object stored in the database comes with a media link that allows direct access to the associated image. These links with the corresponding media object id's were iteratively queried and parsed to the Google Cloud Vision API for analysis. The basic processes is illustrated in figure \ref{fig:vision_illustration}\footnote{Source: (1) Mountain biker - https://allaboutlimassol.com/assets/images/primary-image/51024-0.downhill\_mountain\_biking.jpg, accessed: 30.03.2019 (2) Vision emblem - https://cloud.google.com/vision/?hl=de, accessed: 30.03.2019}. The output consists of text labels with their corresponding confidence score. These values are fed back into the \texttt{vision\_labels} database column of the row with the matching media object id the media link belonged to.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.75\textwidth]{img/vision_illustration}
-\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API. Source: (1) Mountain biker - https://allaboutlimassol.com/assets/images/primary-image/ \\ 51024-0.downhill\_mountain\_biking.jpg, accessed: 30.03.2019 \\
-(2) Vision emblem - https://cloud.google.com/vision/?hl=de, accessed: 30.03.2019}
+\caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API.}
 \label{fig:vision_illustration}
 \end{figure}
 
@@ -541,7 +540,7 @@ Every interview started out with a small introduction to the author's persona an
 The first one being \textbf{location} related:
 \begin{itemize}[label={}]
     \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
-    \item \textbf{Activity} Which NBRA is currently practised by the person in this location?
+    \item \textbf{Activity} Which recreational activity is currently practised by the person in this location?
     \item \textbf{Frequency} How often does the person visit the location? (In the case of 'Schattenw\"aldli', it was also asked what the destination of the trip was.)
 \end{itemize}
 
@@ -554,6 +553,16 @@ The second one was related to \textbf{social media}:
 The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\
 The interview template used in this thesis can be found under Appendix \ref{interview_templates}.
 
+\subsection{Data-comparison procedure}
+The ground truth data was acquired to compare recreational activity occurrences from empirical \textit{in-situ} data and from social media data. This comparison provides insight on how well these two data-sources complement each other or where they show agreement. Additionally, the social media behaviour of the interviewees sheds light on the demographics of users that contribute to the social media platforms that were used in this thesis. This information allows statements about the representative of the produced models compared to real world circumstances.
+
+\paragraph*{Recreational activities \& infrastructure}
+The two data-sources were quantitatively compared according to the inferred ranking of recreational activity occurrences at the three locations where ground truth was acquired. The Spearman's Rank-Order Correlation was used for the statistical analysis of the rankings. Total observation numbers did not yield a good measure of comparison since the data-acquisition periods for both data-sources were incomparable. 
+
+%\paragraph*{Visitation motivation}
+
+
+\paragraph*{Social media usage}
 
 
 xxxxxDESCRIBE HOW GROUND TRUTH DATA IS COMPARED TO SMDxxxx

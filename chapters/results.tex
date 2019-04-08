@@ -442,7 +442,26 @@ One has to keep in mind that the processed Flickr dataset holds only roughly a t
 \end{figure}
 
 \subsection{Comparison to ground truth}
-The modelled output of M2 (see maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2}) was visually compared to the ground truth visible in figure \ref{fig:passive_observation} and figure \ref{fig:interview_activities} to further evaluate the model's plausibility.
+A quantitative comparison of the inferred ranking of recreational activity occurrences between the passive observation and the social media data was performed (see table \ref{tab:compare_ranking}). Interview data to recreational activities were neglected since they are considered to be a subset of the comprehensive passive observation. The Spearman's Rank-Order Correlation revealed a $\rho$=0.4 for the passive observation compared to Instagram as well as Instagram plus Flickr. Considering detected NBRAs in Flickr alone matches the ranking of the passive observation entirely ($\rho$=1). \\
+
+\begin{table}[h!]
+\begin{center}
+\caption{Recreational activity ranking of the passive observation (see table \ref{fig:passive_observation}) and social media data (see table \ref{tab:amount_class_NBRAs}). 'Walking' and 'hiking' were merged for Instagram and Flickr since the ground truth data did not differentiate between the two classes. Also, the classes 'horse riding' and 'picnic' are not included since they were not witnessed during the passive observation.}\vspace{1ex}
+\label{tab:compare_ranking}
+\begin{tabular}{ccccc}\hline
+\textbf{\large{Ranking}}  & & $\rho$=0.4 & $\rho$=1 & $\rho$=0.4\\
+Activity & Passive observation & Instagram & Flickr & Together\footnotemark\\ \hline
+Walking/Hiking & 1 & 1 & 1 & 1\\
+Biking & 2 & 3 & 2 & 3 \\
+Jogging & 3 & 4 & 3 & 4\\
+Dog walking & 4 & 2 & 4 & 2 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\footnotetext{Instagram plus Flickr}
+
+Additionally, the modelled output of M2 (see maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2}) was visually compared to the ground truth visible in figure \ref{fig:passive_observation} and figure \ref{fig:interview_activities} to further evaluate the model's plausibility.
 
 \paragraph*{Biking}
 The model predicts a strong occurrence of biking in the area of 'R\"ossliwiese' where the ground truthing consisting of the passive observation and the interviews did not record a single sighting (to the knowledge of the author: biking is not prohibited there and normally performed regularly).\\
