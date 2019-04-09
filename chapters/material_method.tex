@@ -1,12 +1,27 @@
 \chapter{Materials and Methods} \label{material_methods}
 
 \section{Research area} \label{research_area}
-The Canton of Zug, a constituent state of Switzerland (see figure \ref{fig:TD_locations}) was chosen as research area for this thesis. Existing local knowledge of the author who was raised in the town Cham in the form of cognitive maps were seen as an important asset \parencite{BenjaminKuipers}. This together with the manageable spatial extent and personal connections to the local spatial planning agency were the reasons why this particular region was chosen. The specific areas for which social media data was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which social media data for the social media platforms Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas for which additional Instagram data was acquired. In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreational value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreational services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreational value. \\
+The Canton of Zug, a constituent state of Switzerland (see figure \ref{fig:TD_locations}) was chosen as research area for this thesis. Existing local knowledge of the author who was raised in the town Cham in the form of cognitive maps were seen as an important asset \parencite{BenjaminKuipers}. This together with the manageable spatial extent and personal connections to the local spatial planning agency were the reasons why this particular region was chosen. The specific areas for which social media data was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which social media data for the social media platforms Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas for which additional Instagram data was acquired (refer to table \ref{tab:areas_SMD}). 
+
+\begin{table}[h!]
+\begin{center}
+\caption{Overview of the social media platforms and their respective query perimeter as shown in the map of figure \ref{research_area}}\vspace{1ex}
+\label{tab:areas_SMD}
+\begin{tabular}{c|c}\hline
+Polygon & Data\\ \hline
+A & Flickr + Foursquare\\
+B1, B2, B3 &  Instagram + Flickr + Foursquare\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+In the North lies the 'Lorzenebene' (plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreational value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreational services. The second area resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreational value. \\
 There is no perimeter concordance due to varying constraints in the data acquisition between the different social media platforms which will be illustrated in the following subsection.
 
 \begin{figure}[h]
    \centering
-   \includegraphics[width=0.75\textwidth]{img/overview_research_area_w_Lorzenebene}
+   \includegraphics[width=\textwidth]{img/overview_research_area_w_Lorzenebene_edited.pdf}
    \caption{Overview of the data acquisition perimeters}
    \label{fig:research_area}
 \end{figure}
@@ -18,7 +33,7 @@ The following subsections will elaborate on the data-acquisition process and the
 \subsection{Instagram} \label{instagram}
 Instagram\footnote{https://www.instagram.com/} is a social media platform which supports the sharing of georeferenced image and video content. The platform is mostly financed by web-advertisement and belongs to Facebook\footnote{https://www.facebook.com/}. Instagram held roughly 2'529'000 users in Switzerland on January 2019 which accounted for 29.4\% of its population. People aged 25 to 34 were the largest user group (780'000). The gender distribution was at 49.4\% women and 50.6\% men\footnote{https://napoleoncat.com/stats/instagram-users-in-switzerland/2019/02, accessed: 30.03.2019}. This popularity was the determining factor for using Instagram data in this thesis.\\
 
-\subsubsection*{Query} \label{netlytic}
+\subsubsection{Query} \label{netlytic}
 Licensed Instagram data of the research area visible in figure \ref{fig:research_area} has been collected via the cloud-based text and social media analyser Netlytic\footnote{https://netlytic.org/} \parencite{Gruzd2016}. Netlytic allows hashtag (\# + keyword) as well as spatial queries to retrieve data. Former allows to search for Instagram media objects by providing decisive keywords which are preceded by a '\#'. The latter was used in the scope of this thesis which allows to collect Instagram media objects of public accounts in a 5km radius around a given coordinate. This radius is invariable due to a erstwhile Instagram API restriction. These Netlytic query points with their given perimeter are also visible in figure \ref{fig:research_area}. The exact latitude / longitude pairs are the following:\\
 \begin{enumerate}
   \item 47.177068, 8.494803
@@ -26,10 +41,10 @@ Licensed Instagram data of the research area visible in figure \ref{fig:research
   \item 47.104457, 8.570291
 \end{enumerate}
 
-\subsubsection*{Time-span} \label{Instagram_timespan}
+\subsubsection{Time-span} \label{Instagram_timespan}
 Data collection has been continuously performed on all three coordinates during the period from the 30.09.2018 till the 11.12.2018. Due to the deprecation of the Instagram Application Program Interface (API) on the 11.12.2018 this period could not be extended\footnote{https://www.instagram.com/developer/, accessed: 29.03.2019}.
 
-\subsubsection*{Data} \label{Instagram_data}
+\subsubsection{Data} \label{Instagram_data}
 The data-collection accounted for 28'246 raw Instagram media objects. After social media users with high media object counts and bulk-upload were addressed during the data-processing steps referenced further down (see section \ref{data_processing}) 11'777 remained.
 The data provided by Netlytic came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
 \begin{itemize}[label={}]
@@ -45,7 +60,7 @@ The data provided by Netlytic came in the Comma Separated Values (CSV) format. E
     \item \textbf{like-count:} Amount of likes the media object received on Instagram \big[bigint\big]
 \end{itemize}
 
-\subsubsection*{Location tag} \label{instagram_location_tag}
+\subsubsection{Location tag} \label{instagram_location_tag}
 The provided location information or tag consists of the above mentioned coordinates of an Instagram location. Instagram locations are points of interest which can be user-generated and may not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity while dealing with sensitive location data. This implies that media objects that do not originate from the same location can still be 'snapped'\footnote{https://help.instagram.com/488619974671134, accessed: 03.04.2019} to the same Instagram location and therefore show the same coordinate pair in the meta-data.
 It has been shown that roughly 85\% of Instagram media objects lack a location tag and most users only use them on vacation or when being abroad \parencite{Flatow2015}.
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in section \ref{geolocation_via_instagramapi}.
@@ -62,13 +77,13 @@ access to the entire database of Flickr media objects since the launch of the pl
 \renewcommand{\thefootnote}{\arabic{footnote}}
 
 Flickr still plays an important role as data foundation for scientific studies due to the simple and unbounded data-access. 
-\subsubsection*{Query} \label{flickr_query}
+\subsubsection{Query} \label{flickr_query}
 The entire Flickr database was queried via the publicly accessible official Flickr API. Media objects with a georeference-accuracy level of 12 to a maximum of 16 were of interest which resolves to city level up to street level respectively. Multiple queries with variable bounding boxes were performed which together cover the entire perimeter of the legal boundaries of the Canton of Zug. Each bounding box was defined by two coordinate pairs, describing the South West and North East vertices of the bounding box. This process of subdividing the area was necessary due to a maximum return threshold of 4'000 media objects per request. Therefore, to ensure the acquisition of the entire available dataset each bounding box had to hold less than 4'000 media objects.
 
-\subsubsection*{Time-span} \label{flickr_timespan}
+\subsubsection{Time-span} \label{flickr_timespan}
 All Flickr API requests described above were queried for the time-spawn 2004 (launch of Flickr) until the 23rd of November 2018.
 
-\subsubsection*{Data} \label{flickr_data}
+\subsubsection{Data} \label{flickr_data}
 The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
 
 \begin{itemize}[label={}]
@@ -87,21 +102,21 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
     \item \textbf{favourites:} Amount of approves similar to 'likes' on Instagram a media object received by other Flickr users \big[bigint\big]
 \end{itemize}
 
-\subsubsection*{Location tag} \label{flickr_location_tag}
+\subsubsection{Location tag} \label{flickr_location_tag}
 Flickr provides unlike Instagram location information or tags that represent the actual geographical position where the provided image was taken. This geotag is extracted from the meta-data of the image and can come in different accuracies ranging from 0 (global scale) to 16 (street level) depending on the users preference or the GPS signal strength. \\
 Additional location related information (address and location type) was gathered for all the Flickr media objects via the Google Geocoding API. More information can be found in section \ref{geocoding_api}
 
 \subsection{Foursquare} \label{foursquare}
 Foursquare\footnote{https://de.foursquare.com/} is a platform which enables users to rate and share their visits and experiences to certain establishments (referred to as venues). This stored infrastructure which is categorised into different sectors such as \textit{Travel \& Transport}, \textit{Arts \& Entertainment} but also \textit{Outdoors \& Recreation} can be accessed via the official Foursquare API.
 
-\subsubsection*{Query} \label{foursquare_query}
+\subsubsection{Query} \label{foursquare_query}
 The following two API endpoints which return different information were used for this thesis.
 \paragraph*{Venue search (regular endpoint)} \label{foursquare_endpoint1}
 The first step of the data-acquisition involved a spatial search for venue ids of the category \textit{Outdoors \& Recreation} that lie within the boundaries of the Canton of Zug. This request was done with the regular venue search API endpoint. There is a limitation to the maximum number of results per request returned by the Foursquare API similar to the bounding box request of the Flickr API (see section \ref{flickr_query}). Therefore, a spatial subdivision of the research areas was again used to query all the available venues so that each individual request returned less than 50 results.
 \paragraph*{Acquiring venue details (premium endpoint)} \label{foursquare_endpoint2}
 To obtain more specific information about each venue a second (premium) Foursquare API endpoint was used. This venue endpoint allows regular (non-paying) users 50 requests per day which spread the data acquisition over 9 days for a total of 405 available venues. The results included insight on a more concrete subcategory description, the formatted venue address, the users rating as well as if the venue was verified or not.
 
-\subsubsection*{Data} \label{fq_data}
+\subsubsection{Data} \label{fq_data}
 The data returned by the Foursquare API with the above mentioned endpoints was in the JSON format - the same as the Flickr data.
 The following excerpt of the returned venue meta-data was further used in this thesis with the appropriate PostgreSQL data types in square brackets: \\
 \begin{itemize}[label={}]
@@ -117,7 +132,7 @@ The following excerpt of the returned venue meta-data was further used in this t
 
 Additional location related information (address and location type) was gathered for all the Foursquare venues via the Google Geocoding API. More information can be found in section \ref{geocoding_api}.
 
-\subsubsection*{Data verification} \label{foursquare_data_verification}
+\subsubsection{Data verification} \label{foursquare_data_verification}
 The data verification on Foursquare is not an automated process. It is done by manual supervision of Foursquare personnel. A business can claim their venue which will initiate the Foursquare verification process. This processing is linked to a fee of roughly 20 US-Dollars\footnote{https://support.foursquare.com/hc/en-us/articles/201063930-How-to-claim-your-listing-s-, accessed: 29.03.2019} for venues outside of the United States of America. \\
 Of all 405 venues located inside the Canton of Zug, 13 (3.2\%) are verified according to the data provided by the Foursquare API. The remaining non-verified venues of the categories: scenic outlook, playground, athletics \& sport, farm, (nudist) beach, lake, trail, golf course, mountain, campground, bathing area, outdoors \& recreation, harbour, recreation centre, dog run, forest, pedestrian plaza, waterfront, basketball court, river, bike trail and skate park were validated by the author to its best knowledge. The final Foursquare dataset encompassed 378 venues.
 
@@ -161,10 +176,10 @@ In total, three different partly spatially overlapping Netlytic queries were run
 \subsection{Acquisition of additional location information} \label{add_location_data}
 Auxiliary, more detailed location information regarding the spatial origin of the media objects in the database were acquired. The following two subsections will elaborate on this process for the different data sources Instagram and Flickr.
 
-\subsubsection*{Via the Instagram API} \label{geolocation_via_instagramapi}
+\subsubsection{Via the Instagram API} \label{geolocation_via_instagramapi}
 The Instagram data that was provided by Netlytic was enhanced by using the \\ \texttt{GET/locations/location-id} endpoint of the official Instagram API. Newly acquired information encompassed the Instagram location-name.
 
-\subsubsection*{Via the Google Geocoding API} \label{geocoding_api}
+\subsubsection{Via the Google Geocoding API} \label{geocoding_api}
 Each coordinate of every Flickr media object was run through the Google Geocoding API. Detailed information regarding the media object's address and location type was returned. The location type attribute is evidence of the API's accuracy. Everything besides \small{\textit{ROOFTOP}} returns an address that is close but not exactly at the given coordinate and therefore represents a spatial approximation. The API has been called by modifying the following HTTPS-request:\\
 \texttt{\footnotesize{https://maps.googleapis.com/maps/api/geocode/json?latlng=[latitude,longitude]\&key=[API\_KEY]}}
 
@@ -177,7 +192,7 @@ Additional unwanted data beyond the actual research area boundaries was included
 \subsection{Addressing sources of data-bias} \label{sources_data_bias}
 This part of the data-processing is a filtering step as seen in step 1 of figure \ref{fig:ml_visualisation} to eliminate media objects which would distort the \textbf{general} perception of the research question at hand: Where are people performing NBRAs?
 
-\subsubsection*{Dominant authors} \label{bias_dominant_authors}
+\subsubsection{Dominant authors} \label{bias_dominant_authors}
 Authors (people who contribute to a given social media platform by uploading media objects) who are above a certain threshold regarding their total number of uploaded media objects in the research area during the data-acquisition period are marked in the database table column \texttt{included\_after\_dataprocessing} as \texttt{False} and are thereby excluded from further analysis. There is a need to address dominant authors because drawn conclusions will be otherwise based on a small number of users that contributed a large share to the entire data-set.\\
 \newline
 \textbf{How was this threshold defined?}\\
@@ -190,14 +205,14 @@ Two possibilities were considered:
 
 At first a static top 0.5\% threshold was implemented across all data-sets. Later in the development of the thesis possibility 2 was implemented. A 'posts per author' distribution graph (e.g. see figure \ref{img:dominant_users_flickr}) is simultaneously created as soon as data is read into the database. The number of desired top authors which should be included in the graph can be manually adjusted. This enabled a data specific dynamic adaption of the threshold according to a visual evaluation of the graph and the underlying dataset. 
 
-\subsubsection*{Bulk uploads} \label{bias_bulk_uploads}
+\subsubsection{Bulk uploads} \label{bias_bulk_uploads}
 In the context of this thesis bulk uploads describe a certain amount of simultaneously or during a short period of time uploaded media objects to the same social media platform by a single author. In an early stage of the project a static bulk upload threshold - similarly to the dominant author threshold - was chosen. Later, a dynamic solution which makes adaptive data handling possible was implemented. A graph which visualises the amount of effected media objects by different bulk upload thresholds (2-10) is displayed to the user (see figure \ref{img:bulk_uploads_flickr}). According to the graph a suitable threshold can be inputted and applied to the given dataset. The time period in which the exceeding of the threshold was considered a bulk upload was set to one hour. 
 All as bulk upload marked media objects will be excluded from further analysis by setting the \texttt{included\_after\_dataprocessing} column to \textit{False} (if they were not already excluded in the 'dominant user' step).
 
 \subsection{Text-processing} \label{text_processing}
 Text processing is required to turn noisy user-generated character input (text) into normalised word-tokens which are comparable between media objects. These tokens are a prerequisite for the following machine learning (ML) text-classification approach. The text-processing encompasses the following steps in corresponding order which have been visualised under step 3 in figure \ref{fig:ml_visualisation}: Firstly, iterating over all media objects which lie inside the research area boundary and are included after the data-processing while acquiring the corresponding text-data from the database.
 
-\subsubsection*{Language detection} \label{language_detection}
+\subsubsection{Language detection} \label{language_detection}
 The language detection serves the purpose of optimally adjusting the parameters for the later performed core text-processing step. By identifying the language, a matching word lists can be chosen to check the spelling, remove meaningless stop words as well as stem words to its roots (see \ref{core_text_processing}).\\
 To accomplish a text string which consists of the media object's title is parsed to the function. Firstly, basic text-processing is necessary to ensure a reliable prediction which consists of splitting the text-string at white spaces. Next, any sort of URI (universal resource identifier), HTML, common geographic references (such as the city of Zug) and character/number combination-patterns are removed with the help of regular expression matching. Lastly, all characters are turned lowercase. The resulting word-tokens are only further considered if they have a minimum length of three characters. This minimum length was chosen according to conducted tests to avoid short character-artefacts that can occur during the described process.\\
 In a following step each created word-token is run against five different word lists of the English, German, Swiss German, French and Italian language.
@@ -210,7 +225,7 @@ The entity check of each word versus all five of the above mentioned word lists 
 \newline
 \texttt{Remark 2:} A lot of hashtags used across different languages are primarily in English. Therefore, even a media object which in its core was not written exclusively in English can be classified as English by the algorithm due to the present hashtags. Consider the following exemplary German media object: \\ \textit{"Wandern tut gut \#view \#freshair \#goodlifestyle \#health"} (hiking feels good) \\ This media object would be classified as English since there are four English hashtags and only three German words of the actual sentence.
 
-\subsubsection*{Core text-processing} \label{core_text_processing}
+\subsubsection{Core text-processing} \label{core_text_processing}
 The core text processing encompasses the following alteration steps described in the following subsection and serves the purpose of creating universally similar structured and comparable word-tokens out of the noisy user generated text-data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated ML model to accurately predict the NBRA contained in the media objects.\\
 The function \texttt{text\_processing\_core()} (see Appendix \ref{python_code}) is called with the matching word lists for spell checking, stop words exclusion and the correct stemmer object corresponding to the performed language detection. The provided text string consists of a concatenation of the media object's title and description unlike just the title for the shortened text processing algorithm applied in the language detection function.\\
 Flickr tags were not neglected from this step even though they were also generated by an image detection algorithm similar to the Google Cloud Vision algorithm which was used in this thesis to acquire image content tags.
@@ -293,6 +308,7 @@ Google allows the creation of one Google Cloud trial account (needs a valid post
   \caption{ML workflow}
   \label{fig:ml_visualisation}
 \end{wrapfigure}
+
 One approach to transform text-based data into machine readable information will be covered in this section. Steps 3, 4, 5 and 6 of figure \ref{fig:ml_visualisation} to the left can be used as reference and will illustrate the described processes.\\
 There are multiple approaches available to prepare text-data for a ML model but outputting numbers at the end in one form or the other is uniform.\\
 In this project the \textit{bag-of-words} representation has been applied \parencite{Joulin2016}. This algorithm learns the 'vocabulary' of a corpus of documents or media objects in this case. The entire corpus-vocabulary is compared to the word-tokens incorporated in each media object. Therefrom, a fingerprint-like sequence of numbers is created which represents the occurrence and absence of words-tokens in the corresponding media object. The entire process can be boiled down to three steps\footnote{https://scikit-learn.org/stable/modules/feature\_extraction.html\#text-feature-extraction, accessed: 29.03.2019} which explain more thoroughly what has been said above:
@@ -303,11 +319,12 @@ In this project the \textit{bag-of-words} representation has been applied \paren
 
 \paragraph*{Encoding} The previously build vocabulary array is iterated over and compared to the word tokens found in the final text-string of each media object for which a 'fingerprint'-array is instantiated. Missing words are recorded as nulls and appearances are recorded by their count. The final weight of each feature is calculated according to the \textbf{T}erm (feature) \textbf{F}requency inside the media object times the \textbf{I}nverse  \textbf{D}ocument  \textbf{F}requency (occurrence across all media objects) which is referred to as TF-IDF. This results in a number sequence linked to a given media object on which the model is later trained. The following equations illustrate how TF-IDF is calculated. T\textsubscript{d} stands for the number of times term 'T' occurs in document 'd', 'N' stands for the total number of documents and D\textsubscript{t} describes the amount of documents 'D' that contain term 't'.
 
-\begin{gather*}
-TF = T\textsubscript{d}\\
-IDF = \log\frac{N}{D\textsubscript{t}}\\
-TF-IDF = T\textsubscript{d} * \log\frac{N}{D\textsubscript{t}}\\
-\end{gather*}
+\begin{align}
+TF &= T\textsubscript{d}\\
+IDF &= \log\frac{N}{D\textsubscript{t}}\\
+TF-IDF &= T\textsubscript{d} * \log\frac{N}{D\textsubscript{t}}
+\end{align}
+
 
 TF-IDF was chosen over simple TF because it is assumed that terms that occur across multiple documents are frequently used words such as stopwords that do not hold significant information to classify and distinguish between the seven recreational activities. Trough this normalisation the identification of meaningful terms that appear in the majority of media objects of the same class such as 'walking' but rarely in miscellaneous media objects is possible. 
 
@@ -391,7 +408,7 @@ The links to the full Instagram media object (see section \ref{Instagram_data}) 
 The following subsections encompass the entire pipeline of functions that were used to build \textbf{two} kinds of models. These models should provide insight on the effect of combining text and image content data in regards to model performance. Therefore, the first model was solely trained on the processed user generated text-data whereas the second model was trained additionally on the processed image content labels that were returned from the Google Cloud Vision API. Aside from that the models were setup, trained, tuned and implemented in exactly the same fashion.\\
 Relevant scores for evaluating ML model performance are also introduced which are referenced again in the results. The entire code implementation of the subsequent steps can be found in Appendix \ref{python_code} and in digital form in the enclosed CD.
 
-\subsubsection*{Considered algorithms} \label{ml_algorithms}
+\subsubsection{Considered algorithms} \label{ml_algorithms}
 The following algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
 
 \paragraph*{Support Vector Machines (SVMs)}
