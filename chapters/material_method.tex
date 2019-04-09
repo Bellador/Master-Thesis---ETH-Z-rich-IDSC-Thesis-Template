@@ -75,8 +75,8 @@ The data that was returned by the Flickr API was in the JavaScript Object Notati
     \item \textbf{id:} Unique media object identifier \big[bigint\big]
     \item \textbf{latitude and longitude:} Coordinate information in the WGS84 reference system \big[double precision\big]
     \item \textbf{link:} URL in the form \texttt{https://www.flickr.com/photos/[author]/[ID]/} to the actual media object \big[text\big]
-    \item \textbf{date taken:} Time-stamp from the image meta-data stating when it was taken \big[timestamp\big]
-    \item \textbf{publication date:} Time-stamp when the media object was uploaded to Flickr with the data-format \texttt{MM/DD/YYYY HH:MM:SS} \big[time-stamp\big]
+    \item \textbf{date taken:} Timestamp from the image meta-data stating when it was taken \big[timestamp\big]
+    \item \textbf{publication date:} Timestamp when the media object was uploaded to Flickr with the data-format \texttt{MM/DD/YYYY HH:MM:SS} \big[timestamp\big]
     \item \textbf{author:} The Flickr username of the media object author \big[text\big]
     \item \textbf{author id:} Unique author identifier \big[text\big] 
     \item \textbf{author origin:} User given geographical information regarding the authors origin \big[text\big]
@@ -142,7 +142,7 @@ Location tables:
     \item \texttt{locations\_unionzug\_instagram}
 \end{itemize}
 
-In more detail the media object tables store all data related to an object retrieved from one of the three social media platform, as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is described in figure \ref{fig:database}. The database holds in total 320'647 records and 78 fields. The Instagram and Flickr media object tables are linked via the \texttt{location\_id} primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Time-stamps were normalised across all social media platforms to the \texttt{YYYY-MM-DD HH-MM-SS} format.
+In more detail the media object tables store all data related to an object retrieved from one of the three social media platform, as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is described in figure \ref{fig:database}. The database holds in total 320'647 records and 78 fields. The Instagram and Flickr media object tables are linked via the \texttt{location\_id} primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Timestamps were normalised across all social media platforms to the \texttt{YYYY-MM-DD HH-MM-SS} format.
 
 \begin{figure}[h]
    \centering
@@ -219,7 +219,7 @@ Flickr tags were not neglected from this step even though they were also generat
 The first step of the text alteration included the regular expression matching (see definitions for reverence) of any URI (which includes \texttt{https://, http://, www.} beginnings as well as the domain ending), HTML related tags (e.g. \texttt{<a>\dots<$\backslash$a>}), Instagram mentions (e.g. \texttt{@madmax}) and character/number combination-patterns (e.g. \texttt{zugersee2018}). If detected they were replaced by a whitespace (\texttt{$\backslash$s}) character. This step was done prior to any other text-processing step due to the high risk of creating character artefacts which occur if those patterns remain in the text string.
 
 \paragraph*{Removal of characters other than letters} \label{remove_eveything_but_letters}
-As a next step all special characters such as Unicode characters of the category 'other symbols' including numbers were removed from the text string and also replaced by a whitespace (\texttt{$\backslash$s}) character. This assures that character objects like emojis, time-stamps and dates that often occur in social media data are removed to reduce the noise in the list. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence, e.g. '\"a' was replaced with 'ae'.
+As a next step all special characters such as Unicode characters of the category 'other symbols' including numbers were removed from the text string and also replaced by a whitespace (\texttt{$\backslash$s}) character. This assures that character objects like emojis, timestamps and dates that often occur in social media data are removed to reduce the noise in the list. Additionally, mutated vowels were replaced by a corresponding but simplified character sequence, e.g. '\"a' was replaced with 'ae'.
 
 \paragraph*{Whitespace splitting} \label{whitespace_splitting}
 Eventually the text string is split at the occurrence of one or more whitespaces. This creates for the first time individual word-tokens which will be further modified and filtered in the following steps.
@@ -384,7 +384,7 @@ None & - & 279'285 & 279'490 \\ \hline
 \end{table}
 
 \subsection{Issue of expired Instagram media links} \label{expired_media_links}
-Every media object acquired by the Instagram API or Netlytic contains a media link which points towards the embedded image, video itself. All these generated Instagram media links contain a time-stamp component which functions as an expiration date upon which the links become invalid \parencite{Wayne2018}. At the time of writing the training dataset dates back more then one year and all the media links already turned invalid by now. \\ %It is important to note that this issue effects the reputability of this thesis since
+Every media object acquired by the Instagram API or Netlytic contains a media link which points towards the embedded image, video itself. All these generated Instagram media links contain a timestamp component which functions as an expiration date upon which the links become invalid \parencite{Wayne2018}. At the time of writing the training dataset dates back more then one year and all the media links already turned invalid by now. \\ %It is important to note that this issue effects the reputability of this thesis since
 The links to the full Instagram media object (see section \ref{Instagram_data}) on the other hand were still valid - given the author of the media object or Instagram themselves did not take it down in the meantime. The media link of interest could be acquired by crawling through the web-page and finding the HTML \texttt{<div>} container which encompassed the correct \texttt{<img>} element with the id = "FFVAD". The source (\texttt{src}) attribute of that image element provided a valid media link that could be passed directly to the Google Cloud Vision API for the image recognition.
 
 \subsection{Machine learning model} \label{ml_model}
@@ -559,13 +559,12 @@ The ground truth data was acquired to compare recreational activity occurrences 
 \paragraph*{Recreational activities \& infrastructure}
 The two data-sources were quantitatively compared according to the inferred ranking of recreational activity occurrences at the three locations where ground truth was acquired. The Spearman's Rank-Order Correlation was used for the statistical analysis of the rankings. Total observation numbers did not yield a good measure of comparison since the data-acquisition periods for both data-sources were incomparable. 
 
-%\paragraph*{Visitation motivation}
-
-
 \paragraph*{Social media usage}
+The 52 interviewees are considered a representational sub-sample of the range of users found in the research area. The inferred demographics from the interviews such as age and gender will be compared to social media platform specific demographic statistics\footnote{https://napoleoncat.com/stats/, accessed: 09.04.2019} to investigate their agreement and differences. Knowing how well the social media data coincides with the ground truth allows statements about Instagram's and FLickr's proxy potential to predict NBRAs. Knowing what share of the population is under- or over-represented by the used social media platforms enables future projects to merge empirical \textit{in-situ} data with UGC to cover a broader spectrum of the population.\\
+Additionally, the social media behaviour of the interviewees yielded a ranking of most frequently used social media platforms. This information allowed to evaluate the appropriateness of using Instagram and Flickr data above other UGC-sources in this thesis.
 
-
-xxxxxDESCRIBE HOW GROUND TRUTH DATA IS COMPARED TO SMDxxxx
+\paragraph*{Visitation motivation}
+The given reasoning why certain locations were preferably visited above others was considered a valuable byproduct of the interviews and shall provide the spatial planning agency of the Canton of Zug and other researchers with information about place preference. Since visitation motivation was not directly extracted from the social media data a comparison between the two data-sources was not conducted.
 
 
 
