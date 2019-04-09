@@ -1173,8 +1173,6 @@ class StatisticHandler:
             except Exception:
                 print("Invalid input")
 
-
-
 class DataProcessHandler:
     '''
     Summarizes all methods which are linked to data or text processing
@@ -1182,7 +1180,7 @@ class DataProcessHandler:
     Important regex patterns used for text processing
     '''
     #removes all no-char elements
-    onlychars_pattern = re.compile(r"[^a-züöäßâàçëéêèïîìôûù]")
+    onlychars_pattern = re.compile(r"[^a-züöäßâàç]")
     # removes instagram mentions and email addresses
     profile_pattern = re.compile(r'[^\s]*@[^\s]*')
     # removes url's
