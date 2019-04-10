@@ -62,7 +62,7 @@ The data provided by Netlytic came in the Comma Separated Values (CSV) format. E
 
 \subsubsection{Location tag} \label{instagram_location_tag}
 The provided location information or tag consists of the above mentioned coordinates of an Instagram location. Instagram locations are points of interest which can be user-generated and may not represent the actual precise coordinates where the media object was created. This has been implemented by Facebook as a further step to preserve the Instagram users anonymity while dealing with sensitive location data. This implies that media objects that do not originate from the same location can still be 'snapped'\footnote{https://help.instagram.com/488619974671134, accessed: 03.04.2019} to the same Instagram location and therefore show the same coordinate pair in the meta-data.
-It has been shown that roughly 85\% of Instagram media objects lack a location tag and most users only use them on vacation or when being abroad \parencite{Flatow2015}.
+It has also been shown that roughly 85\% of Instagram media objects lack a location tag and most users only use them on vacation or when being abroad \parencite{Flatow2015}.
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in section \ref{geolocation_via_instagramapi}.
 
 
@@ -219,11 +219,10 @@ In a following step each created word-token is run against five different word l
 The English word list was acquired via the \textit{natural language toolkit} (NLTK) Python library. The mentioned list encompasses over 236'000 of the most common words of the English language.
 The German, Swiss-German, French and Italian word lists\footnote{http://www.gwicks.net/dictionaries.htm, accessed: 29.03.2019} contain 166'100, 165'900, 208'913 and 88'351 of the most common words respectively.\\
 \newline
-\texttt{Remark 1:} All word lists were slightly modified to fit the text-processing algorithm that is applied to the text-data of the media objects (lowercase, replacement of vowel mutations).\\
+\texttt{Remark:} All word lists were slightly modified to fit the text-processing algorithm that is applied to the text-data of the media objects (lowercase, replacement of vowel mutations).\\
 \newline
 The entity check of each word versus all five of the above mentioned word lists accounts for a major share of the total processing cost of the entire text-processing algorithm. The word list with the most contained words defines the language of the text string and ultimately of the entire media object. The determined language for each media object is saved in the 'detected\_language' column in the corresponding database entry.\\
-\newline
-\texttt{Remark 2:} A lot of hashtags used across different languages are primarily in English. Therefore, even a media object which in its core was not written exclusively in English can be classified as English by the algorithm due to the present hashtags. Consider the following exemplary German media object: \\ \textit{"Wandern tut gut \#view \#freshair \#goodlifestyle \#health"} (hiking feels good) \\ This media object would be classified as English since there are four English hashtags and only three German words of the actual sentence.
+
 
 \subsubsection{Core text-processing} \label{core_text_processing}
 The core text processing encompasses the following alteration steps described in the following subsection and serves the purpose of creating universally similar structured and comparable word-tokens out of the noisy user generated text-data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated ML model to accurately predict the NBRA contained in the media objects.\\

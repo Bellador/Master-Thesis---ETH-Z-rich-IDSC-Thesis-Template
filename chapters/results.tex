@@ -165,11 +165,11 @@ Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without None-clas
 \end{table}
 
 \subsubsection{Best features}
-Both linearSVC models consist of more than 600 features. The information gain or coefficient magnitude on the other hand that individual features provide differs. Figure \ref{fig:M2_top40_features_biking} visualises the 40 most predictive features that support the prediction of the class 'Biking' (blue) as well as the top 40 features that indicate the opposite (red). Similar figures for the remaining classifications 'Walking', 'Hiking', 'Jogging', 'Dog walking', 'Horse riding', 'Picnic' and 'None' can be found in Appendix \ref{M2_top_features}. 
+Both linearSVC models consist of more than 600 features. The information gain or coefficient magnitude on the other hand that individual features provide differs. Figure \ref{fig:M2_top40_features_biking} visualises the 40 most predictive features that support the prediction of the class 'biking' (blue) as well as the top 40 features that indicate the opposite (red). Similar figures for the remaining classifications 'walking', 'hiking', 'jogging', 'dog walking', 'horse riding', 'picnic' and 'None' can be found in Appendix \ref{M2_top_features}. 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{img/m2_top_40_features_Biking_cropped.pdf}
-   \caption{80 most predictive M2-features of the class 'Biking'. Blue features are word-tokens which supports the presence of the corresponding classification. Red features support the opposite. The graphic was created with the \textit{mglearn} Python library provided by \textcite{Guido2016}}
+   \caption{The top 80 most predictive M2-features of the class 'biking'. Blue features are word-tokens which supports the presence of the corresponding classification. Red features support the opposite. The graphic was created with the \textit{mglearn} Python library provided by \textcite{Guido2016}}
    \label{fig:M2_top40_features_biking}
 \end{figure}
 
@@ -466,11 +466,11 @@ Dog walking & 4 & 2 & 4 & 2 \\
 Additionally, the modelled output of M2 (see maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2}) was visually compared to the ground truth visible in figure \ref{fig:passive_observation} and figure \ref{fig:interview_activities} to further evaluate the model's plausibility.
 
 \paragraph*{Biking}
-The model predicts a strong occurrence of biking in the area of 'R\"ossliwiese' where the ground truthing consisting of the passive observation and the interviews did not record a single sighting (to the knowledge of the author: biking is not prohibited there and normally performed regularly).\\
+The model predicts a strong occurrence of biking in the area of 'R\"ossliwiese' where the ground truthing consisting of the passive observation and the interviews did not record a single sighting.\\
 In the area of 'Schattenw\"aldli' and 'B\"uggli' the ground truth recorded a moderate to strong occurrence of (mountain-)bikers. Only the former is also registered by the model. 
 
 \paragraph*{Hiking}
-'Schattenw\"aldli' is according to the interviews the only location of the three where the NBRA 'hiking' is performed. The model shows also a strong signal of 'hiking' in the mountainous region. Inconsistency lies in the as 'hiking' classified media objects located in the urban area of the city of Zug.
+'Schattenw\"aldli' is according to the interviews the only location of the three where the NBRA 'hiking' is performed. Also the model shows a strong signal of 'hiking' in the mountainous region. Contradicting are as 'hiking' classified media objects located in the urban area of the city of Zug.
 
 \paragraph*{Jogging}
 The maps as well as the ground truth show moderate congruent signals in all three locations.
@@ -482,7 +482,7 @@ M2 records a predominant signal in the urban areas over the mountainous areas. E
 The ground truth does not yield any information on that classification.
 
 \paragraph*{Dog walking}
-The NBRA 'dog walking' is according to the ground truth performed in all three locations in a comparably low frequency similar to 'jogging'. The M2 Instagram-data shows a signal densification in the urban area of the city of Zug whereas the Flickr-data shows a homogeneous distribution without any clear hot-spots.
+The recreational activity 'dog walking' is according to the ground truth performed in all three locations in a comparably low frequency similar to 'jogging'. The M2 Instagram-data shows a signal densification in the urban area of the city of Zug whereas the Flickr-data shows a homogeneous distribution without any clear hot-spots.
 
 \paragraph*{Horse riding}
 The ground truth does not yield any information on that classification.
@@ -490,8 +490,7 @@ The ground truth does not yield any information on that classification.
 \paragraph*{None} The M2 'None' classification signal shows as expected a homogeneous distribution (especially the Flickr-data with the higher spatial resolution) without any visible patterns. Because non-NBRAs were not actively recorded during the ground truthing a direct comparison cannot be made.
 
 \paragraph*{Summary}
-Essentially predicted the model spatial patterns which coincide with the available ground truth data. An exception is the classification 'hiking' which shows discrepancy and overlaps with the classification 'walking'.  This observation might be related to superordinate Instagram locations positioned in the urban areas. Refer to section \ref{discussion_rec_bias} in the discussion for further insight on this topic. 
-
+Essentially predicted the model spatial patterns which coincide with the available ground truth data. An exception is the classification 'hiking' which shows discrepancy and overlaps with the classification 'walking' which will be addressed in the section \ref{discussion_rq2} of the \nameref{discussion}.
 
 \subsection{Comparison to Foursquare}
 The platform Foursquare holds records of categorised infrastructure (venues). The map in figure \ref{fig:map_foursquare_comparison} visualises 378 Foursquare venues of the category \textit{Outdoor \& Recreation} in relation to the M2 predicted NBRA-occurrences in the Instagram and Flickr dataset of the Canton of Zug.\\

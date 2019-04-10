@@ -1,6 +1,6 @@
 \chapter{Discussion} \label{discussion}
 
-\section{Reflection on RQ 1}
+\section{Reflection on RQ 1}\label{discussion_rq1}
 
 \textit{Does a text-classification machine learning model trained on a combination of text and image-data yield better results than the same model solely trained on text-data?}\\
 
@@ -8,20 +8,28 @@
 
 Comparing model performances during model-tuning (see M1 - table \ref{tab:m1_linearSVC_bestscores} and M2 - table \ref{tab:m2_linearSVC_bestscores}), model-testing on the entire training dataset (see figure \ref{tab:m1_m2_linearSVC_final_scores}) and model-evaluation on new data (see table \ref{precision_unseen_data}) revealed some inconsistency. M1 solely showed a better performance while fitting on fewer training points. This was the case during model-tuning due to the necessary testing subset which accounts for 25\% of the total available data. Besides that M2 showed a better final model performance as well as a better performance on new (unseen) data. This discrepancy suggests that the size of the training dataset used in this thesis was considerably small since 25\% more training data still led to an significant performance increase for both models but especially for M2. Nevertheless, the enhanced M2 performance on unseen data indicates that M2 possesses a better generalisation capability compared to M1 which is also reflected in the reduced Type II Error or False Negative predictions - indicating a higher M2 recall score. This claim is based on the correct identification of 937 recreational activities in Instagram and Flickr media objects by M2 compared to 451 by M1. The difference of 486 true positive predictions implies M2 yielded a \textbf{factor of two} more correctly classified media objects compared to M1.\\
 
-xxxAD REASONING WHY M2 SHOWED BETTER PERFORMANCESxxxx
+The inclusion of image labels during training and media object prediction is sought to have helped the M2 recall improvement by identifying recreational activities that were not explicitly mentioned in the user-generated text. Drawing upon the additional information pool contained in the structural elements of the images favoured the detection of these additional media objects. On the other hand it was shown that M1 which was not trained on image labels showed a significantly worse performance (see table \ref{tab:m1_actual_precision}) if the image content information was provided in the final text-string used for prediction. Firstly, this indicates that the corpora vocabulary created by the bag-of-words algorithm already contained certain image labels that the Google Cloud Vision API returned, because otherwise these words would be ignored by the model and no effect would have been recorded. Secondly, this observation implies that simply providing further data in the form of text for the model to predict on does not simultaneously yield a performance increase but rather the opposite. Possible reason being that most media objects which contain a recreational activity are characterised by specific nature and environment related keywords since they are performed outdoors. Especially media objects that did not contain any user-generated text which are quite common especially on Flickr were observed to be falsely classified since the image labels that oftentimes include the mentioned keywords were the only data for prediction. This issue could easily be addressed by implementing a condition which classifies a media object as None if insufficient data for prediction is available. \\
 
-\subsection{Classification specific scores}
-- classification specific scores, dicuss why certain classes showed significant worse performances
-- images allow to extract/identify recreational activities that are not strictly mentioned in the user-generated text.
-- high errors in absence of text-data and only image labels -> more likely wrong-classification for M2 than for M1
+\section{Reflection on RQ 2}\label{discussion_rq2}
 
+\textit{Can social media derived data function as a proxy to estimate the spacial occurrence of NBRAs as a complementary source to conventional methods such as interviews and surveys?} \\
 
-
-\section{Reflection on RQ 2}
-
-\textit{Can social media derived data function as a proxy to estimate the spacial occurrence of NBRAs as a complementary source to conventional methods such as interviews and surveys?}\\
-
-- discuss produced maps compared to ground truth
+The results have shown..
+Before the proxy potential of UGC compared to the interviews and passive oberservation is discussed, 
+\section{comparing Flickr and Instagram}
+    1. discuss produced maps compared to ground truth
+ISSUES
+    -- people upload from different location to a different time (Instagram)-> forget the exact location or a precise description is not important
+    (Flickr) takes the GPS meta-data if available from where the image was taken
+    -- snapping to superordiante location tags, or because easy general location tags are chosen over more precise ones.
+    --> leads to: instagram much more restricted to certain densification areas compared to flickr which is more homogenious present in the area
+GENERAL
+     -- mention that no statistical spatial similarity analysis was performed - future work
+CLASS SPECIFIC
+    -- hiking: discuss why also detected in urban areas
+    -- biking:  (to the knowledge of the author: biking is not prohibited there and normally performed regularly)
+    -- dog walking: densified in urban areas not only because of confort but also because dog pictures that are not related to dog walking were classified as such
+    
 - Flickr predicted the same ranking of recreational activities as the passive observation.
 - discuss age of social media users and non-users derived from the interviews
 
@@ -53,17 +61,40 @@ The spatial distribution accuracy and the associated interpretation bias of Inst
 
 \section{Model components} \label{disussion_model_performance}
 
+\subsection{evaluation scores}
+F1-score without None-class
+
 \subsection{Fitting algorithms}
 - discuss performance of different fitting algorithms and why linearSVC performed best (better in high dimensional spaces with big number of features)
 
-\subsection{Descriptive features} \label{discussion_model_features}
-- discuss features per class (mostly specific action verbs hold high coefficient magnitudes) --> related to how the training data was queried via SQL from the big pool. Refer to appendix for top features of other classes besides biking 
+\subsection{Features} \label{discussion_model_features}
+- discuss features per class (mostly specific action verbs hold high coefficient magnitudes) --> related to how the training data was queried via SQL from the big pool. Refer to appendix for top features of other classes besides biking
+- Issue of: wrong classifications of sayings and different usages of the action verbs! (also due to sparse training data -> not able to grasp the concept)
+
+- Also, the sparse training data did not allow both models' to fully comprehend that environment related does not automatically mean outdoor recreation related.
+
+\subsection{Classification specific scores}
+- classification specific scores, discuss why certain classes showed significant worse performances
+- overlap between features from different classes (dog walking , walking, hiking,) picnic was really hard to graps, jogging -> run errands, running nose, running late etc., "walk on water" -> clearly wrong classification (see results)
+---> discuss classification specific precision scores on unseen data (graph in results! NEEDS TO BE CREATED FIRST!)
+- dog walking -> just images of dogs indoors
+
+\subsection{Hyperparameter configurations}
 
 
 \section{Comparison to model baselines} \label{model_baseline}
 The models presented in this thesis can be compared to text-classification models of similar research papers to acquire a baseline reference which were also introduced in the State of the Art chapter under section \ref{existing_text_class_models}. \\
 Recent work of \textcite{Das2018} presents a text sentiment classification model which is based on NF-IDF (also used in this thesis) in conjunction with an additional algorithm to enhance sentiment prediction. Three different classifiers were tested of which also the linearSVC showed the best performance on used review datasets. The presented 10-fold cross-validated model accuracy on the main IMBD movie review dataset was 89.91\% with a train-test split of 80\% and 20\% respectively.\\
 Another reference is the deep-learning based model created by \textcite{Li2018} which is optimised to classify Chinese text. The observed accuracy of the tuned model on the Chinese and English dataset lies at 96.23\% and 94.88\% respectively. The latter should function as better comparison to M1 and M2 from this thesis which achieved a test accuracy of 93.7\% and 88.2\% respectively.
+
+\section{Allocation of recreational infrastructure}
+xxxx FOURSQUARE xxxx
+
+\section{Media object languages}
+
+xxxxxxx Shortly explain what the graph shows xxxx
+
+A lot of hashtags used across different languages are primarily in English. Therefore, even a media object which in its core was not written exclusively in English can be classified as English by the algorithm due to the present hashtags. Consider the following exemplary German media object: \\ \textit{"Wandern tut gut \#view \#freshair \#goodlifestyle \#health"} (hiking feels good) \\ This media object would be classified as English since there are four English hashtags and only three German words of the actual sentence.
 
 \section{Ethics}
 Drawing upon crowed sourced big-data is inevitably shadowed by ethical controversies as shown by \textcite{Taylor2018}. Using GPS locations and other sensitive data to identify and analyse patterns of human behaviour is rightfully criticised and sometimes considered unethical practise \parencite{Taylor2018} which is why ethical guidelines for digital engagement are of increasing importance \parencite{Bowen2013}.\\
