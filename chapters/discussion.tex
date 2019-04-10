@@ -24,23 +24,16 @@ A comparison of the spatial distributions of NBRA-related data points between th
 The explanatory power of a data-source to describe spatial relationships is not only dependant on the accuracy of the individual media object but also on the total available amount of data which correlates with the social media platform popularity. Web-traffic associated with Instagram is multiple times bigger than from Flickr according to the Alexa Global Rank\footnote{https://www.alexa.com/topsites, accessed: 10.04.2019}. Correspondingly, I personally consider a combination of the two data-sources to yield a good balance of data-broadness and coverage provided by Instagram and spatial accuracy provided by Flickr.
 
 \subsection{Model output compared to empirical data}
-The broad comparison of observed recreational activity occurrences per class by the passive observation (which includes the occurrences recorded by the interviews) and the two social media platforms revealed that Flickr matched the ranking of the empirical data entirely. Instagram alone as well as the combination of Instagram and Flickr provided a significantly lower Spearman's Rank-Order Correlation of $\rho$=0.4 (see section \ref{results_comp_ground_truth}). This observation alone does not invalidate the credibility of Instagram data. Two of the seven considered recreational activities namely the classes 'picnic' and 'horse riding' were not recorded once in the ground truth. Additionally, the empirical data was acquired from three specific locations over a short period of time which was compared to VGI data from the entire research area that included media objects from 2004 until 2018. The exercising of outdoor activities is linked to specific landscape characteristics such as provided infrastructure, aesthetics and geographic closeness that favour certain places over others \parencite{Mancini2018a}. The occurrence probability of recreational activities is therefore expected to vary in space. This concludes that the result of this ranking holds limited validity to form general assumptions. At this point it must also be mentioned - as addressed under the future prospects of section \ref{future_prospects} - that a sophisticated statistical spatial similarity analysis would have provided more insight on the topic compared to the above discussed ranking correlation as well as the following visual comparison of the maps. \\
+The broad comparison of observed recreational activity occurrences per class by the passive observation (which includes the occurrences recorded by the interviews) and the two social media platforms revealed that Flickr matched the ranking of the empirical data entirely. Instagram alone as well as the combination of Instagram and Flickr provided a significantly lower Spearman's Rank-Order Correlation of $\rho$=0.4 (see section \ref{results_comp_ground_truth}). This observation alone does not invalidate the credibility of Instagram data. Two of the seven considered recreational activities namely the classes 'picnic' and 'horse riding' were not recorded once in the ground truth. Additionally, the empirical data was acquired from three specific locations over a short period of time which was compared to VGI data from the entire research area that included media objects from 2004 until 2018. The exercising of outdoor activities is linked to specific landscape characteristics such as provided infrastructure, aesthetics and geographic closeness that favour certain places over others \parencite{Mancini2018a}. The occurrence probability of recreational activities is therefore expected to vary in space. This concludes that the result of this ranking holds limited validity to form general assumptions. At this point it must also be mentioned - as addressed under the \nameref{future_prospects} of section \ref{future_prospects} - that a sophisticated statistical spatial similarity analysis would have provided more insight on the topic compared to the above discussed ranking correlation as well as the following visual comparison of the maps. \\
+
+The maps in figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2} show the output of M2 and represent the spatial distribution of recreational activities in space. The visual comparison of the displayed data to the ground truth was performed in section \ref{results_comp_ground_truth} of the \nameref{results}. Observed inconsistency between the data-sources will be subsequently further discussed. \\
+The class 'biking' shows much disagreement between the data-sources. Investigations revealed that the corresponding Flickr data mostly originated from one major cycling event in the year 2005 to which many users contributed. The densification of Instagram media objects in the urban area of the City of Zug is dominantly caused by false or general location tags such as 'Zug' or 'Canton Zug'. \\
+According to the interviews was 'Schattenw\"aldli' the only of the three location were people stated to perform the recreation activity 'hiking'. VGI also indicates a strong signal in this location but also in the urban areas where one might not expect hiking to occur. The first assumption of people mixing between definitions of hiking and walking was proven wrong. The occurrences of as 'hiking' classified Instagram and Flickr media objects is mainly caused by false classifications of panorama photographs with mountainous landforms. \\
+The classification 'jogging' shows a moderate signal across all three ground truth locations which coincides well with the Flickr response. Instagram signals are almost exclusive to the core of the City of Zug. Plausible explanations are related to a below average model precision for the classification 'jogging' as further illustrated in section \ref{discussion_class_specific_perform}.  
 
 
-
-revealed
-
-    1. discuss produced maps compared to ground truth
-ISSUES
-    
-GENERAL
-   
-CLASS SPECIFIC
-    -- hiking: discuss why also detected in urban areas
-    -- biking:  (to the knowledge of the author: biking is not prohibited there and normally performed regularly)
     -- dog walking: densified in urban areas not only because of confort to go walking close to home but also because dog pictures that are not related to dog walking were classified as such
-    
-- Flickr predicted the same ranking of recreational activities as the passive observation.
+
 - discuss age of social media users and non-users derived from the interviews
 
 \section{Recorded biases} \label{discussion_rec_bias}
@@ -83,11 +76,16 @@ F1-score without None-class
 
 - Also, the sparse training data did not allow both models' to fully comprehend that environment related does not automatically mean outdoor recreation related.
 
-\subsection{Classification specific scores}
+\subsection{Classification specific scores}\label{discussion_class_specific_perform}
 - classification specific scores, discuss why certain classes showed significant worse performances
-- overlap between features from different classes (dog walking , walking, hiking,) picnic was really hard to graps, jogging -> run errands, running nose, running late etc., "walk on water" -> clearly wrong classification (see results)
+- overlap between features from different classes (dog walking , walking, hiking,) 
+- hiking -> pictures of mountains wrongly classified
+- picnic was really hard to graps
+- jogging -> run errands, running nose, running late etc., 
+- walking -> "walk on water" -> clearly wrong classification (see results)
 ---> discuss classification specific precision scores on unseen data (graph in results! NEEDS TO BE CREATED FIRST!)
 - dog walking -> just images of dogs indoors
+- biking -> bike shops 
 
 \subsection{Hyperparameter configurations}
 
