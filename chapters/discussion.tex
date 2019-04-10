@@ -4,6 +4,8 @@
 
 \textit{Does a text-classification machine learning model trained on a combination of text and image-data yield better results than the same model solely trained on text-data?}\\
 
+This research questions will be addressed by discussing the model performances of M1 and M2 during training, testing and on unseen data as seen in the results. Furthermore, possible explanations for the observed performance changes will be stated.
+
 \subsection{Model performances}
 
 Comparing model performances during model-tuning (see M1 - table \ref{tab:m1_linearSVC_bestscores} and M2 - table \ref{tab:m2_linearSVC_bestscores}), model-testing on the entire training dataset (see figure \ref{tab:m1_m2_linearSVC_final_scores}) and model-evaluation on new data (see table \ref{precision_unseen_data}) revealed some inconsistency. M1 solely showed a better performance while fitting on fewer training points. This was the case during model-tuning due to the necessary testing subset which accounts for 25\% of the total available data. Besides that M2 showed a better final model performance as well as a better performance on new (unseen) data. This discrepancy suggests that the size of the training dataset used in this thesis was considerably small since 25\% more training data still led to an significant performance increase for both models but especially for M2. Nevertheless, the enhanced M2 performance on unseen data indicates that M2 possesses a better generalisation capability compared to M1 which is also reflected in the reduced Type II Error or False Negative predictions - indicating a higher M2 recall score. This claim is based on the correct identification of 937 recreational activities in Instagram and Flickr media objects by M2 compared to 451 by M1. The difference of 486 true positive predictions implies M2 yielded a \textbf{factor of two} more correctly classified media objects compared to M1.\\
@@ -14,21 +16,29 @@ The inclusion of image labels during training and media object prediction is sou
 
 \textit{Can social media derived data function as a proxy to estimate the spacial occurrence of NBRAs as a complementary source to conventional methods such as interviews and surveys?} \\
 
-The results have shown..
-Before the proxy potential of UGC compared to the interviews and passive oberservation is discussed, 
-\section{comparing Flickr and Instagram}
+The spatial distribution maps of the considered recreational activities (see figure \ref{fig:map_cluster_1} and figure \ref{fig:map_cluster_2}) as M2 output and the interview as well as passive observation data (see section \ref{groud_truthing}) will be used as basis to discuss research question number two. \\
+Before the proxy potential of VGI compared to empirical data is discussed, the observed difference between the two considered social media platforms Instagram and Flickr will be addressed.
+
+\subsection{Comparing Instagram and Flickr}
+A comparison of the spatial distributions of NBRA-related data points between the two social media platforms reveal that Flickr provides a relative homogeneous coverage compared to Instagram where clustering is more apparent across the research area. This observation is supported by the fewer unique locations of Instagram (152) compared to Flickr (1'144) as mentioned in section \ref{results_spatial_dist_model_NBRA} - the Instagram dataset being three times bigger than the Flickr dataset underlines this fact even further. The reason is linked to the way the data is georeferenced on the platforms. Flickr supports the extraction of exact coordinates from the image meta-data recorded by the camera or mobile device GPS and attaches it to the uploaded media object. Instagram on the other hand - due to regulatory data privacy policies - does not allow its users to share precise locations associated with their media objects but rather offers a predefined places-of-interest list with suggestions according to the current GPS location of the device. This restriction is likely to cause inconsistent location assignments by Instagram users. Variable place knowledge especially of tourists can lead to general and superordinate or even false assigned location tags that ultimately reduce the spatial mapping accuracy of the media object \parencite{Flatow2015}. Choosing suggested locations by the application for convenience instead of searching for more precise alternatives also effects the spatial accuracy of Instagram data. \\
+The explanatory power of a data-source to describe spatial relationships is not only dependant on the accuracy of the individual media object but also on the total available amount of data which correlates with the social media platform popularity. Web-traffic associated with Instagram is multiple times bigger than from Flickr according to the Alexa Global Rank\footnote{https://www.alexa.com/topsites, accessed: 10.04.2019}. Correspondingly, I personally consider a combination of the two data-sources to yield a good balance of data-broadness and coverage provided by Instagram and spatial accuracy provided by Flickr.
+
+\subsection{Model output compared to empirical data}
+The broad comparison of observed recreational activity occurrences per class by the passive observation (which includes the occurrences recorded by the interviews) and the two social media platforms revealed that Flickr matched the ranking of the empirical data entirely. Instagram alone as well as the combination of Instagram and Flickr provided a significantly lower Spearman's Rank-Order Correlation of $\rho$=0.4 (see section \ref{results_comp_ground_truth}). This observation alone does not invalidate the credibility of Instagram data. Two of the seven considered recreational activities namely the classes 'picnic' and 'horse riding' were not recorded once in the ground truth. Additionally, the empirical data was acquired from three specific locations over a short period of time which was compared to VGI data from the entire research area that included media objects from 2004 until 2018. The exercising of outdoor activities is linked to specific landscape characteristics such as provided infrastructure, aesthetics and geographic closeness that favour certain places over others \parencite{Mancini2018a}. The occurrence probability of recreational activities is therefore expected to vary in space. This concludes that the result of this ranking holds limited validity to form general assumptions. At this point it must also be mentioned - as addressed under the future prospects of section \ref{future_prospects} - that a sophisticated statistical spatial similarity analysis would have provided more insight on the topic compared to the above discussed ranking correlation as well as the following visual comparison of the maps. \\
+
+
+
+revealed
+
     1. discuss produced maps compared to ground truth
 ISSUES
-    -- people upload from different location to a different time (Instagram)-> forget the exact location or a precise description is not important
-    (Flickr) takes the GPS meta-data if available from where the image was taken
-    -- snapping to superordiante location tags, or because easy general location tags are chosen over more precise ones.
-    --> leads to: instagram much more restricted to certain densification areas compared to flickr which is more homogenious present in the area
+    
 GENERAL
-     -- mention that no statistical spatial similarity analysis was performed - future work
+   
 CLASS SPECIFIC
     -- hiking: discuss why also detected in urban areas
     -- biking:  (to the knowledge of the author: biking is not prohibited there and normally performed regularly)
-    -- dog walking: densified in urban areas not only because of confort but also because dog pictures that are not related to dog walking were classified as such
+    -- dog walking: densified in urban areas not only because of confort to go walking close to home but also because dog pictures that are not related to dog walking were classified as such
     
 - Flickr predicted the same ranking of recreational activities as the passive observation.
 - discuss age of social media users and non-users derived from the interviews
@@ -91,10 +101,17 @@ Another reference is the deep-learning based model created by \textcite{Li2018} 
 xxxx FOURSQUARE xxxx
 
 \section{Media object languages}
-
 xxxxxxx Shortly explain what the graph shows xxxx
-
 A lot of hashtags used across different languages are primarily in English. Therefore, even a media object which in its core was not written exclusively in English can be classified as English by the algorithm due to the present hashtags. Consider the following exemplary German media object: \\ \textit{"Wandern tut gut \#view \#freshair \#goodlifestyle \#health"} (hiking feels good) \\ This media object would be classified as English since there are four English hashtags and only three German words of the actual sentence.
+
+\section{Data availability}
+The social media platform related regulations, policies and APIs are always subject to change and can effect the future data-composition and data-availability. as well as studies that try to use them as data-source.
+
+Regarding reproducability of this work
+- people can change their content from puplic to private or delete
+
+
+
 
 \section{Ethics}
 Drawing upon crowed sourced big-data is inevitably shadowed by ethical controversies as shown by \textcite{Taylor2018}. Using GPS locations and other sensitive data to identify and analyse patterns of human behaviour is rightfully criticised and sometimes considered unethical practise \parencite{Taylor2018} which is why ethical guidelines for digital engagement are of increasing importance \parencite{Bowen2013}.\\
