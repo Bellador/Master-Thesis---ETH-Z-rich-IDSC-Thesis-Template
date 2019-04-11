@@ -245,7 +245,7 @@ The model performance evaluation was done manually by the author. 100 media obje
 where the class-specific model precision (\textit{precision}\textsubscript{class}) is based on the manual evaluation of 100 media objects of that class which can be a subset of the total amount of predicted media objects of that class by the model.
 
 \paragraph*{Model 1}
-The best M1 precision of \textbf{0.764} was recorded for the media objects of the social media platform Flickr while the parsed text-string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both social media platforms yields accordingly an average precision score of \textbf{0.748}.\\
+The best M1 precision of \textbf{0.714} was recorded for the media objects of the social media platform Flickr while the parsed text-string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both social media platforms yields accordingly an average precision score of \textbf{0.711}.\\
 While the M1 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% level, the recorded differences between the inclusion and exclusion of image labels were significant.
 
 \begin{table}[h!]
@@ -254,12 +254,12 @@ While the M1 precision differences between the two social media platforms Instag
 \label{tab:m1_actual_precision}
 \begin{tabular}{c|cc?cc}\hline
 platform & +image labels & -image labels & $\bar{x}$ & ratio\\ \hline
-Instagram & 0.664 & 0.732 & 0.698 & 0.907\\
-Flickr & 0.634 & 0.764 & 0.699 & 0.830\\
+Instagram & 0.664 & 0.708 & 0.686 & 0.938\\ %0.664 & 0.732 & 0.698 & 0.907
+Flickr & 0.634 & 0.714 & 0.674 & 0.888\\ %0.634 & 0.764 & 0.699 & 0.830
 \Xhline{2\arrayrulewidth}
-$\bar{x}$ & 0.649 & 0.748 \\
+$\bar{x}$ & 0.649 & 0.711 \\ %& 0.649 & 0.748 
 %\cline{1-3}
-ratio & 1.047 & 0.958  
+ratio & 1.047 & 0.992    %1.047 & 0.958 
 \end{tabular}
 \end{center}
 \end{table}
@@ -326,7 +326,7 @@ ratio & 1.00 & 1.68
 \paragraph*{Summary}
 M1 and M2 showed both the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained.\\
 The model precision was less dependant on the social media platform the media objects originated from but rather if image labels were parsed or not.\\
-The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) was only slightly better than the \textbf{0.764} of M1 (platform average: 0.748). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
+The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) was only slightly better than the \textbf{0.714} of M1 (platform average: 0.711). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
 M2 with a slightly higher precision yielded (937-451=)486 more true positive NBRA-predictions than M1 which resolves to an \textbf{increase by factor two}. Therefore, M2 predicted less False Negatives (FN) which concludes that M2 also possess a higher recall score than M1 and generalises better on new data.
 
 \section{Media object languages}
@@ -392,7 +392,7 @@ One main part of the interviews next to the information gain related to the perf
 \end{figure}
 
 \subsubsection{Relationship between age and social media presence}
-Insight on dominantly represented ages groups in social media data can be drawn from figure \ref{fig:interview_age_SMP}. According to the 52 conducted interviews are the most active people on social media platforms between the age of 21 and 30 (red bars indicating participation). The age group of 61 to 100 on the other hand has not one recorded social media user. The average age of all interviewees lies at 44, the one for social media users at 33 and at 64 for non-users. The red and blue line in figure \ref{fig:interview_age_SMP} represent the linear regression lines of the corresponding datasets. Their intersection at roughly age 50 indicates the transition between social media platform usage and absence. Instagram and Facebook make out the biggest share of these records as already seen in figure \ref{fig:interview_SMP}.
+Insight on dominantly represented ages groups in social media data can be drawn from figure \ref{fig:interview_age_SMP}. According to the 52 conducted interviews are the most active people on social media platforms between the age of 21 and 30 (red bars indicating participation). The age group of 61 to 100 on the other hand has not one recorded social media user. The average age of all interviewees lies at 44, the one for social media users at 33 and at 64 for non social media users. The red and blue line in figure \ref{fig:interview_age_SMP} represent the linear regression lines of the corresponding datasets. Their intersection at roughly age 50 indicates the transition between social media platform usage and absence. Instagram and Facebook make out the biggest share of these records as already seen in figure \ref{fig:interview_SMP}.
 
 \begin{figure}[h!]
    \centering
