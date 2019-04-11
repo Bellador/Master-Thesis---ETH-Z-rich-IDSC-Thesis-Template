@@ -64,9 +64,10 @@ Taking this into consideration a merge of these two NBRA-classes could be consid
 The spatial distribution accuracy and the associated interpretation bias of Instagram media objects has been mentioned in section \ref{instagram_location_tag}. User generated location tags impose the issue of imprecise or simply wrong positions as also described by \textcite{Lee2016}. To mitigate these effects superordinate, general location tags associated with a specific region could be excluded as performed by \textcite{Heikinheimo2017} to increase the overall spatial distribution accuracy of NBRAs for the remaining data-points.
 
 \section{Model components} \label{disussion_model_performance}
+The different test-arrangements and the components that make up the final models M1 and M2 will be further discussed in the following subsections. This includes evaluation of the Random Forest algorithm and linearSVC used for model-fitting, model feature characteristics and expressiveness as well as the discussion of classification specific model precision scores on unseen data.
 
-\subsection{evaluation scores}
-F1-score without None-class
+\subsection{Evaluation scores}
+Unlike common practice \parencite{Guido2016} both models M1 and M2 were tuned according to the average F1-score across all classes except the None-class. The optimal hyperparameter setting was therefore chosen to maximise the model performance of the recreational activity classes. The reasoning behind this choice was partly given by the heavily asymmetric availability of training data per class. Media objects resembling the None-class amounted to (see table \ref{}) 
 
 \subsection{Fitting algorithms}
 - discuss performance of different fitting algorithms and why linearSVC performed best (better in high dimensional spaces with big number of features)
