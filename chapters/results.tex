@@ -219,8 +219,6 @@ The effect of different \textit{ngram\_range} settings in combination with varyi
 \label{fig:heatmaps}
 \end{figure}
 
-\texttt{Remark:} If different hyperparameter settings produce the same model performance (F1-score) than the setting which produces fewer features is prioritised due to better generalisation and regularisation capabilities. Regarding figure \ref{fig:m1_heatmap} for instance the \textit{ngram\_range} setting of either (1, 1), (1, 2) or (1, 3) in combination with \textit{C} = 1 all produce a F1-score of 0.932. (1, 1) has been chosen as best hyperparameter configuration due to the lowest feature count.
-
 \subsubsection{Classification specific F1-scores}
 As already seen above M1 performed on the test set with an 10-fold cross-validated F1-score excluding the None-class of \textbf{0.870} compared to \textbf{0.835} of M2. Figure \ref{fig:m1_m2_class_f1_scores} gives more insight on the classification specific model performances. The worst performances are recorded for both Random Forest classifiers. Also the M2 linearSVC picnic class sticks out with a score of 0.48. The actual performance and generalisation potential of both model on 'unseen data' is presented further down.
 \begin{figure}[h!]
