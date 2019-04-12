@@ -1,0 +1,55 @@
+-------------------------------------------- (339 entries)
+
+SELECT media_object_id, title, processed_text
+FROM media_objects_trainingdata_instagram
+WHERE (
+	processed_text ~* '(\s|^)picnic(\s|$)'
+	OR processed_text ~* '(\s|^)barbecu(\s|$)'
+	OR processed_text ~* '(\s|^)bbq(\s|$)'
+	OR processed_text ~* '(\s|^)meal(\s|$)'
+	OR processed_text ~* '(\s|^)food(\s|$)'
+	OR processed_text ~* '(\s|^)lunch(\s|$)'
+	OR processed_text ~* '(\s|^)dinner(\s|$)'
+	OR processed_text ~* '(\s|^)snack(\s|$)'
+	OR processed_text ~* '(\s|^)clambak(\s|$)'
+	OR processed_text ~* '(\s|^)outing(\s|$)'
+	OR processed_text ~* '(\s|^)picknick(\s|$)'
+	OR processed_text ~* '(\s|^)piquen(\s|$)'
+	OR (processed_text ~* '(\s|^)piqu(\s|$)' 
+		AND processed_text ~* '(\s|^)niqu(\s|$)')
+	)
+AND (
+	processed_text ~* '(\s|^)natur(\s|$)' 
+	OR processed_text ~* '(\s|^)outsid(\s|$)'
+	OR processed_text ~* '(\s|^)recreat(\s|$)' 
+	OR processed_text ~* '(\s|^)adventur(\s|$)'
+	OR processed_text ~* '(\s|^)mountain(\s|$)'
+	OR processed_text ~* '(\s|^)wood(\s|$)'
+	OR processed_text ~* '(\s|^)landscap(\s|$)'
+	OR processed_text ~* '(\s|^)sceneri(\s|$)'
+	OR processed_text ~* '(\s|^)outdoor(\s|$)'
+	OR processed_text ~* '(\s|^)getoutsid(\s|$)'
+	OR processed_text ~* '(\s|^)view(\s|$)'
+	OR processed_text ~* '(\s|^)panoram(\s|$)'
+	OR processed_text ~* '(\s|^)explor(\s|$)'
+	OR processed_text ~* '(\s|^)air(\s|$)'
+	OR processed_text ~* '(\s|^)natuallight(\s|$)'
+	OR processed_text ~* '(\s|^)sunshin(\s|$)'
+	OR processed_text ~* '(\s|^)drauss(\s|$)'
+	OR processed_text ~* '(\s|^)ausruh(\s|$)'
+	OR processed_text ~* '(\s|^)erhol(\s|$)'
+	OR processed_text ~* '(\s|^)sundhei(\s|$)'
+	OR processed_text ~* '(\s|^)auszei(\s|$)'
+	OR processed_text ~* '(\s|^)abenteu(\s|$)'
+	OR processed_text ~* '(\s|^)berg(\s|$)'
+	OR processed_text ~* '(\s|^)landschaf(\s|$)'
+	OR processed_text ~* '(\s|^)aussich(\s|$)'
+	OR processed_text ~* '(\s|^)strateg(\s|$)'
+	OR processed_text ~* '(\s|^)sonn(\s|$)'	
+	)
+AND processed_text !~* '(\s|^)buy(\s|$)'
+AND processed_text !~* '(\s|^)sell(\s|$)'
+AND processed_text !~* '(\s|^)giveaway(\s|$)'
+AND processed_text !~* '(\s|^)kauf(\s|$)'
+AND processed_text !~* '(\s|^)verkauf(\s|$)'
+AND processed_text !~* '(\s|^)restaur(\s|$)';

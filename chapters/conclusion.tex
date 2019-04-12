@@ -10,7 +10,15 @@ The visual matching of M2 predicted recreational activity occurrences to the gro
 
 \section{Main findings}
 
-xxxLISTINGxxxx
+\begin{itemize}
+  \item Training a machine learning model on both processed text-data and labels of structural image elements yields a performance increase compared to exclusively text trained models by significantly reducing the Type II error and enhancing the overall model precision.
+  \item VGI in the form of georeferenced social media data from Instagram and Flickr show proxy potential to predict spatial occurrences of recreational activities.
+  \item 'Hiking' and 'walking' are by far the most dominant recreation activities in the research area according to both ground truth and social media data.
+  \item \textit{Geographic closeness} followed by the presence of water bodies are the most decisive reason for choosing a location for recreation according to the performed interviews.
+  \item The social media platforms Instagram and Facebook hold the highest popularity among the interviewees.
+  \item Social media active people are on average younger than people that do not engage in social media.
+  \item The linear support vector machine classifier performs better than the decision tree based Random Forest fitting algorithm for this text-classification tasks. 
+\end{itemize}
 
 \section{Future prospects} \label{future_prospects}
 The presented models in this thesis are far from their full potential. Small training datasets from inconsistent sources as well as further expendable data-processing show opportunities for method refinement. Instagram location accuracy could potentially be improved by utilising topographic keywords in the user-generated text to narrow down the media object origin similarly to \parencite{Ostermann2015}. \\
