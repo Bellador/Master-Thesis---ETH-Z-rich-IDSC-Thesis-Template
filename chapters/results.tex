@@ -69,12 +69,12 @@ None & - & 279'285 & 279'490 \\ \hline
 \section{Models} \label{results_models}
 The performance results of the two in section \ref{ml_model} introduced models will subsequently be presented. These models were both solely trained on the Instagram Zurich Dolder and Instagram Zurich Uetliberg datasets included in the database table: \texttt{media\_objects\_trainingdata\_instagram} (database overview visible in figure \ref{database_setup}). For each model the Random Forest classifier and the linearSVC fitting algorithm were independently tested. The hyperparameters were tuned to yield the best possible 10-fold cross-validated F1-score averaged over all classes excluding the None-class. The training data was consistently split into 75\% for training and 25\% for testing. Simultaneously, the effect of including different amounts of the None-class training data media objects during model fitting were also investigated. These values ranged from 500 to 6'500 with steps of 500.\\
 These models were then used to predict the NBRAs contained in the media objects of the Instagram database table: \texttt{media\_objects\_unionzug\_instagram} and the \\Flickr database table: \texttt{media\_objects\_cantonzug\_flickr}\\
-Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text-string composition that was parsed for prediction. One time the final text-string was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data.\\
+Each model performed two separate predictions on each of the above mentioned datasets which differed in the final text string composition that was parsed for prediction. One time the final text string was constructed by concatenating the processed text data and the image labels of a given media object. The second time the final text string only contained the processed text data.\\
 \newline
 \texttt{Remark:} The entire data presented in the following subsections is available on the enclosed CD. This includes the actual M1 and M2 dump files, tuning and cross-validation logs as well as the performance graphs (see chapter \ref{CD_content}).
 
 \subsection{Model 1: untrained on image labels}
-The first model (M1) that was trained exclusively on processed user generated text-data. Therefore, it did not include any image content information.
+The first model (M1) that was trained exclusively on processed user generated text data. Therefore, it did not include any image content information.
 
 \subsubsection{M1 - Random Forest}
 The model tuning according to the parameter grid visible in figure \ref{coderandomForestparameters} resulted in the following best performing hyperparameter constellation:
@@ -130,8 +130,8 @@ Accuracy train & Accuracy test & Precision & Recall & F1 & F1 (without None-clas
 \end{center}
 \end{table}
 
-\subsection{Model 2: trained on image labels and text-data}
-The second model (M2) was trained on the Google Cloud Vision API image labels extracted from the media objects images and the processed user generated text-data.
+\subsection{Model 2: trained on image labels and text data}
+The second model (M2) was trained on the Google Cloud Vision API image labels extracted from the media objects images and the processed user generated text data.
 
 \subsubsection{M2 - Random Forest}
 The model tuning with the parameter grid visible in figure \ref{coderandomForestparameters} resulted in the following best performing hyperparameter constellation:\\
@@ -251,7 +251,7 @@ This section will present the model performances on new unseen data. All Instagr
     \item \texttt{media\_objects\_unionzug\_instagram} \item \texttt{media\_objects\_cantonzug\_flickr}
 \end{itemize}
 
-One time the final text-string provided for the prediction was constructed by concatenating the processed text-data and the image labels of a given media object. The second time the final text-string only contained the processed text-data. The model performance evaluation was done manually by the author. 100 media objects per class (if available), per prediction-mode and per model were evaluated for True Positive (TP) or False Positive (FP) predictions which allowed the calculation of the model precision on unseen data. An estimate for the recall over all classes was made based on the share of media objects that were correctly classified (except the None-class) in relation to the total amount of media objects present. In other words, how many media objects that actually contained NBRAs were also identified as such? This information is important because e.g. a model with 95\% precision that only identifies 20\% of media objects containing NBRAs is still not practical. This approximation was calculated in the following way:
+One time the final text string provided for the prediction was constructed by concatenating the processed text data and the image labels of a given media object. The second time the final text string only contained the processed text data. The model performance evaluation was done manually by the author. 100 media objects per class (if available), per prediction-mode and per model were evaluated for True Positive (TP) or False Positive (FP) predictions which allowed the calculation of the model precision on unseen data. An estimate for the recall over all classes was made based on the share of media objects that were correctly classified (except the None-class) in relation to the total amount of media objects present. In other words, how many media objects that actually contained NBRAs were also identified as such? This information is important because e.g. a model with 95\% precision that only identifies 20\% of media objects containing NBRAs is still not practical. This approximation was calculated in the following way:
 
 \begin{ceqn}
 \begin{align}
@@ -263,7 +263,7 @@ One time the final text-string provided for the prediction was constructed by co
 where the class-specific model precision (\textit{precision}\textsubscript{class}) is based on the manual evaluation of 100 media objects of that class which can be a subset of the total amount of predicted media objects of that class by the model.
 
 \paragraph*{Model 1}
-The best M1 precision of \textbf{0.714} was recorded for the media objects of the social media platform Flickr while the parsed text-string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both social media platforms yields accordingly an average precision score of \textbf{0.711}. While the M1 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% confidence level, the recorded differences between the inclusion and exclusion of image labels were significant. \\
+The best M1 precision of \textbf{0.714} was recorded for the media objects of the social media platform Flickr while the parsed text string excluded image labels (see table \ref{tab:m1_actual_precision}). Predicting new data without image labels across both social media platforms yields accordingly an average precision score of \textbf{0.711}. While the M1 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% confidence level, the recorded differences between the inclusion and exclusion of image labels were significant. \\
 
 \begin{table}[h!]
 \begin{center}
@@ -290,9 +290,9 @@ Classification specific M1 precision scores with excluded image labels for the p
    \label{fig:M1_precision_unseen_data}
 \end{figure}
 
-The incorporation of image labels into the text-string results in an increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m1_actual_recall}).
+The incorporation of image labels into the text string results in an increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m1_actual_recall}).
 In the case of Instagram the inclusion and exclusion of image labels results in a total of \textbf{668} and \textbf{384} NBRA-identifications which corresponds to 5.67\% and 3.26\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}.
-In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}. Therefore, the best performing final text-string format which excludes image labels results in a total of \textbf{451} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
+In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{273} and \textbf{67} NBRA-identifications which corresponds to 4.25\% and 1.77\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}. Therefore, the best performing final text string format which excludes image labels results in a total of \textbf{451} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
 
 \begin{table}[h!]
 \begin{center}
@@ -310,7 +310,7 @@ ratio & 1.33 & 1.84
 \end{table}
 
 \paragraph*{Model 2}
-The best M2 precision of \textbf{0.776} was recorded for the media objects of the social media platform Instagram while the parsed text-string included image labels (see table \ref{tab:m2_actual_precision}). Predicting new data with image labels across both social media platforms yields accordingly an average model performance of \textbf{0.749}. While the M2 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% confidence level, the recorded differences between the inclusion and exclusion of image labels were significant.\\
+The best M2 precision of \textbf{0.776} was recorded for the media objects of the social media platform Instagram while the parsed text string included image labels (see table \ref{tab:m2_actual_precision}). Predicting new data with image labels across both social media platforms yields accordingly an average model performance of \textbf{0.749}. While the M2 precision differences between the two social media platforms Instagram and Flickr were not significant on a 5\% confidence level, the recorded differences between the inclusion and exclusion of image labels were significant.\\
 
 
 \begin{table}[h!]
@@ -339,7 +339,7 @@ Classification specific M2 precision scores with included image labels for the p
 \end{figure}
 
 
-The incorporation of image labels into the final text-string results in a significant increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m2_actual_recall}). In the case of Instagram the inclusion and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.03\% and 3.63\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}. In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.99\% and 2.16\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}. Therefore, the best performing final text-string format which includes image labels results in a total of \textbf{937} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
+The incorporation of image labels into the final text string results in a significant increase of overall and true positive predictions for both social media platforms (see table \ref{tab:m2_actual_recall}). In the case of Instagram the inclusion and exclusion of image labels results in a total of \textbf{710} and \textbf{137} NBRA-identifications which corresponds to 6.03\% and 3.63\% respectively of the 11'777 media objects in the database table \texttt{media\_objects\_unionzug\_instagram}. In the case of Flickr the inclusion and exclusion of image labels results in a total of \textbf{227} and \textbf{82} NBRA-identifications which corresponds to 5.99\% and 2.16\% respectively of the 3'790 media objects in the database table \texttt{media\_objects\_cantonzug\_flickr}. Therefore, the best performing final text string format which includes image labels results in a total of \textbf{937} (extrapolation based on the calculated precision on 100 media objects per class) true positive NBRA media objects across both social media platforms. 
 
 \begin{table}[h!]
 \begin{center}
@@ -357,7 +357,7 @@ ratio & 1.00 & 1.68
 \end{table}
 
 \paragraph*{Summary}
-M1 and M2 showed both the best performance if the parsed data for prediction (final text-string) was in the form the model was originally trained. The model precision was less dependant on the social media platform the media objects originated from but rather if image labels were parsed or not. The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) was only slightly better than the \textbf{0.714} of M1 (platform average: 0.711). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
+M1 and M2 showed both the best performance if the parsed data for prediction (final text string) was in the form the model was originally trained. The model precision was less dependant on the social media platform the media objects originated from but rather if image labels were parsed or not. The best observed precision of M2 with \textbf{0.776} (platform average: 0.749) was only slightly better than the \textbf{0.714} of M1 (platform average: 0.711). Strong differences were registered in the percentage of correctly classified media objects in relation to the entire dataset which lay at \textbf{6.01\%} for M2 but only at \textbf{2.52\%} for M1.
 M2 with a slightly higher precision yielded (937-451=)486 more true positive NBRA-predictions than M1 which resolves to an \textbf{increase by factor two}. Therefore, M2 predicted less False Negatives (FN) which concludes that M2 also possess a higher recall score than M1 and generalises better on new data.
 
 \section{Media object languages}
@@ -458,14 +458,14 @@ One has to keep in mind that the processed Flickr dataset holds only roughly a t
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_1.pdf}
-   \caption{Part 1 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \caption{Part 1 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text data and image labels from the Instagram / Flickr media objects.}
    \label{fig:map_cluster_1}
 \end{figure}
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/map_cluster_2.pdf}
-   \caption{Part 2 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text-data and image labels from the Instagram / Flickr media objects.}
+   \caption{Part 2 - Spatial NBRA-occurrences in the Canton of Zug based on M2 predictions which were conducted on text strings containing processed text data and image labels from the Instagram / Flickr media objects.}
    \label{fig:map_cluster_2}
 \end{figure}
 
