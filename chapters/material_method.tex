@@ -373,10 +373,10 @@ The links to the full Instagram media object (see section \ref{Instagram_data}) 
 \subsection{Machine learning model} \label{ml_model}
 The following subsections encompass the entire pipeline of functions that were used to build \textbf{two} kinds of models. These models should provide insight on the effect of combining text and image content data in regards to model performance. Therefore, the first model was solely trained on the processed user generated text data whereas the second model was trained additionally on the processed image content labels that were returned from the Google Cloud Vision API. Aside from that, the models were setup, trained, tuned and implemented in exactly the same fashion. Relevant scores for evaluating ML model performance are also introduced which are referenced again in the results. The entire code implementation of the subsequent steps can be found in Appendix \ref{python_code} and in digital form on the enclosed CD.
 
-\clearpage
-
 \subsubsection{Considered algorithms} \label{ml_algorithms}
-The following algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
+The following fitting algorithms were tested and evaluated for the creation of the two ML models. The results will be presented in section \ref{results_models}.
+
+\clearpage
 
 \paragraph*{Support Vector Machines (SVMs)}
 A SVM can be used for classification and regression applications. Its aim is to divide media objects of different classes - represented as vectors - by creating a hyperplane while maximising the distance between the closest vectors of each class (see hyperplane H\textsubscript{2} in figure \ref{fig:SVM_visualisation}). This constraint improves the performance of the model on new data where vectors do not follow the exact spatial distribution of the training data.
@@ -392,50 +392,48 @@ A SVM can be used for classification and regression applications. Its aim is to 
 \vspace{-0.5cm}
 \end{wrapfigure}
 
-For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the plane. Name giving is the fact that only a small portion of the entire vector set - the so called support vectors - is used for the training of the model. The result is an algorithm with comparably low processing costs.
+For the calculation of the mentioned hyperplane are only the marginal vectors of relevance because they define the border between the classes and therefore the location of the hyperplane. Name giving is the fact that only a small portion of the entire vector set - the so called support vectors - is used for the training of the model. The result is an algorithm with comparably low computation costs (refer to \textcite{Guido2016} p.94).
 
 \paragraph*{Decision Tree algorithm}
-Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data with increasing tree depth. The determination of the nodes operation and their position inside the tree is seen as the fitting or training of the model.\\
-One specific variation of the generic decision tree which has been tested for this project is the so-called Random Forest. It creates a defined amount of individual decision trees which are trained on different random test- and train-splits of the training dataset. This process comes close to performing a cross-validation. At the end these trees are logically merged where deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training data while reducing the trend to overfitting.\\
-Decision trees are prone to overfitting due to their infinite possible depth by adapting perfectly to any training dataset. This can be countered by limiting the maximal depth of the tree(s) (see listing \ref{coderandomForestparameters}) . This process is called pre-pruning.\\
-\newline
- The book from \textcite{Guido2016} about ML stated that "Random Forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, the Random Forest algorithm was tested, evaluated and compared to the linearSVC visible in section \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be faster than the one of the linearSVC model (in this thesis roughly 15 \% faster). 
+Like SVMs decision trees can be used if a continuous value (regression) or a concrete set of values (classification) is desired as model output. Decision trees are fundamentally consecutive IF / ELSE statements (nodes) which try to purify the data with increasing tree depth. The determination of the nodes operation and their position inside the tree is seen as the fitting or training of the model. One specific variation of the generic decision tree which has been tested for this project is the so-called Random Forest. It creates a defined amount of individual decision trees which are trained on different random test- and train-splits of the training dataset. This process comes close to performing a cross-validation. At the end these trees are logically merged where deterministic features are kept and ones that carry little information are dropped. The result is a decision tree which more successfully captures the information contained in the training data while reducing the trend to overfitting. Decision trees are prone to overfitting due to their infinite possible depth while adapting perfectly to any training dataset. This can be mitigated by limiting the maximal depth of the tree(s). This process is called pre-pruning.\\
+
+ The book from \textcite[p.90]{Guido2016} about ML stated that "Random Forests do not tend to perform well on very high dimensional, sparse data, such as text data". Nevertheless, the Random Forest algorithm was tested, evaluated and compared to the linearSVC visible in section \ref{results_models}. Due to the fact that the calculation process of the different decision trees can be multithreaded across all available CPU cores, the fitting process can be faster than the one of the linearSVC model (in this thesis roughly 15 \% faster). 
 
 \subsection{Model setup} \label{model_setup}
-In addition to the previously mentioned data- and text-processing steps some extra functions were needed before the actual fitting algorithm could be applied. The models were setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library allowed pipelining\footnote{https://scikit-learn.org/stable/modules/compose.html, accessed: 29.03.2019} (see definitions) which consisted of the following functions:
+In addition to the previously mentioned data- and text-processing steps some extra functions were needed before the actual fitting algorithm could be applied. The models were setup with Python v.3.6.7 and the \textit{scikit-learn} library v.0.20.2. This library allowed pipelining\footnote{https://scikit-learn.org/stable/modules/compose.html, accessed: 29.03.2019} (see definitions) which consisted of the following functions in their respective order of application:
 
 \begin{enumerate}
-    \item \textbf{TfidfVectorizer} Converts a collection of raw documents (media objects) into a matrix of TF-IDF features which stands for the frequency times the inverse document frequency of a given word-token (see step 5 and 6 of figure \ref{fig:ml_visualisation}). This function is equivalent to applying 'CountVectorizer' followed by 'TfidfTransformer'.\\
+    \item \textbf{TfidfVectorizer} Converts a collection of raw documents (media objects) into a matrix of TF-IDF features which stands for the frequency times the inverse document frequency of a given word-token (see step 5 and 6 of figure \ref{fig:ml_visualisation}). This function is equivalent to applying 'CountVectorizer' followed by 'TfidfTransformer' (refer to \textcite{Guido2016} p.338). \\
     \textit{Tuned hyper-parameters:}
     \begin{itemize}[label={}]
         \item \textbf{Min\_df} This parameter defines the minimal required document frequency of a word-token in the entire corpus to be included for further processing.
         \item \textbf{Ngram\_range} This parameter defines how word-tokens are interpreted by the model. Given a minimal and a maximal value the function is able to create new features by concatenating tokens that appear in succession. This enables the extraction of semantic meaning that would stay unseen if only individual token were considered \parencite{Surtikanti2013}. E.g (1,2) would consider all single tokens as well as the concatenation of two consecutive tokens. (2,3) would only consider token concatenations of length two up to a maximum of three.
     \end{itemize}
     
-    \item \textbf{SelectKBest} This function allows for a further selection of the features generated by the vectorizer. Score functions such as ANOVA F-value and Chi-squared allow the selection of the most deterministic features in a set. Limiting the number of features can help to prevent model overfitting and increase a model's generalisation capabilities.\\
+    \item \textbf{SelectKBest}\footnote{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html, accessed: 14.04.2019} This function provides an additional filtering step for features generated by the 'TfidfVectorizer'. Score functions such as ANOVA F-value and Chi-squared allow the selection of the most deterministic features in a set. Limiting the number of features can help prevent model overfitting and increase a model's generalisation capabilities. \\
     \textit{Tuned hyper-parameters:}
     \begin{itemize}[label={}]
         \item \textbf{k} Defines the number of further considered features with the highest score.
     \end{itemize}
     
-    \item \textbf{ML algorithm} LinearSVC and Random Forest classifiers (see section \ref{ml_algorithms}) were used to find the most well-rounded model.\\
+    \item \textbf{ML algorithm} LinearSVC and Random Forest classifiers (see section \ref{ml_algorithms}) were used to find the most well-rounded model. \\
     \textit{Tuned hyper-parameters:}
     \begin{itemize}[label={}]
-        \item \textbf{LinearSVC \textit{C}} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training point. Reducing this parameter allows for more generalisation and counteracts to overfitting. Increasing the 'C' parameter raise the model's training accuracy (see figure \ref{fig:over_underfitting}).
+        \item \textbf{LinearSVC \textit{C}} Adjusting this parameter gives the user control over the margin-size of the hyperplane. This effects how strong the model is fit to every single training point. Reducing this parameter allows for more generalisation and counteracts to overfitting. Increasing the 'C' parameter raises the model's training accuracy (see figure \ref{fig:over_underfitting}).
         
-        \item \textbf{LinearSVC Penalty} This parameter introduces a regularisation penalty to prevent overfitting by minimising the components of the word-token vectors. There are two commonly used L\textsubscript{p}-norms:
+        \item \textbf{LinearSVC Penalty} This parameter introduces a regularisation penalty to prevent overfitting by minimising the components of the word-token vectors. There are two commonly used L\textsubscript{p}-norms of which the latter (L2) has been used throughout this thesis:
         \begin{itemize}[label={}]
             \item \textbf{L1} Favours sparse parameter vectors which helps to identify important features.
             \item \textbf{L2} Forces parameter vectors to be close to zero.
             \item For more detailed information on these two regularisation terms with an in depth comparison please refer to \textcite{Mazilu2011}.
         \end{itemize}
         
-        \item \textbf{Random Forest n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the better are classification boundaries smoothed and the training data captured. The downside is the computational cost increase.
+        \item \textbf{Random Forest n\_estimators} Defines the amount of independent decision trees that are created. The higher the number the smoother are generated classification boundaries and the better is the training data captured. The downside is the computational cost increase.
         
-        \item \textbf{Random Forest max\_depth} Defines the number of levels the created decision trees are made of.
+        \item \textbf{Random Forest max\_depth} Defines the number of levels the created decision trees possess.
     \end{itemize}
     
-    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure the result reliability (leave one out cross-validation has not been considered due to the great increase in processing time). The used hyperparameter testing grid for the Random Forest algorithm is visible in figure \ref{coderandomForestparameters} and the one for the linearSVC algorithm in figure \ref{codelinearsvcparameters}.
+    \item \textbf{GridSearchCV} This function allows the systematic testing of different hyperparameter settings to find the best performing configuration. This process is also known as model tuning. The weighted F1-score instead of the default accuracy score was used to evaluate performance of the individual models due to the multi-classification approach. Additionally, cross-validation is performed to ensure result reliability (refer to \textcite{Guido2016} p.265). The used hyperparameter testing grid for the Random Forest algorithm is visible in figure \ref{coderandomForestparameters} and the one for the linearSVC algorithm in figure \ref{codelinearsvcparameters}.
 \end{enumerate}
 
 %\begin{listing}
@@ -472,7 +470,7 @@ linear_svc_parameters = {
 \texttt{Remark:} At the end the model was trained on the entire training dataset with the best parameter configuration.\\
 
 \subsection{Evaluation scores} \label{ml_evaluation_scores}
-There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
+There are different measurements to evaluate a ML model. All of them can be extracted from the confusion matrix created during the testing phase of the model. This matrix consists of rows that represent the actual classes and columns that represent the model class predictions. The name confusion matrix stems from the purpose of noticing if the model is confusing classes.
 
 \begin{wrapfigure}{LR}{0.5\textwidth} %0.3 and 0.28
   %\vspace{-0.5cm}
@@ -499,7 +497,7 @@ F1 = 2*\frac{(precision*recall)}{(precision+recall)}
 \clearpage
 
 \section{Ground truthing} \label{groud_truthing}
-Interviews and passive observations were performed to gain insight on how well the social media data approximates to actual visitation rates and spatial NBRA dispersion. This ground truth information shall help to answer the question on how good of a proxy the considered social media platforms and their data in the study area are.
+Interviews and passive observations were performed to gain insight on how well the social media data approximates observed recreational activities as proxy while also investigating the social media engagement and demography of people in the research area.
 
 \subsection{Locations for ground truth data-acquisition} \label{locations_ground_truthing_data}
 
@@ -514,31 +512,28 @@ Interviews and passive observations were performed to gain insight on how well t
 %\vspace{-0.5cm}
 \end{wrapfigure}
 
-Three locations (see figure \ref{fig:locations_ground_truthing}) with different degrees of urbanisation were chosen which resemble hotspots for NBRAs covered in this thesis. The location to the far left is called 'Br\"uggli' - right next to a camping ground - which resembles a hotspot for jogging, biking, (dog-) walking and in summer also for picnicking and swimming. It lies inside the perimeter of the concept 'Lorzenebene' (plain of the river Lorze) and is close to the 'Delta' wildlife sanctuary which allows for various activities along the lake for relaxation.\\
-The second location includes the 'R\"ossliwiese' which is a meadow located close to the city centre at the lake side. There people like to go for short walks (with their dog), eat lunch, relax (after shopping). Its high attractiveness is mostly given by the closeness to the residential area.\\
-The last and most nature-near location was the adventure playground 'Schattenw\"aldli' on the Zugerberg. It appeals to various groups of people due to its wide spectrum of activities the environment allows. Young families with kids are the most dominant visitor group due to the playground and the possibility to have a picnic. But also people hiking, walking (their dog) and mountain-bikers can be frequently encountered there.
+Three locations (see figure \ref{fig:locations_ground_truthing}) with different degrees of urbanisation were chosen for ground truthing which resemble recreational hotspots in the research area according to the spatial planning agency of the City of Zug and the author's personal experience. The location to the far left is called 'Br\"uggli' - right next to a camping ground and the lake of Zug - which resembles a hotspot for jogging, biking, (dog-) walking and in summer also for picnicking and swimming. It lies inside the perimeter of the concept 'Lorzenebene' (plain of the river Lorze) and is close to the 'Delta' wildlife sanctuary which allows for various activities along the lake for relaxation including bird watching. The second location includes the 'R\"ossliwiese' which is a meadow located close to the city centre at the lake side. People like to go there for short walks (with their dog), to eat lunch or for relaxation (after shopping). Its high attractiveness is mostly given by the closeness to the residential area. The last and most nature-near location was the adventure playground 'Schattenw\"aldli' on the Zugerberg. It appeals to various groups of people due to its wide spectrum of activities the environment allows. Young families with kids are the most dominant visitor group due to the playground and the possibility to have a picnic. But also people hiking, walking (their dog) and mountain-bikers can be frequently encountered there.
 
 \subsection{Passive observation setup} \label{passive_observation_setup}
-The passive observation encompassed the recording of NBRAs performed by people that passed through the location during the same time the interviews were held. More specific the group size, the approximate average group age, the NBRA and the time were captured. The term 'passive' implies that no direct interaction with the recorded people occurred. Therefore, the data is entirely based on perception.
-Since the thesis's author held all the interviews, the passive observation was performed by an unaffiliated assistant (see \nameref{acknowledgements}).\\
+The passive observation encompassed the recording of recreational activities performed by people that passed through the location during the same time the interviews were held. More specific the group size, the approximate average group age, the performed activity and the time were captured. The term 'passive' implies that no direct interaction with the recorded people occurred. Therefore, the data is entirely based on perception.
+Since the thesis author held all the interviews, the passive observation was performed by an unaffiliated assistant (see \nameref{acknowledgements}).\\
 The durations of these passive observations were the following:
 \begin{itemize}
     \item \textbf{Br\"uggli} 1h 30min
     \item \textbf{R\"ossliwiese} 1h 15min
     \item \textbf{Schattenw\"aldli} 1h 45min
 \end{itemize}
-The time spent in one location depends on the time needed to hold the required interviews owing to the observable differences. Also, the relation between the observed frequencies of NBRAs were of greater interest than the actual recorded numbers.
-The passive observation template used in this thesis can be found under Appendix \ref{passive_obs_templates}.
+The time spent in one location depends on the time needed to hold the required interviews owing to the observable differences. Also, the relation between the observed frequencies of recreational activities were of greater interest than the actual recorded numbers. The passive observation template used in this thesis can be found under Appendix \ref{passive_obs_templates}.
 
 \subsection{Interview setup} \label{interview_setup}
-A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25\textsuperscript{th} of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and NBRAs.\\
-Every interview started out with a small introduction to the author's persona and the motivation behind the interviews. Additionally, the interviewees were informed that all the gathered information will be kept anonymous and used only within the scope of this thesis. The purpose of these interviews was to gain information on three topics.\\
-\newline
+A total of \textbf{52} interviews were performed in the afternoon during slightly cloudy but sunny conditions on the 24\textsuperscript{th} in 'Br\"uggli' (18 interviews) and 'R\"ossliwiese' (17 interviews) as well as on the 25\textsuperscript{th} of November 2018 in 'Schattenw\"aldli' (17 interviews). It was tried - to the best abilities of the author - to interview homogeneously across different age groups and recreational activities. Every interview started out with a small introduction to the author's persona and the motivation behind the interviews. Additionally, the interviewees were informed that all the gathered information will be kept anonymous and used only within the scope of this thesis. The purpose of these interviews was to gain information on three topics.\\
+
 The first one being \textbf{location} related:
 \begin{itemize}[label={}]
     \item \textbf{Reason} Why was the current location in particular sought out? What was the motivation that resulted in visiting this location over another?
-    \item \textbf{Activity} Which recreational activity is currently practised by the person in this location?
-    \item \textbf{Frequency} How often does the person visit the location? (In the case of 'Schattenw\"aldli', it was also asked what the destination of the trip was.)
+    \item \textbf{Activity} Which recreational activity is currently performed by the person in this location?
+    \item \textbf{Frequency} How often does the person visit the location? \\
+    (In the case of 'Schattenw\"aldli', it was also asked what the destination of the trip was.)
 \end{itemize}
 
 The second one was related to \textbf{social media}:
@@ -547,8 +542,7 @@ The second one was related to \textbf{social media}:
     \item \textbf{Habits} How do they interact with social media? Do they share own content (if yes in what frequency?), or do they rather look at contributions of others?
     \item \textbf{Intent} Do they consider sharing their current visit to the given location on social media and if yes on which platform?
 \end{itemize}
-The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation.\\
-The interview template used in this thesis can be found under Appendix \ref{interview_templates}.
+The final topic at the end of the interview was dedicated to some person specific details. This included their age, gender, place of residence as well as the travel time to the location and their choice of transportation. The interview template used in this thesis can be found under Appendix \ref{interview_templates}.
 
 \subsection{Data-comparison procedure}
 The ground truth data was acquired to compare recreational activity occurrences from empirical \textit{in-situ} data and from social media data. This comparison provides insight on how well these two data sources complement each other or where they show agreement. Additionally, the social media behaviour of the interviewees sheds light on the demographics of users that contribute to the social media platforms that were used in this thesis. This information allows statements about the representative of the produced models compared to real world circumstances.
