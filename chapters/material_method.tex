@@ -3,7 +3,7 @@
 \section{Research area} \label{research_area}
 The Canton of Zug, a constituent state of Switzerland (see figure \ref{fig:TD_locations}) was chosen as research area for this thesis. Existing local knowledge of the author who was raised in the town Cham in the form of cognitive maps were seen as an important asset \parencite{BenjaminKuipers}. This together with the manageable spatial extent and personal connections to the local spatial planning agency were the reasons why this particular region was chosen. The specific areas for which social media data was acquired are visible in the map of figure \ref{fig:research_area}. The turquoise area resembles the political border of the Canton of Zug for which social media data for the social media platforms Flickr and Foursquare were collected. The purple area is included in the above mentioned perimeter and consists of three major areas for which additional Instagram data was acquired (refer to table \ref{tab:areas_SMD}). 
 
-\begin{table}[h!]
+\begin{table}[!htb]
 \begin{center}
 \caption{Overview of the social media platforms and their respective query perimeter as shown in the map of figure \ref{research_area}}\vspace{1ex}
 \label{tab:areas_SMD}
@@ -19,7 +19,7 @@ B1, B2, B3 &  Instagram + Flickr + Foursquare\\
 In the North lies the 'Lorzenebene' (B1 - plane of the river Lorze). This area is of special interest to the cantonal authorities due to its local recreational value. An overall concept named 'Leitbild Lorzenebene'  \parencite{BaudirektiondesKantonsZug2012} has been created for that area which outlines the future development goals also in regard to potential nature-based recreational services. The second area B2 resembles the jurisdiction of the city of Zug which partly encompasses the 'Lorzenebene'. This area is characterised by its internal urban gradient which increases towards the city centre as well as the long reaching lake side. The last area B3 furthest South consists of the three mountains 'Zuger-, Walchwiler-, Rossberg' which are likewise part of an development concept \parencite{Berchtold2011} of the Canton of Zug due to their among others sport and recreational value. \\
 There is no perimeter concordance due to varying constraints in the data-acquisition between the different social media platforms which will be illustrated in the following subsection.
 
-\begin{figure}[h]
+\begin{figure}[!htb]
    \centering
    \includegraphics[width=\textwidth]{img/overview_research_area_w_Lorzenebene_edited.pdf}
    \caption{Overview of the data acquisition perimeters}
@@ -47,6 +47,7 @@ Data collection has been continuously performed on all three coordinates during 
 \subsubsection{Data} \label{Instagram_data}
 The data-collection accounted for 28'246 raw Instagram media objects. After social media users with high media object counts and bulk-upload were addressed during the data-processing steps referenced further down (see section \ref{data_processing}) 11'777 remained.
 The data provided by Netlytic came in the Comma Separated Values (CSV) format. Every media object was provided with the following information entities with the appropriate PostgreSQL data type in square brackets:
+
 \begin{itemize}[label={}]
     \item \textbf{id:} Unique media object identifier. \big[varchar(30)\big] if the media object contains location information, \big[numeric(20)\big] if not.
     \item \textbf{latitude and longitude
@@ -65,8 +66,6 @@ The provided location information known as location tag consists of the above me
 It has also been shown that roughly 85 \% of Instagram media objects lack a location tag and most users only use them on vacation or when being abroad \parencite{Flatow2015}.
 Additional location related information (address) was gathered for all the media objects via the official Instagram API. More information can be found in section \ref{geolocation_via_instagramapi}.
 
-
-
 \subsection{Flickr} \label{flickr}
 Flickr\footnote{https://www.flickr.com/} is a photo sharing website that allows users to upload georeferenced images similar to Instagram. The corresponding Flickr API gives free\renewcommand{\thefootnote}{\alph{footnote}} access to the entire database of Flickr media objects since the launch of the platform in the year 2004 if used for non-commercial applications. The popularity of Flickr according to the Alexa Global Rank lies at 358\footnote{https://www.alexa.com/siteinfo/flickr.com, accessed: 10.04.2019} which is significantly lower than to the one of Instagram which lies at 15\footnote{https://www.alexa.com/siteinfo/instagram.com, accessed: 10.04.2019}. \textcite{Tenkanen2017} states that in the period between 2004 and 2017 over six billion images were uploaded by 71 million Flickr users of which roughly 197 million images or 3.3 \% were georeferenced.\renewcommand{\thefootnote}{\arabic{footnote}} Flickr still plays an important role as data foundation for scientific studies due to the simple and unbounded data-access.
 
@@ -77,7 +76,7 @@ The entire Flickr database was queried via the publicly accessible official Flic
 All Flickr API requests described above were queried for the time-spawn 2004 (launch of Flickr) until the 23\textsuperscript{rd} of November 2018.
 
 \subsubsection{Data} \label{flickr_data}
-The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:\\
+The data that was returned by the Flickr API was in the JavaScript Object Notation (JSON) format. The following information has been extracted for every Flickr media object with the appropriate PostgreSQL data types in square brackets:
 
 \begin{itemize}[label={}]
     \item \textbf{id:} Unique media object identifier \big[bigint\big]
@@ -112,7 +111,7 @@ To obtain more specific information about each venue a second (premium) Foursqua
 
 \subsubsection{Data} \label{fq_data}
 The data returned by the Foursquare API with the above mentioned endpoints was in the JSON format - the same as the Flickr data.
-Subsequently listed is an excerpt of the returned venue meta-data with the appropriate PostgreSQL data types in square brackets: \\
+Subsequently listed is an excerpt of the returned venue meta-data with the appropriate PostgreSQL data types in square brackets:
 
 \begin{itemize}[label={}]
     \item \textbf{venue id:} Unique venue identifier \big[text\big]
@@ -152,10 +151,10 @@ Location tables:
 
 In more detail, the media object tables store all data related to an object retrieved from one of the three social media platform as stated in the subsections above. Furthermore, the outputs from the data- and text-processing steps (see section \ref{data_processing}) are stored in the database. The exact structure and table specific content of the PostgreSQL database is described in figure \ref{fig:database}. The database holds in total 320'647 records and 78 fields. The Instagram and Flickr media object tables are linked via the \texttt{location\_id} primary key to the corresponding locations table where unique media object location information is separately stored to reduce redundancy. This information exceeds the basic coordinates provided by the Flickr API and the stand-alone user generated locations provided by Netlytic (Instagram). Additional geographic information was acquired via the Googles Geocoding API and the Instagram API respectively (see section \ref{add_location_data}). Timestamps were normalised across all social media platforms to the \texttt{YYYY-MM-DD HH-MM-SS} format. \\
 
-\begin{figure}[h]
+\begin{figure}[!htb]
    \centering
    \includegraphics[width=\textwidth]{img/fusion_db_overview}
-   \caption{Visualisation of the database, its associated tables and columns. \\ Created with https://www.draw.io/}
+   \caption{Visualisation of the database, its associated tables and columns \\ Created with https://www.draw.io/}
    \label{fig:database}
 \end{figure}
 
@@ -211,11 +210,10 @@ The language detection serves the purpose of optimally adjusting the parameters 
 In a following step each created word-token is run against five different word lists of the English, German, Swiss German, French and Italian language.
 The English word list was acquired via the \textit{Natural Language Toolkit} (NLTK) Python library. The mentioned list encompasses over 236'000 of the most common words of the English language.
 The German, Swiss-German, French and Italian word lists\footnote{http://www.gwicks.net/dictionaries.htm, accessed: 29.03.2019} contain 166'100, 165'900, 208'913 and 88'351 of the most common words respectively.\\
-\newline
-\texttt{Remark:} All word lists were slightly modified to fit the text-processing algorithm that is applied to the text data of the media objects (lowercase, replacement of vowel mutations).\\
-\newline
-The entity check of each word versus all five of the above mentioned word lists accounts for a major share of the total computational cost of the entire text-processing algorithm. The word list with the most contained words defines the language of the text string and ultimately of the entire media object. The determined language for each media object is saved in the \texttt{detected\_language} column in the corresponding database entry.\\
 
+\texttt{Remark:} All word lists were slightly modified to fit the text-processing algorithm that is applied to the text data of the media objects (lowercase, replacement of vowel mutations).\\
+
+The entity check of each word versus all five of the above mentioned word lists accounts for a major share of the total computational cost of the entire text-processing algorithm. The word list with the most contained words defines the language of the text string and ultimately of the entire media object. The determined language for each media object is saved in the \texttt{detected\_language} column in the corresponding database entry.
 
 \subsubsection{Core text-processing} \label{core_text_processing}
 The core text processing encompasses the following alteration steps described in the coming subsections and serves the purpose of creating universally similar structured and comparable word-tokens out of the noisy user generated text data from each media object in the database. This entire process generates the feed-in-data which enables the training and testing of a sophisticated ML model to accurately predict the recreational activity described by a media object.\\
@@ -248,9 +246,9 @@ To maintain the uniformity of the word-tokens every remaining character is turne
 
 \paragraph*{Minimum token length}
 Setting a minimum word length adds an additional filter layer. Contextless word-tokens as well as character artefacts that were created throughout the text-processing steps are thereby neglected. The threshold was set to a minimum token-length of \textbf{three} for this thesis. In the English language only a few two letters words with contextual meaning exist besides stopwords such as \textit{or}. The words \textit{ad} (short for advertisement), \textit{ma} (short for mama/mother) or \textit{ou} (Hawaiian bird\footnote{https://birdsna.org/Species-Account/bna/species/ou/introduction, accessed: 08.04.2019}) are further examples. Abbreviations or short-forms of English words are predominant. The potential information gain for the model by including these words compared to the conjoined inflation of the feature space is considered to be low \parencite{Guido2016}.\\
-\newline
+
 \textbf{How was this threshold defined?}\\
-\newline
+
 This threshold was defined based upon personal empirical tests on the original data and on the book of \textcite{Guido2016}.
 
 \paragraph*{Stop words}
@@ -271,15 +269,15 @@ The extraction of structural elements or objects from images enables an addition
 \subsection{Process}
 Flickr and Instagram media objects stored in the database come with a (media-)link that allows the extraction of the associated image. These links with the corresponding media object ids were iteratively queried and parsed to the Google Cloud Vision API for analysis. The basic processes is illustrated in figure \ref{fig:vision_illustration}. The output consists of text labels with their corresponding confidence score. These values are fed back into the \texttt{vision\_labels} database column of the row with the matching media object id the media link belonged to. The placement of this entire step in relation to the other data- and text-processes is visualised in step 2 of figure \ref{fig:ml_visualisation}.
 
-\begin{figure}[h!]
+\subsection{Query costs} \label{vision_query_cost}
+Google allows the creation of one Google Cloud trial account (needs a valid postpaid Credit Card for verification) per user which comes with 300 US Dollars' worth of credit that expires after one year. This credit can be used among others to rent virtual machines (VMs), access APIs and other Google Cloud services. The Google Cloud Vision API can also be paid with that available credit and comes with the following rates: The first 1'000 requests per month are free of charge. Subsequent requests up to 5 million requests per month are charged at \$1.50 per 1'000 requests - this applies specifically to the API label detection feature. Therefore, the \$300 worth of credit would allow the processing of around 201'000 images. These rates\footnote{https://cloud.google.com/vision/pricing, accessed: 29.03.2019} were in place during the time of writing (March 2019) and are presumably subject to change. \\
+
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{img/vision_illustration}
 \caption{This visualisation shall illustrate the image recognition process which is performed by the Google Cloud Vision API showcased on a photograph containing the recreational activity 'biking'. Source: (1) Mountain biker https://i.imgur.com/DPAjX84.jpg, accessed: 13.04.2019 (2) Vision emblem https://cloud.google.com/vision/?hl=de, accessed: 30.03.2019}
 \label{fig:vision_illustration}
 \end{figure}
-
-\subsection{Query costs} \label{vision_query_cost}
-Google allows the creation of one Google Cloud trial account (needs a valid postpaid Credit Card for verification) per user which comes with 300 US Dollars' worth of credit that expires after one year. This credit can be used among others to rent virtual machines (VMs), access APIs and other Google Cloud services. The Google Cloud Vision API can also be paid with that available credit and comes with the following rates: The first 1'000 requests per month are free of charge. Subsequent requests up to 5 million requests per month are charged at \$1.50 per 1'000 requests - this applies specifically to the API label detection feature. Therefore, the \$300 worth of credit would allow the processing of around 201'000 images. These rates\footnote{https://cloud.google.com/vision/pricing, accessed: 29.03.2019} were in place during the time of writing (March 2019) and are presumably subject to change.
 
 \clearpage
 
@@ -336,10 +334,10 @@ The recreational activity 'swimming/bathing' that is listed in the recreation ty
 \subsection{Acquisition and preparation of the training- and test-dataset} \label{preparation_training_data}
 Due to a limited amount of available Instagram and Flickr data from the research area it was certain that not enough training data for each of the NBRA-types was available. Therefore, a larger additional Instagram dataset was drawn upon which was collected by the geocomputation team of the University of Zurich \parencite{Gruzd2016} in the year 2017. The dataset consists of ten locations in Switzerland which differed in topography, spoken language and demographic factors. The locations were the following: Aarau, Arosa, Ebmatingen, Locarno Nord, Neuch\^{a}tel, Ovronnaz, S-chanf, Scuol, Uetliberg and Zurich Dolder (see map in figure \ref{fig:TD_locations}). For each location there existed around six to seven individual files that partly overlapped in the time they were acquired. The entire dataset covered a time-span of approximately three months for every of the mentioned locations from the beginning of October 2017 till the end of January 2018. A total of ten merge files - one for every location - were created to firstly, eliminate any duplicate media objects and secondly, to add the location name as an additional column to the data-rows for easier database filtering later on.\\
 
-\begin{figure}[h]
+\begin{figure}[!htb]
    \centering
    \includegraphics[width=\textwidth]{img/TD_locations_cropped.pdf}
-   \caption{The red circles indicate locations from which additional Instagram data as potential training data was available. The blue circles indicate the locations which were ultimately chosen as training data sources. The green circle indicates the location of the research area.}
+   \caption{The red circles indicate locations from which additional Instagram data as potential training data was available. The blue circles indicate the locations which were ultimately chosen as training data sources. The green circle indicates the location of the research area}
    \label{fig:TD_locations}
 \end{figure}
 
