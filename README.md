@@ -1,4 +1,4 @@
-# Detection of Recreation Activities in Social Media
+# Detection of Recreation Activities on Social Media
 
 Full report is availble [here](https://drive.google.com/file/d/1LUaHJSoy5LKM-fSKQK6TyDGgtbVmRV10/view?usp=sharing)
 
