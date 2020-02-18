@@ -1,0 +1,134 @@
+% http://www.idsc.ethz.ch/education/theses-semester-projects.html
+% IDSC LaTeX Thesis Template
+% 
+% Author(s):	Eric Müller
+% 				Institute for Dynamic Systems and Control
+% 				Swiss Federal Institute of Technology (ETH) Zurich
+% 
+% Created:		2004/04/02  (Eric Mueller)
+% 
+% Notes: Has been tested on Windows 7 + MikTeX + TeXnicCenter
+%
+% Revisions: 	2009/05/29  (Soren Ebbesen)
+% 				    2011/03/22	(Soren Ebbesen)
+%             2013/03/08	(Soren Ebbesen)
+%             2014/03/13	(Soren Ebbesen)
+% ______________________________________________________________________________
+\documentclass[11pt,twoside,a4paper,fleqn]{report}
+
+% specifies to what depth sections shall be enumerated
+\setcounter{secnumdepth}{5}
+%changes the white space padding below figures
+%5pt stands for the padding between float elements (figures), the plus 2pt stands for a fixed 2pt (minus would mean optional)
+\setlength{\intextsep}{5pt plus 2pt}   % default value 12pt plus 2pt minus 2pt
+
+\usepackage[english,mt]{ethidsc} % Special IDSC styles and commands      	
+								 % {german}/english: language of headings, etc.
+								 % {st}/bt/mt: {semester}/bachelor/master thesis
+%Footnotes
+\renewcommand{\thefootnote}{\arabic{footnote}}
+% for image positioning
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+% defining the bibliography settings
+\usepackage[backend=biber, citestyle=authoryear]{biblatex}
+\addbibresource{library.bib}
+
+% placing figures next to each other with subfigures
+\usepackage{subcaption}
+\usepackage{caption}
+\newcommand{\source}[1]{\caption*{Source: {#1}} }
+% for displaying code snipplets
+\usepackage{minted}
+\usemintedstyle{vs}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{nccmath}
+\usepackage{mathtools}
+% change h and vline thinkness
+\usepackage{makecell}
+\usepackage{array}
+\newcolumntype{?}{!{\vrule width 1pt}}
+
+% Page header (don't change)____________________________________________________
+\setlength{\parindent}{0em}                 % Disable parindent
+\rhead[\nouppercase{\rightmark}]{\thepage}  % Special headings
+\lhead[\thepage]{\nouppercase{\leftmark}}   % Special headings
+\cfoot{}                                    % Special headings
+
+
+% Title page (please fill in)___________________________________________________
+%\title{Using a classification model trained on text and image-data to predict nature-based recreation activities in geo-referenced social media content}
+
+\title{Using a model trained on text and image data from social media content to predict and map leisure activities}
+
+
+\studentA{Maximilian Hartmann (13-061-619)}
+\ethidA{13-061-619}
+\semesterA{9}
+\emailA{hartmanm@student-net.ethz.ch}
+
+%\studentB{Second Student}
+%\ethidB{12-345-678}
+%\semesterB{9}
+%\emailB{second@student.ethz.ch}
+
+\supervision{Dr. Flurina Wartmann, Swiss Federal Research Institute for Forest, Snow and Landscape WSL\\ Prof. Dr. Ross Purves, Geography Department, University of Zurich UZH\\ Dr. Rahul Deb Das, Geography Department, University of Zurich UZH}
+
+\date{Submission: 15\textsuperscript{th} of April 2019}
+
+%\identification{IDSC-XX-YY-ZZ} 		% Project identifier
+
+% Begin document___________________________________________________________
+
+\begin{document}
+
+\maketitle 							% Create title page
+
+
+% Preamble______________________________________________________________________
+
+\pagenumbering{roman} 				% Begin roman page numbering (i,ii,...)
+
+\input{chapters/preamble}
+
+% Chapters______________________________________________________________________
+
+\pagestyle{fancy}               	% Fancy headings
+\pagenumbering{arabic}				% Begin arabic page numbering (1,2,...)
+
+\input{chapters/introduction}
+\cleardoublepage
+\input{chapters/state_of_the_art.tex}
+\cleardoublepage
+\input{chapters/research_questions.tex}
+\cleardoublepage
+\input{chapters/material_method}
+%\input{chapters/howto}
+\cleardoublepage
+\input{chapters/results.tex}
+\cleardoublepage
+\input{chapters/discussion.tex}
+\cleardoublepage
+\input{chapters/conclusion.tex}
+\cleardoublepage
+%\input{chapters/ethics.tex}
+%\cleardoublepage
+% ...
+\input{chapters/used_software}
+
+\input{chapters/enclosed_CD_content.tex}
+
+% Appendix______________________________________________________________________
+\input{chapters/appendix}
+
+% Bibliography__________________________________________________________________
+% Literature (Additional references can be added to the .bib-file manually, or by using, for example, the free application JabRef). Compile in the following order: latex -bibtex -latex -latex
+%\bibliographystyle{apa}
+
+\printbibliography
+\input{chapters/declaration_originality.tex}
+
+\end{document}
